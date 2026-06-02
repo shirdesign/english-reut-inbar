@@ -864,7 +864,132 @@ tr:hover td { background: #f8fafc; }
   </div>
 
   <div class="note note-blue" style="margin-top:1rem">
-    <strong>📐 גדלי מסכים:</strong> Primary target – מובייל (375px). Secondary – טאבלט. Desktop – תמיכה בסיסית. כל הכפתורים מינימום 44×44px לנגישות.
+    <strong>📐 גדלי מסכים – Responsive מלא:</strong> שלושה breakpoints: מובייל (375px) | טאבלט (768px) | דסקטופ (1280px). כל הכפתורים מינימום 44×44px לנגישות.
+  </div>
+
+  <!-- Responsive Wireframes -->
+  <div class="card" style="margin-top:1.5rem">
+    <h3>📱💻 Wireframes – 3 גדלי מסך (דוגמה: מסך הקלטת משפט)</h3>
+    <div style="overflow-x:auto; padding-bottom:1rem; margin-top:1rem">
+    <div style="display:flex; gap:1.5rem; align-items:flex-start; min-width:700px">
+
+      <!-- MOBILE -->
+      <div style="text-align:center; flex-shrink:0">
+        <div style="font-size:.75rem;color:var(--muted);margin-bottom:.4rem;font-weight:700">📱 מובייל — 375px<br>Primary</div>
+        <div style="width:200px;border:2px solid #334155;border-radius:24px;background:#0f172a;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.2)">
+          <div style="height:20px;background:#334155;border-radius:22px 22px 0 0"></div>
+          <div style="padding:.6rem;display:flex;flex-direction:column;gap:.4rem;min-height:360px;background:#080820;align-items:center;justify-content:center">
+            <div style="color:rgba(255,255,255,.5);font-size:.65rem">משפט 3/8</div>
+            <div style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:.7rem;text-align:center;width:100%">
+              <div style="color:white;font-size:1rem;font-weight:700">My name is ___.</div>
+              <div style="color:rgba(255,255,255,.5);font-size:.65rem;margin-top:.2rem">שמי ______.</div>
+            </div>
+            <div style="background:#ef4444;color:white;border-radius:20px;padding:.5rem;text-align:center;font-size:.8rem;font-weight:700;width:100%">🎤 הקלט</div>
+            <div style="display:flex;gap:.3rem;width:100%">
+              <div style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);border-radius:12px;padding:.3rem;text-align:center;font-size:.65rem;flex:1">🔊 שמע</div>
+              <div style="background:#6366f1;color:white;border-radius:12px;padding:.3rem;text-align:center;font-size:.65rem;flex:1">הבא ▶</div>
+            </div>
+            <div style="display:flex;gap:.2rem;justify-content:center">
+              ${Array.from({length:8},(_,i)=>`<div style="width:7px;height:7px;border-radius:50%;background:${i<2?'rgba(99,102,241,.8)':i===2?'white':'rgba(255,255,255,.2)'}"></div>`).join('')}
+            </div>
+          </div>
+        </div>
+        <div style="font-size:.7rem;color:var(--muted);margin-top:.4rem">כפתורים: full width<br>תוכן: מרכז אנכי</div>
+      </div>
+
+      <!-- TABLET -->
+      <div style="text-align:center; flex-shrink:0">
+        <div style="font-size:.75rem;color:var(--muted);margin-bottom:.4rem;font-weight:700">📟 טאבלט — 768px<br>Secondary</div>
+        <div style="width:340px;border:2px solid #334155;border-radius:16px;background:#080820;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.2)">
+          <div style="height:16px;background:#334155"></div>
+          <div style="padding:1rem;min-height:260px;background:#080820">
+            <!-- Nav -->
+            <div style="display:flex;gap:.4rem;margin-bottom:.8rem">
+              <div style="background:rgba(59,130,246,.3);border:1px solid #3b82f6;color:#93c5fd;border-radius:12px;padding:.25rem .6rem;font-size:.6rem">🚀 משחק 1</div>
+              <div style="background:rgba(99,102,241,.5);border:1px solid #6366f1;color:white;border-radius:12px;padding:.25rem .6rem;font-size:.6rem;font-weight:700">👑 משחק 3</div>
+              <div style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.5);border-radius:12px;padding:.25rem .6rem;font-size:.6rem">👸 משחק 4</div>
+            </div>
+            <!-- 2-col layout -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem">
+              <div style="background:rgba(255,255,255,.07);border-radius:12px;padding:.7rem">
+                <div style="color:rgba(255,255,255,.5);font-size:.6rem;margin-bottom:.3rem">המלך אומר:</div>
+                <div style="color:white;font-size:.75rem;font-weight:600">👑</div>
+                <div style="background:rgba(255,255,255,.85);color:#1e293b;border-radius:8px;padding:.4rem;font-size:.65rem;margin-top:.3rem">In my kingdom, we speak politely!</div>
+              </div>
+              <div style="background:rgba(255,255,255,.07);border-radius:12px;padding:.7rem">
+                <div style="color:rgba(255,255,255,.5);font-size:.6rem;margin-bottom:.3rem">משפט 3/8:</div>
+                <div style="background:rgba(255,255,255,.12);border-radius:8px;padding:.5rem;text-align:center">
+                  <div style="color:white;font-size:.8rem;font-weight:700">My name is ___.</div>
+                </div>
+                <div style="background:#ef4444;color:white;border-radius:12px;padding:.35rem;text-align:center;font-size:.7rem;font-weight:700;margin-top:.3rem">🎤 הקלט</div>
+              </div>
+            </div>
+            <!-- progress -->
+            <div style="margin-top:.7rem;background:rgba(255,255,255,.1);border-radius:4px;height:4px"><div style="background:#6366f1;height:4px;border-radius:4px;width:37%"></div></div>
+          </div>
+        </div>
+        <div style="font-size:.7rem;color:var(--muted);margin-top:.4rem">layout: 2 עמודות<br>ניווט גלוי בחלק עליון</div>
+      </div>
+
+      <!-- DESKTOP -->
+      <div style="text-align:center; flex-shrink:0">
+        <div style="font-size:.75rem;color:var(--muted);margin-bottom:.4rem;font-weight:700">🖥️ דסקטופ — 1280px<br>Tertiary</div>
+        <div style="width:420px;border:2px solid #334155;border-radius:10px;background:#080820;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.2)">
+          <div style="height:22px;background:#1e2436;display:flex;align-items:center;gap:.3rem;padding:0 .5rem">
+            <div style="width:8px;height:8px;border-radius:50%;background:#ef4444"></div>
+            <div style="width:8px;height:8px;border-radius:50%;background:#f59e0b"></div>
+            <div style="width:8px;height:8px;border-radius:50%;background:#10b981"></div>
+          </div>
+          <div style="padding:1rem;min-height:240px;background:#080820;display:flex;gap:1rem">
+            <!-- Sidebar -->
+            <div style="width:90px;flex-shrink:0">
+              <div style="color:rgba(255,255,255,.4);font-size:.55rem;margin-bottom:.4rem;text-transform:uppercase;letter-spacing:1px">משחקים</div>
+              <div style="color:rgba(255,255,255,.4);font-size:.6rem;padding:.3rem .4rem;border-radius:6px;margin-bottom:.2rem">🚀 פתיחה</div>
+              <div style="color:rgba(255,255,255,.4);font-size:.6rem;padding:.3rem .4rem;border-radius:6px;margin-bottom:.2rem">🔵 AEIOU</div>
+              <div style="background:rgba(245,158,11,.2);color:#fbbf24;font-size:.6rem;padding:.3rem .4rem;border-radius:6px;margin-bottom:.2rem;font-weight:700">👑 המלך</div>
+              <div style="color:rgba(255,255,255,.4);font-size:.6rem;padding:.3rem .4rem;border-radius:6px;margin-bottom:.2rem">👸 המלכה</div>
+              <div style="color:rgba(255,255,255,.4);font-size:.6rem;padding:.3rem .4rem;border-radius:6px">🌟 YES</div>
+            </div>
+            <!-- Main content -->
+            <div style="flex:1">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:.6rem">
+                <div style="background:rgba(255,255,255,.06);border-radius:10px;padding:.6rem">
+                  <div style="color:rgba(255,255,255,.4);font-size:.55rem">המלך:</div>
+                  <div style="color:white;font-size:.65rem;margin-top:.2rem">"You speak very politely!"</div>
+                </div>
+                <div style="background:rgba(255,255,255,.06);border-radius:10px;padding:.6rem">
+                  <div style="color:rgba(255,255,255,.4);font-size:.55rem">A.B:</div>
+                  <div style="color:white;font-size:.65rem;margin-top:.2rem">"Thank you, King! 🤖"</div>
+                </div>
+              </div>
+              <div style="background:rgba(255,255,255,.08);border-radius:10px;padding:.7rem">
+                <div style="color:rgba(255,255,255,.5);font-size:.55rem;margin-bottom:.3rem">משפט 3 מתוך 8:</div>
+                <div style="color:white;font-size:.9rem;font-weight:700;text-align:center;margin-bottom:.4rem">My name is ______.</div>
+                <div style="display:flex;gap:.4rem">
+                  <div style="background:#ef4444;color:white;border-radius:10px;padding:.3rem .5rem;font-size:.65rem;font-weight:700;flex:1;text-align:center">🎤 הקלט</div>
+                  <div style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);border-radius:10px;padding:.3rem .5rem;font-size:.65rem;text-align:center">🔊</div>
+                  <div style="background:#6366f1;color:white;border-radius:10px;padding:.3rem .5rem;font-size:.65rem;text-align:center">▶</div>
+                </div>
+              </div>
+              <div style="margin-top:.5rem;background:rgba(255,255,255,.08);border-radius:4px;height:3px"><div style="background:#f59e0b;height:3px;border-radius:4px;width:37%"></div></div>
+            </div>
+          </div>
+        </div>
+        <div style="font-size:.7rem;color:var(--muted);margin-top:.4rem">sidebar ניווט<br>max-width: 900px מרכוז</div>
+      </div>
+
+    </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:1rem">
+    <h3>📐 כללי Responsive</h3>
+    <table>
+      <tr><th>Breakpoint</th><th>Layout</th><th>מיקום ניווט</th><th>כפתורים</th></tr>
+      <tr><td>📱 375px (מובייל)</td><td>עמודה אחת, full-width</td><td>tabs גלילה אופקית</td><td>full-width, גדולים</td></tr>
+      <tr><td>📟 768px (טאבלט)</td><td>2 עמודות (דמות + משחק)</td><td>tabs גלוי בשורה</td><td>חצי רוחב</td></tr>
+      <tr><td>🖥️ 1280px (דסקטופ)</td><td>sidebar + תוכן, max-width 900px</td><td>sidebar שמאלי</td><td>קומפקטיים</td></tr>
+    </table>
   </div>
 </div>
 

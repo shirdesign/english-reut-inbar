@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>משימות | קורס אנגלית – רעות זהבי</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', Arial, sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.7; }
+
+.header { background: #1e1b4b; color: #fff; padding: 2rem; }
+.header h1 { font-size: 1.6rem; }
+.header p { opacity: .7; font-size: .9rem; margin-top: .3rem; }
+.header .meta { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; font-size: .8rem; }
+.header .meta span { background: rgba(255,255,255,.15); padding: .2rem .8rem; border-radius: 12px; }
+
+.container { max-width: 860px; margin: 0 auto; padding: 1.5rem; }
+
+/* Progress bar */
+.progress-wrap { background: #e2e8f0; border-radius: 8px; height: 10px; margin: 1.5rem 0 .3rem; }
+.progress-fill { height: 10px; border-radius: 8px; background: linear-gradient(90deg, #6366f1, #8b5cf6); transition: width .4s; }
+.progress-label { font-size: .8rem; color: #64748b; text-align: left; direction: ltr; }
+
+/* Phase */
+.phase { margin: 2rem 0; }
+.phase-header {
+  display: flex; align-items: center; gap: .8rem;
+  padding: .8rem 1rem; border-radius: 12px 12px 0 0;
+  cursor: pointer; user-select: none;
+}
+.phase-header h2 { font-size: 1rem; font-weight: 700; flex: 1; }
+.phase-header .count { font-size: .8rem; opacity: .8; }
+.phase-body { border: 1px solid; border-top: none; border-radius: 0 0 12px 12px; overflow: hidden; }
+
+/* Task item */
+.task {
+  display: flex; align-items: flex-start; gap: .8rem;
+  padding: .7rem 1rem; border-bottom: 1px solid rgba(0,0,0,.05);
+  transition: background .15s;
+}
+.task:last-child { border-bottom: none; }
+.task:hover { background: rgba(0,0,0,.02); }
+.task input[type=checkbox] { margin-top: .3rem; width: 16px; height: 16px; cursor: pointer; accent-color: #6366f1; flex-shrink: 0; }
+.task label { cursor: pointer; font-size: .9rem; flex: 1; }
+.task input:checked + label { text-decoration: line-through; color: #94a3b8; }
+.task .sub { font-size: .78rem; color: #64748b; display: block; margin-top: .1rem; }
+.task .tag { display: inline-block; font-size: .7rem; padding: .1rem .5rem; border-radius: 8px; margin-right: .3rem; font-weight: 600; }
+.tag-red { background: #fee2e2; color: #991b1b; }
+.tag-yellow { background: #fef3c7; color: #92400e; }
+.tag-green { background: #d1fae5; color: #065f46; }
+.tag-blue { background: #dbeafe; color: #1e40af; }
+.tag-purple { background: #ede9fe; color: #6d28d9; }
+
+/* Phase colors */
+.phase-0 .phase-header { background: #1e1b4b; color: white; }
+.phase-0 .phase-body { border-color: #1e1b4b33; }
+.phase-1 .phase-header { background: #7c3aed; color: white; }
+.phase-1 .phase-body { border-color: #7c3aed33; }
+.phase-2 .phase-header { background: #0369a1; color: white; }
+.phase-2 .phase-body { border-color: #0369a133; }
+.phase-3 .phase-header { background: #b45309; color: white; }
+.phase-3 .phase-body { border-color: #b4530933; }
+.phase-4 .phase-header { background: #065f46; color: white; }
+.phase-4 .phase-body { border-color: #065f4633; }
+.phase-5 .phase-header { background: #9d174d; color: white; }
+.phase-5 .phase-body { border-color: #9d174d33; }
+
+/* Notes */
+.note { background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: .7rem 1rem; font-size: .85rem; color: #92400e; margin: 1rem 0; }
+
+/* Print */
+@media print {
+  body { font-size: 12px; }
+  .phase-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .progress-fill { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>✅ רשימת משימות – קורס אנגלית</h1>
+  <p>מאישור האיפיון עד Delivery</p>
+  <div class="meta">
+    <span>👤 לקוחה: רעות זהבי</span>
+    <span>📅 יעד: 10.07.2026</span>
+    <span>💰 8,500 ₪ | 200 ₪/שעה | 42.5 שעות</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="progress-wrap">
+    <div class="progress-fill" id="progressBar" style="width:0%"></div>
+  </div>
+  <div class="progress-label" id="progressLabel">0 / 0 משימות הושלמו</div>
+
+  <!-- PHASE 0 -->
+  <div class="phase phase-0">
+    <div class="phase-header">
+      <span>🤝</span>
+      <h2>שלב 0 – אישור פנימי עם להבה</h2>
+      <span class="count" id="count-0"></span>
+    </div>
+    <div class="phase-body">
+      <div class="task"><input type="checkbox" id="t0_1"><label for="t0_1">סקירת מסמך האיפיון עם להבה <span class="sub">לוודא שאנחנו מסכימות על scope, תמחור, ולוח זמנים</span></label><span class="tag tag-red">דחוף</span></div>
+      <div class="task"><input type="checkbox" id="t0_2"><label for="t0_2">הדגמת הדמו בפני להבה <span class="sub">לבדוק ביחד את 5 המשחקים ולסמן הערות</span></label></div>
+      <div class="task"><input type="checkbox" id="t0_3"><label for="t0_3">סיכום חלוקת עבודה פנימית <span class="sub">מי עושה עיצוב, מי פיתוח, מי תיאום לקוחה</span></label></div>
+      <div class="task"><input type="checkbox" id="t0_4"><label for="t0_4">אישור סופי להגשה ללקוחה <span class="sub">שתיכן מסכימות לפני שנשלח לרעות</span></label><span class="tag tag-red">חובה</span></div>
+    </div>
+  </div>
+
+  <!-- PHASE 1 -->
+  <div class="phase phase-1">
+    <div class="phase-header">
+      <span>📋</span>
+      <h2>שלב 1 – הגשה ואישור לקוחה (איפיון)</h2>
+      <span class="count" id="count-1"></span>
+    </div>
+    <div class="phase-body">
+      <div class="task"><input type="checkbox" id="t1_1"><label for="t1_1">שליחת מסמך האיפיון לרעות <span class="sub">קישור ל-spec.html דרך Vercel</span></label></div>
+      <div class="task"><input type="checkbox" id="t1_2"><label for="t1_2">שליחת הדמו האינטראקטיבי לרעות <span class="sub">לבדוק ב-Chrome עם מיקרופון</span></label></div>
+      <div class="task"><input type="checkbox" id="t1_3"><label for="t1_3">קבלת אישור על 5 המשחקים וה-scope <span class="sub">חובה לפני תחילת עיצוב</span></label><span class="tag tag-red">בלוקר</span></div>
+      <div class="task"><input type="checkbox" id="t1_4"><label for="t1_4">קבלת אישור על מנגנון הסיסמה בסקולר <span class="sub">רעות מוסיפה בוחן אחרי כל משחק בסקולר</span></label><span class="tag tag-red">בלוקר</span></div>
+      <div class="task"><input type="checkbox" id="t1_5"><label for="t1_5">קבלת תוכן AEIOU – מה כל רובוט אומר <span class="sub">סקריפט מלא ל-5 הכפתורים (משחק 2)</span></label><span class="tag tag-yellow">תוכן</span></div>
+      <div class="task"><input type="checkbox" id="t1_6"><label for="t1_6">קבלת לינקי Vimeo לסרטוני ABC <span class="sub">סרטון מלא + A–M + N–Z</span></label><span class="tag tag-yellow">תוכן</span></div>
+      <div class="task"><input type="checkbox" id="t1_7"><label for="t1_7">קבלת חומרי עיצוב מרעות <span class="sub">לוגו קיים, צבעים, השראות, דוגמאות שהיא אוהבת</span></label><span class="tag tag-yellow">עיצוב</span></div>
+      <div class="task"><input type="checkbox" id="t1_8"><label for="t1_8">קבלת קישור לסיליבוס המלא <span class="sub">כדי להבין כמה שיעורים נוספים יהיו בהמשך</span></label></div>
+      <div class="task"><input type="checkbox" id="t1_9"><label for="t1_9">חתימת הצעת מחיר <span class="sub">8,500 ₪ | תנאי תשלום: 50% מקדמה</span></label><span class="tag tag-red">חובה</span></div>
+    </div>
+  </div>
+
+  <!-- PHASE 2 -->
+  <div class="phase phase-2">
+    <div class="phase-header">
+      <span>🎨</span>
+      <h2>שלב 2 – עיצוב (8 שעות)</h2>
+      <span class="count" id="count-2"></span>
+    </div>
+    <div class="phase-body">
+      <div class="task"><input type="checkbox" id="t2_1"><label for="t2_1">Style guide ראשוני <span class="sub">פלטת צבעים, גופנים, גדלי כפתורים, סגנון כללי</span></label></div>
+      <div class="task"><input type="checkbox" id="t2_2"><label for="t2_2">עיצוב לוגו קורס <span class="sub">2–3 הצעות, מבוסס על צבעי הלקוחה</span></label></div>
+      <div class="task"><input type="checkbox" id="t2_3"><label for="t2_3">עיצוב דמות A.B (הרובוט) <span class="sub">placeholder עד אישור</span></label></div>
+      <div class="task"><input type="checkbox" id="t2_4"><label for="t2_4">עיצוב דמות המלך <span class="sub">בסגנון הקורס – חלל / מלכותי</span></label></div>
+      <div class="task"><input type="checkbox" id="t2_5"><label for="t2_5">עיצוב דמות המלכה</label></div>
+      <div class="task"><input type="checkbox" id="t2_6"><label for="t2_6">עיצוב דמות Silence <span class="sub">כהה, דרמטי, אבל מתפייס בסוף</span></label></div>
+      <div class="task"><input type="checkbox" id="t2_7"><label for="t2_7">עיצוב רקעים לכל משחק <span class="sub">5 רקעים: חללית, AEIOU, ארמון מלך, ארמון מלכה, Yes Planet</span></label></div>
+      <div class="task"><input type="checkbox" id="t2_8"><label for="t2_8">עיצוב responsive – 3 גדלים <span class="sub">מובייל (375px) | טאבלט (768px) | דסקטופ (1280px)</span></label><span class="tag tag-blue">חדש</span></div>
+      <div class="task"><input type="checkbox" id="t2_9"><label for="t2_9">אישור עיצוב מרעות – סבב 1 <span class="sub">שליחת mockups, המתנה לפידבק</span></label><span class="tag tag-red">בלוקר</span></div>
+      <div class="task"><input type="checkbox" id="t2_10"><label for="t2_10">תיקוני עיצוב אחרי סבב 1</label></div>
+      <div class="task"><input type="checkbox" id="t2_11"><label for="t2_11">אישור עיצוב סופי מרעות ✅ <span class="sub">קפאון עיצובי – לא לשנות אחרי זה ללא תוספת תמחור</span></label><span class="tag tag-red">חובה</span></div>
+    </div>
+  </div>
+
+  <!-- PHASE 3 -->
+  <div class="phase phase-3">
+    <div class="phase-header">
+      <span>⚙️</span>
+      <h2>שלב 3 – פיתוח (22 שעות)</h2>
+      <span class="count" id="count-3"></span>
+    </div>
+    <div class="phase-body">
+      <div class="task"><input type="checkbox" id="t3_1"><label for="t3_1">תשתית משותפת לכל המשחקים <span class="sub">Speech engine, completion code, responsive layout, design system</span></label></div>
+      <div class="task"><input type="checkbox" id="t3_2"><label for="t3_2">משחק 1 – פתיחה + ABC (6 שעות) <span class="sub">שם, ברכה, Vimeo embed, ABC validation, קוד סיום</span></label></div>
+      <div class="task"><input type="checkbox" id="t3_3"><label for="t3_3">משחק 2 – AEIOU (4 שעות) <span class="sub">5 כפתורי רובוט + אודיו + סיפור + check all clicked</span></label></div>
+      <div class="task"><input type="checkbox" id="t3_4"><label for="t3_4">משחק 3 – כוכב המלך (3 שעות) <span class="sub">8 משפטים + הקלטה + דיאלוג + קוד סיום</span></label></div>
+      <div class="task"><input type="checkbox" id="t3_5"><label for="t3_5">משחק 4 – עולם המלכה (3 שעות) <span class="sub">10 משפטים + הקלטה + אנימציית שחרור קורים</span></label></div>
+      <div class="task"><input type="checkbox" id="t3_6"><label for="t3_6">משחק 5 – YES World (3 שעות) <span class="sub">הקלטה + YES/NO validation + סיום קורס</span></label></div>
+      <div class="task"><input type="checkbox" id="t3_7"><label for="t3_7">Responsive – מובייל (375px) <span class="sub">כל 5 משחקים עובדים על iPhone</span></label><span class="tag tag-blue">חדש</span></div>
+      <div class="task"><input type="checkbox" id="t3_8"><label for="t3_8">Responsive – טאבלט (768px) <span class="sub">layout מותאם, אין overflow</span></label><span class="tag tag-blue">חדש</span></div>
+      <div class="task"><input type="checkbox" id="t3_9"><label for="t3_9">Responsive – דסקטופ (1280px) <span class="sub">centered layout, max-width, לא נמתח יותר מדי</span></label><span class="tag tag-blue">חדש</span></div>
+      <div class="task"><input type="checkbox" id="t3_10"><label for="t3_10">Deploy ל-Vercel + בדיקת URLs <span class="sub">game1.html עד game5.html נגישים</span></label></div>
+      <div class="task"><input type="checkbox" id="t3_11"><label for="t3_11">הטמעת iframe בסקולר <span class="sub">לבדוק שהמשחק נטען תקין + גודל מסך</span></label></div>
+      <div class="task"><input type="checkbox" id="t3_12"><label for="t3_12">בדיקת מנגנון סיסמה end-to-end <span class="sub">משחק מסתיים → קוד → בוחן סקולר → מעבר שיעור</span></label></div>
+    </div>
+  </div>
+
+  <!-- PHASE 4 -->
+  <div class="phase phase-4">
+    <div class="phase-header">
+      <span>🧪</span>
+      <h2>שלב 4 – QA ו-3 סבבי תיקונים (7.5 שעות)</h2>
+      <span class="count" id="count-4"></span>
+    </div>
+    <div class="phase-body">
+      <div class="task"><input type="checkbox" id="t4_1"><label for="t4_1">בדיקות פנימיות לפני סבב 1 <span class="sub">כל משחק מתחיל ומסתיים, Speech עובד, קוד מופיע</span></label></div>
+      <div class="task"><input type="checkbox" id="t4_2"><label for="t4_2">סבב תיקונים 1 – אחרי דמו ראשוני לרעות <span class="sub">עד 2.5 שעות תיקונים</span></label></div>
+      <div class="task"><input type="checkbox" id="t4_3"><label for="t4_3">בדיקת Speech API על ילדים (אם אפשר) <span class="sub">לוודא שזיהוי ABC עובד גם בקול ילד</span></label><span class="tag tag-yellow">סיכון</span></div>
+      <div class="task"><input type="checkbox" id="t4_4"><label for="t4_4">בדיקה על iPhone / Android <span class="sub">Safari iOS + Chrome Android</span></label></div>
+      <div class="task"><input type="checkbox" id="t4_5"><label for="t4_5">בדיקה על טאבלט (iPad)</label></div>
+      <div class="task"><input type="checkbox" id="t4_6"><label for="t4_6">סבב תיקונים 2 – אחרי משחקים מלאים <span class="sub">עד 2.5 שעות תיקונים</span></label></div>
+      <div class="task"><input type="checkbox" id="t4_7"><label for="t4_7">אישור ביניים מרעות – "כיוון נכון?" <span class="sub">לפני סבב תיקונים אחרון</span></label></div>
+      <div class="task"><input type="checkbox" id="t4_8"><label for="t4_8">סבב תיקונים 3 – לפני delivery <span class="sub">עד 2.5 שעות תיקונים. מה שלא נכנס – scope נוסף</span></label></div>
+    </div>
+  </div>
+
+  <!-- PHASE 5 -->
+  <div class="phase phase-5">
+    <div class="phase-header">
+      <span>🚀</span>
+      <h2>שלב 5 – Delivery ואישור סופי</h2>
+      <span class="count" id="count-5"></span>
+    </div>
+    <div class="phase-body">
+      <div class="task"><input type="checkbox" id="t5_1"><label for="t5_1">שליחת URLs סופיים לרעות <span class="sub">game1–game5 על Vercel. לא index.html הפנימי.</span></label></div>
+      <div class="task"><input type="checkbox" id="t5_2"><label for="t5_2">הדרכה קצרה לרעות – איך להטמיע בסקולר <span class="sub">הסבר iframe + בוחן סיסמה</span></label></div>
+      <div class="task"><input type="checkbox" id="t5_3"><label for="t5_3">אישור סופי בכתב מרעות ✅ <span class="sub">"קיבלתי, מאושר, תודה"</span></label><span class="tag tag-red">חובה</span></div>
+      <div class="task"><input type="checkbox" id="t5_4"><label for="t5_4">קבלת תשלום מלא <span class="sub">50% מקדמה + 50% בסיום</span></label><span class="tag tag-red">חובה</span></div>
+      <div class="task"><input type="checkbox" id="t5_5"><label for="t5_5">מסירת גישה ל-GitHub לרעות (אופציונלי) <span class="sub">רק אם היא ביקשה גישה לקוד</span></label></div>
+    </div>
+  </div>
+
+  <div class="note">
+    ⚠️ <strong>כלל ברזל:</strong> כל שינוי scope מעבר לתסריטים שאושרו (תוכן חדש, משחק נוסף, שינוי עיצוב אחרי אישור סופי) = הצעת מחיר נפרדת.
+  </div>
+
+</div>
+
+<script>
+function update() {
+  const all = document.querySelectorAll('input[type=checkbox]');
+  const checked = document.querySelectorAll('input[type=checkbox]:checked');
+  const pct = Math.round((checked.length / all.length) * 100);
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = `${checked.length} / ${all.length} משימות הושלמו (${pct}%)`;
+
+  [0,1,2,3,4,5].forEach(i => {
+    const phase = document.querySelector(`.phase-${i}`);
+    if (!phase) return;
+    const total = phase.querySelectorAll('input[type=checkbox]').length;
+    const done = phase.querySelectorAll('input[type=checkbox]:checked').length;
+    const el = document.getElementById(`count-${i}`);
+    if (el) el.textContent = `${done}/${total}`;
+  });
+
+  // Save state
+  const state = {};
+  all.forEach(cb => state[cb.id] = cb.checked);
+  localStorage.setItem('tasks_reut', JSON.stringify(state));
+}
+
+// Load saved state
+const saved = JSON.parse(localStorage.getItem('tasks_reut') || '{}');
+document.querySelectorAll('input[type=checkbox]').forEach(cb => {
+  if (saved[cb.id]) cb.checked = true;
+  cb.addEventListener('change', update);
+});
+update();
+</script>
+</body>
+</html>
