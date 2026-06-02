@@ -216,36 +216,79 @@ body { font-family: 'Segoe UI', Arial, sans-serif; background: #f8fafc; color: #
 
 </div>
 
+<div id="shareBar" style="position:sticky;bottom:0;background:#1e1b4b;border-top:1px solid rgba(255,255,255,.1);padding:.7rem 1rem;display:flex;align-items:center;gap:.8rem;z-index:100">
+  <span style="font-size:.85rem;color:rgba(255,255,255,.7);flex:1" id="shareHint">✅ סמני משימות → ה-URL מתעדכן אוטומטית → שלחי לבלהה</span>
+  <button onclick="copyLink()" style="background:#6366f1;color:white;border:none;border-radius:20px;padding:.4rem 1rem;font-size:.8rem;cursor:pointer;font-weight:600">📋 העתק קישור לשיתוף</button>
+  <span id="copyDone" style="font-size:.8rem;color:#6ee7b7;display:none">✓ הועתק!</span>
+</div>
+
 <script>
-function update() {
+const STORAGE_KEY = 'tasks_reut';
+
+function getCheckedIds() {
+  return Array.from(document.querySelectorAll('input[type=checkbox]:checked')).map(cb => cb.id);
+}
+
+function saveState() {
+  const ids = getCheckedIds();
+  // Save to localStorage
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(ids));
+  // Update URL hash (for sharing)
+  const hash = ids.length ? '#' + ids.join(',') : '#';
+  history.replaceState(null, '', hash);
+}
+
+function loadState() {
+  // Priority: URL hash → localStorage
+  const hash = location.hash.replace('#','');
+  if (hash && hash.length > 2) {
+    const ids = hash.split(',');
+    ids.forEach(id => {
+      const cb = document.getElementById(id);
+      if (cb) cb.checked = true;
+    });
+  } else {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    saved.forEach(id => {
+      const cb = document.getElementById(id);
+      if (cb) cb.checked = true;
+    });
+  }
+}
+
+function updateUI() {
   const all = document.querySelectorAll('input[type=checkbox]');
   const checked = document.querySelectorAll('input[type=checkbox]:checked');
   const pct = Math.round((checked.length / all.length) * 100);
   document.getElementById('progressBar').style.width = pct + '%';
-  document.getElementById('progressLabel').textContent = `${checked.length} / ${all.length} משימות הושלמו (${pct}%)`;
+  document.getElementById('progressLabel').textContent =
+    `${checked.length} / ${all.length} משימות הושלמו (${pct}%)`;
 
   [0,1,2,3,4,5].forEach(i => {
     const phase = document.querySelector(`.phase-${i}`);
     if (!phase) return;
     const total = phase.querySelectorAll('input[type=checkbox]').length;
-    const done = phase.querySelectorAll('input[type=checkbox]:checked').length;
+    const done  = phase.querySelectorAll('input[type=checkbox]:checked').length;
     const el = document.getElementById(`count-${i}`);
     if (el) el.textContent = `${done}/${total}`;
   });
-
-  // Save state
-  const state = {};
-  all.forEach(cb => state[cb.id] = cb.checked);
-  localStorage.setItem('tasks_reut', JSON.stringify(state));
 }
 
-// Load saved state
-const saved = JSON.parse(localStorage.getItem('tasks_reut') || '{}');
+function copyLink() {
+  navigator.clipboard.writeText(location.href).then(() => {
+    const done = document.getElementById('copyDone');
+    done.style.display = 'inline';
+    setTimeout(() => done.style.display = 'none', 2000);
+  });
+}
+
+// Init
+loadState();
+updateUI();
+
 document.querySelectorAll('input[type=checkbox]').forEach(cb => {
-  if (saved[cb.id]) cb.checked = true;
-  cb.addEventListener('change', update);
+  cb.addEventListener('change', () => { saveState(); updateUI(); });
 });
-update();
 </script>
 </body>
 </html>
