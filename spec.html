@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>אפיון | קורס אנגלית – רעות זהבי</title>
+<style>
+:root {
+  --primary: #1e1b4b;
+  --accent: #6366f1;
+  --g1: #3b82f6; --g2: #8b5cf6; --g3: #f59e0b; --g4: #ec4899; --g5: #10b981;
+  --bg: #f8fafc; --card: #fff; --border: #e2e8f0; --text: #1e293b; --muted: #64748b;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; }
+
+/* Header */
+.header {
+  background: linear-gradient(135deg, #0a0a2e 0%, #1e1b4b 60%, #312e81 100%);
+  color: #fff; padding: 3rem 2rem; text-align: center;
+}
+.header h1 { font-size: 2.4rem; margin-bottom: .5rem; }
+.header .subtitle { font-size: 1.1rem; opacity: .8; margin-bottom: 1.5rem; }
+.header .stars { font-size: 2rem; letter-spacing: 8px; margin-bottom: 1rem; }
+.meta-grid { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.meta-grid span {
+  background: rgba(255,255,255,.15); padding: .3rem 1rem;
+  border-radius: 20px; font-size: .9rem; border: 1px solid rgba(255,255,255,.2);
+}
+
+/* Layout */
+.container { max-width: 960px; margin: 0 auto; padding: 2rem; }
+.toc {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 1.5rem 2rem; margin: 2rem 0;
+}
+.toc h2 { margin-bottom: 1rem; color: var(--primary); }
+.toc ol { padding-right: 1.5rem; }
+.toc li { padding: .2rem 0; }
+.toc a { color: var(--accent); text-decoration: none; }
+.toc a:hover { text-decoration: underline; }
+
+/* Sections */
+.section { margin: 2.5rem 0; }
+.section-header {
+  display: flex; align-items: center; gap: .8rem;
+  border-bottom: 3px solid; padding-bottom: .6rem; margin-bottom: 1.5rem;
+}
+.section-header h2 { font-size: 1.5rem; }
+.section-header .num {
+  width: 36px; height: 36px; border-radius: 50%; display: flex;
+  align-items: center; justify-content: center; color: #fff;
+  font-weight: 700; font-size: .95rem; flex-shrink: 0;
+}
+
+/* Cards */
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin: 1rem 0; }
+.card h3 { margin-bottom: .8rem; color: var(--primary); }
+.card p, .card li { color: #374151; }
+.card ul, .card ol { padding-right: 1.5rem; }
+.card ul li, .card ol li { padding: .2rem 0; }
+
+/* 2-col grid */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+@media(max-width: 680px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
+
+/* Tags */
+.tag { display: inline-block; padding: .2rem .7rem; border-radius: 12px; font-size: .8rem; font-weight: 600; margin: .1rem; }
+.tag-blue { background: #dbeafe; color: #1e40af; }
+.tag-purple { background: #ede9fe; color: #6d28d9; }
+.tag-green { background: #d1fae5; color: #065f46; }
+.tag-yellow { background: #fef3c7; color: #92400e; }
+.tag-red { background: #fee2e2; color: #991b1b; }
+.tag-pink { background: #fce7f3; color: #9d174d; }
+
+/* Architecture diagram */
+.arch {
+  background: #0f172a; color: #e2e8f0; border-radius: 12px;
+  padding: 1.5rem; font-family: monospace; font-size: .9rem; line-height: 2;
+  overflow-x: auto;
+}
+.arch .green { color: #4ade80; }
+.arch .blue { color: #60a5fa; }
+.arch .yellow { color: #fbbf24; }
+.arch .purple { color: #a78bfa; }
+
+/* Wireframe phone */
+.screens-row {
+  display: flex; gap: 1rem; overflow-x: auto;
+  padding-bottom: 1rem; margin: 1rem 0;
+}
+.phone-wrap { flex-shrink: 0; text-align: center; }
+.phone-label { font-size: .75rem; color: var(--muted); margin-bottom: .4rem; font-weight: 600; }
+.phone {
+  width: 200px; border: 2px solid #334155; border-radius: 24px;
+  background: #f1f5f9; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,.12);
+}
+.phone-bar { height: 20px; background: #334155; border-radius: 22px 22px 0 0; }
+.phone-body { padding: .6rem; display: flex; flex-direction: column; gap: .4rem; min-height: 340px; }
+.wf-bg { background: #0a0a2e; border-radius: 8px; flex: 1; padding: .5rem; display: flex; flex-direction: column; gap: .3rem; align-items: center; justify-content: center; }
+.wf-char { background: rgba(255,255,255,.15); border: 1px dashed rgba(255,255,255,.4); border-radius: 8px; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; }
+.wf-bubble { background: rgba(255,255,255,.9); color: #1e293b; border-radius: 8px; padding: .3rem .5rem; font-size: .7rem; text-align: center; max-width: 100%; }
+.wf-btn { border-radius: 20px; padding: .25rem .6rem; font-size: .7rem; font-weight: 700; color: #fff; text-align: center; border: none; cursor: default; }
+.wf-mic { background: #ef4444; }
+.wf-play { background: #3b82f6; }
+.wf-next { background: #10b981; }
+.wf-choice { background: #6366f1; }
+.wf-divider { height: 1px; background: rgba(255,255,255,.2); width: 90%; }
+.wf-input { background: rgba(255,255,255,.85); border-radius: 6px; padding: .25rem .5rem; font-size: .7rem; color: #374151; text-align: center; width: 90%; }
+.wf-title { color: rgba(255,255,255,.9); font-size: .75rem; font-weight: 700; text-align: center; }
+.wf-sub { color: rgba(255,255,255,.65); font-size: .65rem; text-align: center; }
+.wf-video { background: #000; border-radius: 6px; width: 100%; height: 55px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; }
+.wf-row { display: flex; gap: .25rem; justify-content: center; width: 100%; }
+
+/* Game header */
+.game-header {
+  border-radius: 12px; padding: 1.2rem 1.5rem; color: #fff;
+  display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;
+}
+.game-icon { font-size: 2.5rem; }
+.game-meta { flex: 1; }
+.game-meta h3 { font-size: 1.3rem; margin-bottom: .2rem; }
+.game-meta p { font-size: .9rem; opacity: .85; }
+
+/* Flow arrows */
+.flow { display: flex; align-items: center; gap: .3rem; flex-wrap: wrap; margin: .5rem 0; font-size: .85rem; }
+.flow-step { background: #ede9fe; color: #5b21b6; border-radius: 8px; padding: .2rem .6rem; font-weight: 600; }
+.flow-arrow { color: #94a3b8; font-weight: 700; }
+
+/* Risk / note boxes */
+.note { border-left: 4px solid; padding: .8rem 1rem; border-radius: 0 8px 8px 0; margin: .5rem 0; font-size: .9rem; }
+.note-blue { border-color: #3b82f6; background: #eff6ff; }
+.note-yellow { border-color: #f59e0b; background: #fffbeb; }
+.note-red { border-color: #ef4444; background: #fef2f2; }
+.note-green { border-color: #10b981; background: #f0fdf4; }
+
+/* Table */
+table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .9rem; }
+th { background: #f1f5f9; padding: .6rem 1rem; text-align: right; border-bottom: 2px solid var(--border); }
+td { padding: .6rem 1rem; border-bottom: 1px solid var(--border); }
+tr:hover td { background: #f8fafc; }
+
+/* Timeline */
+.timeline { position: relative; padding-right: 2rem; }
+.timeline::before { content: ''; position: absolute; right: 8px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+.tl-item { position: relative; margin-bottom: 1.5rem; }
+.tl-dot { position: absolute; right: -2rem; top: .3rem; width: 18px; height: 18px; border-radius: 50%; background: var(--accent); border: 3px solid #fff; box-shadow: 0 0 0 2px var(--accent); }
+.tl-content { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; }
+.tl-content strong { display: block; margin-bottom: .3rem; }
+
+/* Schooler integration */
+.integration-box {
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+  color: white; border-radius: 12px; padding: 1.5rem;
+}
+.integration-box h3 { color: #a5b4fc; margin-bottom: 1rem; }
+.integration-step { display: flex; align-items: flex-start; gap: .8rem; margin: .8rem 0; }
+.step-num { background: var(--accent); color: white; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .85rem; flex-shrink: 0; margin-top: .1rem; }
+.integration-step p { font-size: .9rem; color: #cbd5e1; }
+.integration-step strong { color: #e2e8f0; }
+
+/* Print */
+@media print {
+  .header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .card, .game-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
+/* Footer */
+.footer { background: #1e293b; color: #94a3b8; text-align: center; padding: 1.5rem; margin-top: 3rem; font-size: .9rem; }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="header">
+  <div class="stars">⭐ 🚀 🌟</div>
+  <h1>אפיון טכני – קורס אנגלית</h1>
+  <div class="subtitle">פיתוח משחקים אינטראקטיביים עם קלט קולי</div>
+  <div class="meta-grid" style="margin-top:1.5rem">
+    <span>👤 לקוחה: רעות זהבי</span>
+    <span>📅 תאריך יעד: 10.07.2026</span>
+    <span>💰 תקציב: 8,500 ₪ | 200 ₪/שעה | 42.5 שעות</span>
+    <span>📋 מסמך: גרסה 1.0</span>
+    <span>✍️ הכין: שירת גולדשטיין</span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ===== TOC ===== -->
+<div class="toc">
+  <h2>📋 תוכן עניינים</h2>
+  <ol>
+    <li><a href="#overview">סקירת הפרויקט</a></li>
+    <li><a href="#arch">ארכיטקטורה טכנית</a></li>
+    <li><a href="#schooler">אינטגרציה עם Schooler</a></li>
+    <li><a href="#speech">טכנולוגיית זיהוי קול</a></li>
+    <li><a href="#g1">משחק 1 – פתיחה + ABC</a></li>
+    <li><a href="#g2">משחק 2 – כפתורי AEIOU</a></li>
+    <li><a href="#g3">משחק 3 – כוכב המלך</a></li>
+    <li><a href="#g4">משחק 4 – עולם המלכה</a></li>
+    <li><a href="#g5">משחק 5 – עולם YES (Silence)</a></li>
+    <li><a href="#design">הנחיות עיצוב</a></li>
+    <li><a href="#questions">שאלות פתוחות</a></li>
+    <li><a href="#timeline">לוח זמנים ותמחור</a></li>
+  </ol>
+</div>
+
+<!-- ===== SECTION 1: OVERVIEW ===== -->
+<div class="section" id="overview">
+  <div class="section-header" style="border-color:#6366f1">
+    <div class="num" style="background:#6366f1">1</div>
+    <h2>סקירת הפרויקט</h2>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>🎯 מטרת הקורס</h3>
+      <p>לימוד אנגלית לילדים דרך גיימיפיקציה מלאה – כל שיעור הוא משחק אינטראקטיבי עצמאי. הקורס מספר סיפור של הרפתקה בחלל, ובכל שיעור הילדים מתקדמים בסיפור ולומדים אנגלית בדרך.</p>
+    </div>
+    <div class="card">
+      <h3>👦 קהל יעד</h3>
+      <p>יסודי עד חטיבה (גילאי 7–14). הממשק מותאם לילדים עם מובייל, כפתורים גדולים, ואינטואיטיביות מקסימלית.</p>
+    </div>
+    <div class="card">
+      <h3>🔧 טכנולוגיה נבחרת</h3>
+      <ul>
+        <li>HTML5 + CSS3 + JavaScript (Vanilla)</li>
+        <li>Web Speech API לזיהוי קול</li>
+        <li>Vimeo embed לסרטוני ABC</li>
+        <li>Vercel לאחסון</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🏫 מערכת הקורס</h3>
+      <p>Schooler (סקולר) – מערכת ישראלית לקורסים. כל משחק הוא שיעור עצמאי שמוטמע ב-iframe. המעבר בין שיעורים נשלט דרך מנגנון סיסמה.</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:1rem">
+    <h3>🗺️ מפת הקורס – 5 משחקים</h3>
+    <div style="display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.8rem; align-items:center">
+      <div class="tag tag-blue">🚀 משחק 1<br>פתיחה + ABC</div>
+      <span style="font-size:1.5rem; color:#94a3b8">→</span>
+      <div class="tag tag-purple">🔵 משחק 2<br>AEIOU</div>
+      <span style="font-size:1.5rem; color:#94a3b8">→</span>
+      <div class="tag tag-yellow">👑 משחק 3<br>כוכב המלך</div>
+      <span style="font-size:1.5rem; color:#94a3b8">→</span>
+      <div class="tag tag-pink">👸 משחק 4<br>עולם המלכה</div>
+      <span style="font-size:1.5rem; color:#94a3b8">→</span>
+      <div class="tag tag-green">🌟 משחק 5<br>YES World</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 2: ARCHITECTURE ===== -->
+<div class="section" id="arch">
+  <div class="section-header" style="border-color:#3b82f6">
+    <div class="num" style="background:#3b82f6">2</div>
+    <h2>ארכיטקטורה טכנית</h2>
+  </div>
+
+  <div class="arch">
+<span class="green">[ Schooler LMS ]</span>
+   └── שיעור 1: iframe  ──→  <span class="blue">game1.vercel.app</span>  (פתיחה + ABC)
+   └── שיעור 2: iframe  ──→  <span class="blue">game2.vercel.app</span>  (AEIOU)
+   └── שיעור 3: iframe  ──→  <span class="blue">game3.vercel.app</span>  (כוכב המלך)
+   └── שיעור 4: iframe  ──→  <span class="blue">game4.vercel.app</span>  (עולם המלכה)
+   └── שיעור 5: iframe  ──→  <span class="blue">game5.vercel.app</span>  (YES World)
+
+<span class="yellow">כל משחק:</span>
+   HTML5 + JS  ──→  <span class="purple">Web Speech API</span>  (מיקרופון)
+                ──→  <span class="purple">Vimeo Embed</span>   (סרטוני ABC)
+                ──→  <span class="green">✓ Completion Code</span>  (סיסמה לשיעור הבא)
+  </div>
+
+  <div class="note note-blue" style="margin-top:1rem">
+    <strong>📝 כל משחק = קובץ HTML עצמאי</strong> – הועלה ל-Vercel. לא תלוי בוורדפרס. לא צריך backend. כל הלוגיקה היא client-side בלבד.
+  </div>
+</div>
+
+<!-- ===== SECTION 3: SCHOOLER ===== -->
+<div class="section" id="schooler">
+  <div class="section-header" style="border-color:#10b981">
+    <div class="num" style="background:#10b981">3</div>
+    <h2>אינטגרציה עם Schooler</h2>
+  </div>
+
+  <div class="integration-box">
+    <h3>🔐 מנגנון הסיסמה – איך זה עובד?</h3>
+    <div class="integration-step">
+      <div class="step-num">1</div>
+      <p>הילד <strong>מסיים משחק</strong> – המשחק מציג <strong>קוד סיום</strong> (לדוג׳: <code style="background:#334155;padding:.1rem .4rem;border-radius:4px">KING-2024</code>)</p>
+    </div>
+    <div class="integration-step">
+      <div class="step-num">2</div>
+      <p>ב-Schooler, אחרי המשחק יש <strong>בוחן קצר</strong> עם שאלה: "מה הקוד שקיבלת?" – הילד מכניס את הקוד</p>
+    </div>
+    <div class="integration-step">
+      <div class="step-num">3</div>
+      <p>אם הקוד נכון → Schooler מאפשרת <strong>מעבר לשיעור הבא</strong> אוטומטית</p>
+    </div>
+    <div class="integration-step">
+      <div class="step-num">4</div>
+      <p>הסיסמה לכניסה למשחק הבא = הקוד שהתקבל. <strong>מניעת דילוג</strong> על שיעורים.</p>
+    </div>
+  </div>
+
+  <div class="note note-yellow" style="margin-top:1rem">
+    <strong>⚠️ מגבלה ידועה של Schooler:</strong> המערכת לא תומכת ב-SCORM/xAPI. לכן לא ניתן לדווח על completion אוטומטית. מנגנון הסיסמה הוא הפתרון המעשי הטוב ביותר.
+  </div>
+
+  <div class="note note-green">
+    <strong>💡 אופציה עתידית:</strong> אפשר לשלוח <code>window.parent.postMessage({status:"completed"})</code> מהמשחק – אם Schooler תומכת בו, זה יאפשר completion אוטומטי ללא בוחן. לבדוק עם תמיכה של Schooler.
+  </div>
+</div>
+
+<!-- ===== SECTION 4: SPEECH ===== -->
+<div class="section" id="speech">
+  <div class="section-header" style="border-color:#8b5cf6">
+    <div class="num" style="background:#8b5cf6">4</div>
+    <h2>טכנולוגיית זיהוי קול</h2>
+  </div>
+
+  <div class="grid2">
+    <div class="card" style="border: 2px solid #10b981">
+      <h3>✅ המלצה: Web Speech API</h3>
+      <ul>
+        <li>בנוי בתוך Chrome ו-Edge – <strong>ללא עלות</strong></li>
+        <li>אין צורך ב-API key</li>
+        <li>תמיכה ב-iOS Safari (מ-v14.5+)</li>
+        <li>מספיק מדויק לצורך הקורס</li>
+        <li>המשחק עובד ב-HTTPS (Vercel)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🔄 Speechly – אופציה חלופית</h3>
+      <ul>
+        <li>מדויק יותר לפקודות קוליות</li>
+        <li>יש Free Tier (מוגבל)</li>
+        <li>מצריך API Key ורישום</li>
+        <li>מומלץ אם Web Speech API לא מספיק</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:1rem">
+    <h3>🎤 סוגי קלט קולי בפרויקט</h3>
+    <table>
+      <tr>
+        <th>סוג קלט</th><th>שימוש</th><th>ולידציה</th><th>משחק</th>
+      </tr>
+      <tr>
+        <td>שם הילד</td><td>ברכה אישית "Hello [שם]"</td><td>כל טקסט תקין</td><td>משחק 1</td>
+      </tr>
+      <tr>
+        <td>שיר ABC</td><td>הילד שר את האותיות</td><td>בדיקה שנאמרו מרבית האותיות</td><td>משחק 1</td>
+      </tr>
+      <tr>
+        <td>קריאת משפטים</td><td>הילד קורא משפטים בקול</td><td>ללא ולידציה (הקלטה בלבד)</td><td>3, 4, 5</td>
+      </tr>
+      <tr>
+        <td>YES / NO</td><td>תשובות לשאלות</td><td>בדיקת מילה בודדת</td><td>משחק 5</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="note note-red">
+    <strong>⚠️ אזהרה:</strong> Web Speech API עובד רק ב-HTTPS ורק ב-Chrome/Edge בדסקטופ. ב-iOS Safari יש תמיכה חלקית. לוודא שהלקוחה ותלמידיה עובדים בדפדפן תואם.
+  </div>
+</div>
+
+<!-- ===== GAME 1 ===== -->
+<div class="section" id="g1">
+  <div class="section-header" style="border-color:var(--g1)">
+    <div class="num" style="background:var(--g1)">5</div>
+    <h2>משחק 1 – פתיחה + ABC</h2>
+  </div>
+
+  <div class="game-header" style="background:linear-gradient(135deg,#1e3a8a,#3b82f6)">
+    <div class="game-icon">🚀</div>
+    <div class="game-meta">
+      <h3>כניסה לחללית – מי אתה?</h3>
+      <p>משך: ~3 דק׳ | מיקום: שיעור ראשון | נושא: היכרות + שיר ABC</p>
+    </div>
+    <div>
+      <div class="tag tag-blue">הקלטה: שם</div>
+      <div class="tag tag-blue">הקלטה: ABC</div>
+      <div class="tag tag-blue">וידאו Vimeo</div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>🎯 מה הילד לומד?</h3>
+      <ul>
+        <li>לשיר את ה-ABC מ-A עד Z</li>
+        <li>היכרות עם ממשק הקלט הקולי</li>
+        <li>כניסה לעולם הסיפור (חללית)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>📋 דרישות תוכן מהלקוחה</h3>
+      <ul>
+        <li>סרטון ABC מלא (Vimeo) – לכל האותיות</li>
+        <li>סרטון ABC חלק 1 (A–M)</li>
+        <li>סרטון ABC חלק 2 (N–Z)</li>
+        <li>אפשרות: קובץ שמע בנוסף לסרטון</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:1rem">
+    <h3>🔄 זרימת המסכים</h3>
+    <div class="flow">
+      <div class="flow-step">מסך 1<br>שם</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">מסך 2<br>ברכה</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">מסך 3<br>שמע ABC</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">מסך 4<br>אמור ABC</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">מסך 5<br>הצלחה + קוד</div>
+    </div>
+    <p style="font-size:.85rem; color:var(--muted); margin-top:.5rem">* מסכים 3-4 מחולקים ל-3 גרסאות: ABC מלא / A–M / N–Z (ילד בוחר)</p>
+  </div>
+
+  <!-- Wireframes -->
+  <div class="card" style="margin-top:1rem">
+    <h3>📱 Wireframes</h3>
+    <div class="screens-row">
+
+      <div class="phone-wrap">
+        <div class="phone-label">מסך 1: מה שמך?</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body">
+          <div class="wf-bg">
+            <div class="wf-title">🚀 משימה סודית</div>
+            <div class="wf-char">🤖</div>
+            <div class="wf-bubble">רגע! לא אמרתם לי מה השם שלכם!</div>
+            <div class="wf-divider"></div>
+            <div class="wf-sub">לחצו ואמרו את שמכם:</div>
+            <div class="wf-btn wf-mic">🎤 אמור שם</div>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone-label">מסך 2: ברכה + LET'S GO</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body">
+          <div class="wf-bg">
+            <div class="wf-char">🤖</div>
+            <div class="wf-bubble">שלום [שם]! ברוכים הבאים למשימה!</div>
+            <div class="wf-divider"></div>
+            <div class="wf-bubble">מוכנים להרפתקה?</div>
+            <div class="wf-btn wf-next">LET'S GO! 🚀</div>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone-label">מסך 3: שמע ABC</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body">
+          <div class="wf-bg">
+            <div class="wf-title">📻 מסר נכנס מהחלל!</div>
+            <div class="wf-video">▶</div>
+            <div class="wf-sub">סרטון ABC (Vimeo)</div>
+            <div class="wf-divider"></div>
+            <div class="wf-sub">בחר גרסה:</div>
+            <div class="wf-row">
+              <div class="wf-btn wf-play" style="font-size:.55rem">A–Z מלא</div>
+              <div class="wf-btn wf-choice" style="font-size:.55rem">A–M</div>
+              <div class="wf-btn wf-choice" style="font-size:.55rem">N–Z</div>
+            </div>
+            <div class="wf-btn wf-next" style="margin-top:.3rem">קדימה ←</div>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone-label">מסך 4: אמור ABC</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body">
+          <div class="wf-bg">
+            <div class="wf-char">🚀</div>
+            <div class="wf-bubble">לחצו על הכפתור ואמרו את ה-ABC!</div>
+            <div class="wf-sub" style="color:#fbbf24">⚠️ Silence שומע – אל תשתקו!</div>
+            <div class="wf-divider"></div>
+            <div class="wf-btn wf-mic">🎤 אמור ABC</div>
+            <div class="wf-sub">א"ב ג"ד... (A B C D...)</div>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone-label">מסך 5: הצלחה + קוד</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body">
+          <div class="wf-bg">
+            <div class="wf-title" style="color:#4ade80;font-size:1rem">🎉 כל הכבוד!</div>
+            <div class="wf-char" style="font-size:2.5rem">🚀</div>
+            <div class="wf-bubble">החללית נפתחה! המסע מתחיל!</div>
+            <div class="wf-divider"></div>
+            <div class="wf-input">קוד כניסה לשיעור הבא:<br><strong>AEIOU-01</strong></div>
+            <div class="wf-sub">כתבו את הקוד ✍️</div>
+          </div>
+        </div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="note note-yellow">
+    <strong>⚠️ ולידציה ABC:</strong> כשהילד אומר ABC, המשחק בודק שהמילים A, B, C ו-Z נאמרו (לא חייב מושלם). אם רוב האותיות נשמעות – עובר. אם לא – הודעת עידוד ונסיון נוסף.
+  </div>
+</div>
+
+<!-- ===== GAME 2 ===== -->
+<div class="section" id="g2">
+  <div class="section-header" style="border-color:var(--g2)">
+    <div class="num" style="background:var(--g2)">6</div>
+    <h2>משחק 2 – כפתורי AEIOU</h2>
+  </div>
+
+  <div class="game-header" style="background:linear-gradient(135deg,#4c1d95,#8b5cf6)">
+    <div class="game-icon">🔵</div>
+    <div class="game-meta">
+      <h3>5 הרובוטים – צלילי התנועות</h3>
+      <p>משך: ~7 דק׳ | נושא: היכרות עם AEIOU | סגנון: אינטראקטיבי + הסבר</p>
+    </div>
+    <div>
+      <div class="tag tag-purple">לחיצה × 5</div>
+      <div class="tag tag-purple">ללא הקלטה</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🔄 זרימת המסכים</h3>
+    <div class="flow">
+      <div class="flow-step">מסך 1<br>פתיחה</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">מסך 2<br>5 כפתורי AEIOU</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">מסך 3<br>הסבר AB</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">מסך 4<br>הפרעת Silence</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">מסך 5<br>סיום + קוד</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:1rem">
+    <h3>📱 Wireframes</h3>
+    <div class="screens-row">
+
+      <div class="phone-wrap">
+        <div class="phone-label">מסך 2: 5 כפתורים</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body">
+          <div class="wf-bg">
+            <div class="wf-title">לחץ על כל כפתור-רובוט:</div>
+            <div class="wf-row" style="flex-wrap:wrap; gap:.3rem; justify-content:center">
+              <div class="wf-btn wf-choice" style="width:48px;height:48px;border-radius:50%;font-size:.9rem">A</div>
+              <div class="wf-btn wf-choice" style="width:48px;height:48px;border-radius:50%;font-size:.9rem">E</div>
+              <div class="wf-btn wf-choice" style="width:48px;height:48px;border-radius:50%;font-size:.9rem">I</div>
+              <div class="wf-btn wf-choice" style="width:48px;height:48px;border-radius:50%;font-size:.9rem">O</div>
+              <div class="wf-btn wf-choice" style="width:48px;height:48px;border-radius:50%;font-size:.9rem">U</div>
+            </div>
+            <div class="wf-bubble">לחץ כדי לשמוע את הצליל!</div>
+            <div class="wf-input">0 / 5 נלחצו ✓</div>
+            <div class="wf-btn wf-next" style="opacity:.4">המשך (לאחר 5 לחיצות)</div>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone-label">מסך 3: הסבר</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body">
+          <div class="wf-bg">
+            <div class="wf-char">🤖</div>
+            <div class="wf-bubble">AB מסביר על צלילי AEIOU</div>
+            <div class="wf-divider"></div>
+            <div class="wf-sub">תוכן וידאו / טקסט הסבר</div>
+            <div class="wf-video">▶ הסבר AB</div>
+            <div class="wf-btn wf-next">המשך ←</div>
+          </div>
+        </div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="note note-blue">
+    <strong>📝 תוכן נדרש מהלקוחה:</strong> לכל אות AEIOU – מה הרובוט אומר (הצליל + הסיפור על ה"תקלה"). טקסט הסבר של Capt. IL. רעות צריכה לספק את הסקריפט המלא לסעיף זה.
+  </div>
+</div>
+
+<!-- ===== GAME 3 ===== -->
+<div class="section" id="g3">
+  <div class="section-header" style="border-color:var(--g3)">
+    <div class="num" style="background:var(--g3)">7</div>
+    <h2>משחק 3 – כוכב המלך (King's Planet)</h2>
+  </div>
+
+  <div class="game-header" style="background:linear-gradient(135deg,#78350f,#f59e0b)">
+    <div class="game-icon">👑</div>
+    <div class="game-meta">
+      <h3>שיחה עם המלך – מילות נימוסים</h3>
+      <p>משך: ~10 דק׳ | שיעור 018 | נושא: מתחילים לדבר</p>
+    </div>
+    <div>
+      <div class="tag tag-yellow">8 משפטים</div>
+      <div class="tag tag-yellow">הקלטה</div>
+      <div class="tag tag-yellow">דיאלוג</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📝 המשפטים להקלטה (שיחת הקלט)</h3>
+    <table>
+      <tr><th>#</th><th>משפט</th><th>זמן הצגה</th><th>זמן הקלטה</th></tr>
+      <tr><td>1</td><td>Hello.</td><td>30 שנ׳</td><td>20 שנ׳</td></tr>
+      <tr><td>2</td><td>How are you?</td><td>30 שנ׳</td><td>20 שנ׳</td></tr>
+      <tr><td>3</td><td>My name is ______.</td><td>30 שנ׳</td><td>25 שנ׳</td></tr>
+      <tr><td>4</td><td>What is your name?</td><td>30 שנ׳</td><td>25 שנ׳</td></tr>
+      <tr><td>5</td><td>Nice to meet you.</td><td>30 שנ׳</td><td>20 שנ׳</td></tr>
+      <tr><td>6</td><td>Please help us.</td><td>30 שנ׳</td><td>20 שנ׳</td></tr>
+      <tr><td>7</td><td>Thank you.</td><td>30 שנ׳</td><td>20 שנ׳</td></tr>
+      <tr><td>8</td><td>Goodbye.</td><td>30 שנ׳</td><td>20 שנ׳</td></tr>
+    </table>
+    <p style="font-size:.85rem; color:var(--muted)">* הילד רואה את המשפט, מתכונן, לוחץ 🎤 ואומר אותו. ללא ולידציה אוטומטית – כל הקלטה מתקבלת.</p>
+  </div>
+
+  <div class="card" style="margin-top:1rem">
+    <h3>🔄 זרימת המסכים</h3>
+    <div class="flow">
+      <div class="flow-step">נחיתה<br>בכוכב</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">פגישה<br>עם המלך</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">משפט<br>מוצג</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">הקלטה<br>(× 8)</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">הסבר<br>המלך</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">משימה:<br>מתנה למלכה</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">המראה<br>+ קוד</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:1rem">
+    <h3>📱 Wireframes</h3>
+    <div class="screens-row">
+
+      <div class="phone-wrap">
+        <div class="phone-label">מסך: פגישה עם המלך</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body">
+          <div class="wf-bg">
+            <div class="wf-char">👑</div>
+            <div class="wf-bubble">Hello! Who are you?</div>
+            <div class="wf-divider"></div>
+            <div class="wf-char" style="width:40px;height:40px;font-size:1.2rem">🤖</div>
+            <div class="wf-bubble">We need help. We are stuck in a web.</div>
+            <div class="wf-btn wf-next">המשך →</div>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone-label">מסך: הקלטת משפט</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body">
+          <div class="wf-bg">
+            <div class="wf-sub">משפט 3 מתוך 8</div>
+            <div class="wf-input" style="font-size:.9rem;font-weight:700;padding:.5rem">My name is ______.</div>
+            <div class="wf-sub">קרא את המשפט, ואז הקלט:</div>
+            <div class="wf-btn wf-mic">🎤 הקלט</div>
+            <div class="wf-row">
+              <div class="wf-btn" style="background:#374151;font-size:.65rem">◀ קודם</div>
+              <div class="wf-btn wf-next" style="font-size:.65rem">הבא ▶</div>
+            </div>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone-label">מסך: המשחק הסתיים</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body">
+          <div class="wf-bg">
+            <div class="wf-title" style="color:#fbbf24">👑 Very good!</div>
+            <div class="wf-bubble">You speak very politely!</div>
+            <div class="wf-bubble">Go find a gift for the Queen!</div>
+            <div class="wf-divider"></div>
+            <div class="wf-input">קוד לשיעור הבא:<br><strong>QUEEN-02</strong></div>
+          </div>
+        </div></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===== GAME 4 ===== -->
+<div class="section" id="g4">
+  <div class="section-header" style="border-color:var(--g4)">
+    <div class="num" style="background:var(--g4)">8</div>
+    <h2>משחק 4 – עולם המלכה (Queen's World)</h2>
+  </div>
+
+  <div class="game-header" style="background:linear-gradient(135deg,#831843,#ec4899)">
+    <div class="game-icon">👸</div>
+    <div class="game-meta">
+      <h3>שיחה עם המלכה – חיזוק ניקוד</h3>
+      <p>משך: ~10 דק׳ | שיעור 020 | נושא: מפגש עם המלכה</p>
+    </div>
+    <div>
+      <div class="tag tag-pink">10 משפטים</div>
+      <div class="tag tag-pink">הקלטה</div>
+      <div class="tag tag-pink">שחרור מקורי עכביש</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📝 המשפטים להקלטה</h3>
+    <table>
+      <tr><th>#</th><th>משפט</th><th>זמן הקלטה</th></tr>
+      <tr><td>1</td><td>Hello Queen.</td><td>15 שנ׳</td></tr>
+      <tr><td>2</td><td>How are you?</td><td>15 שנ׳</td></tr>
+      <tr><td>3</td><td>My name is ______.</td><td>20 שנ׳</td></tr>
+      <tr><td>4</td><td>Nice to meet you.</td><td>15 שנ׳</td></tr>
+      <tr><td>5</td><td>We have a gift for you.</td><td>20 שנ׳</td></tr>
+      <tr><td>6</td><td>We came from many planets.</td><td>20 שנ׳</td></tr>
+      <tr><td>7</td><td>The witch made a web.</td><td>20 שנ׳</td></tr>
+      <tr><td>8</td><td>We were stuck on the web.</td><td>20 שנ׳</td></tr>
+      <tr><td>9</td><td>Please help us.</td><td>15 שנ׳</td></tr>
+      <tr><td>10</td><td>Thank you.</td><td>15 שנ׳</td></tr>
+    </table>
+  </div>
+
+  <div class="note note-green">
+    <strong>✨ רגע מיוחד:</strong> אחרי ההקלטות, המלכה מניפה שרביט, קורי העכביש נעלמים! אנימציה ויזואלית קטנה של שחרור. זה הרגע הדרמטי של השיעור.
+  </div>
+</div>
+
+<!-- ===== GAME 5 ===== -->
+<div class="section" id="g5">
+  <div class="section-header" style="border-color:var(--g5)">
+    <div class="num" style="background:var(--g5)">9</div>
+    <h2>משחק 5 – עולם YES (Silence)</h2>
+  </div>
+
+  <div class="game-header" style="background:linear-gradient(135deg,#064e3b,#10b981)">
+    <div class="game-icon">🌟</div>
+    <div class="game-meta">
+      <h3>פיוס עם Silence – YES/NO</h3>
+      <p>משך: ~4 דק׳ | שיעור 023 | נושא: תחושת סוף + YES/NO</p>
+    </div>
+    <div>
+      <div class="tag tag-green">הקלטה × 8</div>
+      <div class="tag tag-green">שאלות YES/NO</div>
+      <div class="tag tag-green">סיום הקורס</div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>📝 שלב 1: משפטי עידוד ל-Silence</h3>
+      <ul>
+        <li>Don't be sad.</li>
+        <li>Don't be angry.</li>
+        <li>Don't be afraid.</li>
+        <li>We are your friends.</li>
+        <li>You are not alone.</li>
+      </ul>
+      <p style="font-size:.85rem;color:var(--muted);margin-top:.5rem">→ הילד מקליט כל משפט</p>
+    </div>
+    <div class="card">
+      <h3>📝 שלב 2: שאלות YES/NO</h3>
+      <p>Silence שואל, הילד עונה בקול:</p>
+      <ul>
+        <li>Friends? → <strong>YES</strong></li>
+        <li>Do you like me? → <strong>YES</strong></li>
+        <li>Do you want me to go away? → <strong>NO</strong></li>
+      </ul>
+      <p style="font-size:.85rem;color:var(--muted);margin-top:.5rem">→ ולידציה של YES / NO</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:1rem">
+    <h3>📱 Wireframe: שאלת YES/NO</h3>
+    <div class="screens-row">
+      <div class="phone-wrap">
+        <div class="phone-label">מסך: שאלה של Silence</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body">
+          <div class="wf-bg">
+            <div class="wf-char">🌑</div>
+            <div class="wf-bubble">Friends? You want to be my friend?</div>
+            <div class="wf-divider"></div>
+            <div class="wf-sub">ענה בקול:</div>
+            <div class="wf-btn wf-mic">🎤 אמור YES או NO</div>
+            <div class="wf-row">
+              <div class="wf-btn" style="background:#10b981;font-size:.8rem">YES ✓</div>
+              <div class="wf-btn" style="background:#ef4444;font-size:.8rem">NO ✗</div>
+            </div>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone-label">מסך: סיום הקורס</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body">
+          <div class="wf-bg">
+            <div class="wf-title" style="color:#4ade80;font-size:.9rem">🎉 כל הכבוד!</div>
+            <div class="wf-char" style="font-size:2rem">🚀✨</div>
+            <div class="wf-bubble">You did it! You helped everyone!</div>
+            <div class="wf-bubble">לוגו קורס</div>
+            <div class="wf-btn wf-next">THE END 🌟</div>
+          </div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== DESIGN ===== -->
+<div class="section" id="design">
+  <div class="section-header" style="border-color:#f59e0b">
+    <div class="num" style="background:#f59e0b">10</div>
+    <h2>הנחיות עיצוב</h2>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>🎨 סגנון כללי</h3>
+      <ul>
+        <li><strong>תמה:</strong> חלל, חללית, כוכבי לכת</li>
+        <li><strong>טון:</strong> צעיר, צבעוני, הרפתקני</li>
+        <li><strong>רקע:</strong> כהה (כחול-לילה / שחור-חלל)</li>
+        <li><strong>כפתורים:</strong> גדולים, עגולים, צבעוניים</li>
+        <li><strong>גופן:</strong> עגול, ברור, ידידותי לילדים</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🎭 הדמויות</h3>
+      <ul>
+        <li><strong>A.B</strong> – רובוט ידידותי, הדמות הראשית</li>
+        <li><strong>הכלב</strong> – חבר של A.B</li>
+        <li><strong>המלך</strong> – כוכב זהב, ארמון</li>
+        <li><strong>המלכה</strong> – כוכב ורדרד, ארמון ורוד</li>
+        <li><strong>Silence</strong> – דמות כהה, עצובה אך מיתרפאת</li>
+        <li><strong>Capt. IL</strong> – קפטן, קול מהחלל</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:1rem">
+    <h3>🎨 פלטת צבעים מוצעת לפי שיעור</h3>
+    <div style="display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.5rem">
+      <div style="background:#1e3a8a;color:white;padding:.5rem 1rem;border-radius:8px;font-size:.85rem">משחק 1<br>כחול-חלל</div>
+      <div style="background:#4c1d95;color:white;padding:.5rem 1rem;border-radius:8px;font-size:.85rem">משחק 2<br>סגול</div>
+      <div style="background:#78350f;color:white;padding:.5rem 1rem;border-radius:8px;font-size:.85rem">משחק 3<br>זהב</div>
+      <div style="background:#831843;color:white;padding:.5rem 1rem;border-radius:8px;font-size:.85rem">משחק 4<br>ורוד</div>
+      <div style="background:#064e3b;color:white;padding:.5rem 1rem;border-radius:8px;font-size:.85rem">משחק 5<br>ירוק</div>
+    </div>
+  </div>
+
+  <div class="note note-blue" style="margin-top:1rem">
+    <strong>📐 גדלי מסכים:</strong> Primary target – מובייל (375px). Secondary – טאבלט. Desktop – תמיכה בסיסית. כל הכפתורים מינימום 44×44px לנגישות.
+  </div>
+</div>
+
+<!-- ===== QUESTIONS ===== -->
+<div class="section" id="questions">
+  <div class="section-header" style="border-color:#ef4444">
+    <div class="num" style="background:#ef4444">11</div>
+    <h2>שאלות פתוחות ופעולות נדרשות</h2>
+  </div>
+
+  <div class="card">
+    <h3>❓ שאלות לרעות</h3>
+    <table>
+      <tr><th>#</th><th>שאלה</th><th>משפיע על</th><th>דחיפות</th></tr>
+      <tr>
+        <td>1</td>
+        <td>סקריפט מלא לכפתורי AEIOU – מה כל רובוט אומר?</td>
+        <td>משחק 2</td>
+        <td><span class="tag tag-red">גבוהה</span></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>לינקי Vimeo לסרטוני ABC (מלא, A–M, N–Z)</td>
+        <td>משחק 1</td>
+        <td><span class="tag tag-red">גבוהה</span></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>אילו חומרי עיצוב קיימים? (לוגו, דמויות, רקעים)</td>
+        <td>כל המשחקים</td>
+        <td><span class="tag tag-red">גבוהה</span></td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>קישור לסיליבוס המלא – כמה שיעורים בסה"כ?</td>
+        <td>תכנון כולל</td>
+        <td><span class="tag tag-yellow">בינונית</span></td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>האם Schooler תומכת ב-postMessage מ-iframe?</td>
+        <td>אינטגרציה</td>
+        <td><span class="tag tag-yellow">בינונית</span></td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>מה הסקריפט המלא לשיחה עם Silence (משחק 5)?</td>
+        <td>משחק 5</td>
+        <td><span class="tag tag-yellow">בינונית</span></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card" style="margin-top:1rem">
+    <h3>✅ פעולות נדרשות מהצוות</h3>
+    <ul>
+      <li>לפתוח חשבון Speechly (או לאשר שנמשיך עם Web Speech API)</li>
+      <li>לבנות את ה-demo prototype ולשלוח לרעות לאישור חוויית משתמש</li>
+      <li>לקבל חומרי עיצוב מרעות ולהגדיר style guide</li>
+      <li>לבדוק עם Schooler תמיכה ב-iframe + postMessage</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ===== TIMELINE ===== -->
+<div class="section" id="timeline">
+  <div class="section-header" style="border-color:#6366f1">
+    <div class="num" style="background:#6366f1">12</div>
+    <h2>לוח זמנים ותמחור</h2>
+  </div>
+
+  <div class="note note-blue" style="margin-bottom:1.5rem">
+    <strong>💰 מסגרת תקציב:</strong> 8,500 ₪ סה"כ | תעריף: 200 ₪/שעה | <strong>תקרה: 42.5 שעות</strong>
+  </div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <strong>שלב 1: איפיון + דמו — 4 שעות</strong>
+        <p>מסמך אפיון, wireframes, demo prototype לאישור לקוחה. <em>✅ כבר בוצע</em></p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <strong>שלב 2: עיצוב — 8 שעות</strong>
+        <p>לוגו קורס, דמויות (A.B, מלך, מלכה, Silence), רקעים, style guide, UI components.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <strong>שלב 3: פיתוח — 22 שעות</strong>
+        <p>בניית 5 המשחקים. משחקים 3–5 משתמשים באותה תבנית → ייעול מקסימלי.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <strong>שלב 4: תיקונים — 3 סבבים × 2.5 שעות = 7.5 שעות</strong>
+        <p>סבב 1 אחרי דמו ראשוני | סבב 2 אחרי משחקים מלאים | סבב 3 לפני delivery.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <strong>שלב 5: Deploy + הטמעה בסקולר — 1 שעה</strong>
+        <p>העלאה ל-Vercel, בדיקת iframe בסקולר, מנגנון סיסמאות. Delivery: 10.07.2026</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:2rem">
+    <h3>💰 פירוט תקציב</h3>
+    <table>
+      <tr><th>שלב</th><th>שעות</th><th>עלות (200 ₪/שעה)</th><th>הערות</th></tr>
+      <tr><td>איפיון + דמו</td><td>4</td><td>800 ₪</td><td>✅ בוצע</td></tr>
+      <tr><td>עיצוב (לוגו, דמויות, UI)</td><td>8</td><td>1,600 ₪</td><td>תלוי בחומרים מהלקוחה</td></tr>
+      <tr><td>משחק 1 – ABC + שם</td><td>6</td><td>1,200 ₪</td><td>speech validation ייחודי</td></tr>
+      <tr><td>משחק 2 – AEIOU</td><td>4</td><td>800 ₪</td><td>5 כפתורים + אודיו</td></tr>
+      <tr><td>משחקים 3–5 (תבנית × 3)</td><td>9</td><td>1,800 ₪</td><td>3 שעות כל אחד – תבנית משותפת</td></tr>
+      <tr><td>תיקונים (3 סבבים)</td><td>7.5</td><td>1,500 ₪</td><td>2.5 שעות לסבב</td></tr>
+      <tr><td>Deploy + Schooler</td><td>1</td><td>200 ₪</td><td></td></tr>
+      <tr style="font-weight:700;background:#f1f5f9">
+        <td>סה"כ</td><td><strong>39.5 שעות</strong></td><td><strong>7,900 ₪</strong></td>
+        <td style="color:#10b981">✅ בתוך תקציב (יתרה 600 ₪)</td>
+      </tr>
+    </table>
+    <div class="note note-yellow" style="margin-top:1rem">
+      <strong>⚠️ תנאי לעמידה בתקציב:</strong> הלקוחה מספקת את כל תכני השמע/וידאו בזמן. כל שינוי scope מעבר לתסריטים שאושרו = הצעת מחיר נפרדת.
+    </div>
+    <div class="note note-green" style="margin-top:.5rem">
+      <strong>💡 מנוף ייעול מרכזי:</strong> משחקים 3, 4, 5 בנויים על אותה תבנית קוד של "שיחה + הקלטה". מפתחים פעם אחת, משכפלים ומתאימים תוכן. חוסך ~6 שעות פיתוח.
+    </div>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<div class="footer">
+  <p>📄 מסמך אפיון | קורס אנגלית – רעות זהבי | הוכן ע"י שירת גולדשטיין | 2026</p>
+  <p style="margin-top:.5rem; font-size:.8rem">גרסה 1.0 – טרם אושר סופית על ידי הלקוחה</p>
+</div>
+
+</body>
+</html>

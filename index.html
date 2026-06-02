@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>קורס אנגלית – רעות זהבי | לוח בקרה</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', Arial, sans-serif; background: #080820; color: #fff; min-height: 100vh; }
+.header {
+  background: linear-gradient(135deg, #0a0a2e, #1e1b4b);
+  padding: 2.5rem 2rem; text-align: center;
+  border-bottom: 1px solid rgba(255,255,255,.1);
+}
+.header h1 { font-size: 1.8rem; margin-bottom: .4rem; }
+.header p { color: rgba(255,255,255,.6); font-size: .9rem; }
+.badge { display: inline-block; background: rgba(99,102,241,.3); border: 1px solid #6366f1; color: #a5b4fc; padding: .2rem .8rem; border-radius: 20px; font-size: .75rem; margin-top: .5rem; }
+
+.container { max-width: 800px; margin: 0 auto; padding: 2rem; }
+
+.section-title { font-size: 1rem; color: rgba(255,255,255,.4); text-transform: uppercase; letter-spacing: 2px; margin: 2rem 0 1rem; }
+
+.card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media(max-width:600px){ .card-grid { grid-template-columns: 1fr; } }
+
+.card {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 14px; padding: 1.2rem;
+  text-decoration: none; color: inherit;
+  display: block; transition: all .2s;
+}
+.card:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.25); transform: translateY(-2px); }
+.card .icon { font-size: 2rem; margin-bottom: .6rem; display: block; }
+.card h3 { font-size: 1rem; margin-bottom: .3rem; }
+.card p { font-size: .8rem; color: rgba(255,255,255,.5); line-height: 1.5; }
+.card .tag { display: inline-block; font-size: .7rem; padding: .15rem .5rem; border-radius: 8px; margin-top: .5rem; }
+
+/* Game cards */
+.game-card { border-radius: 14px; padding: 1rem 1.2rem; text-decoration: none; color: #fff; display: block; transition: all .2s; }
+.game-card:hover { transform: translateY(-2px); filter: brightness(1.1); }
+.game-card .num { font-size: .7rem; opacity: .7; margin-bottom: .2rem; }
+.game-card h3 { font-size: .95rem; font-weight: 700; }
+.game-card p { font-size: .75rem; opacity: .8; margin-top: .2rem; }
+.games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: .8rem; }
+
+.internal-note {
+  background: rgba(245,158,11,.1); border: 1px solid rgba(245,158,11,.3);
+  border-radius: 10px; padding: .8rem 1rem; font-size: .8rem; color: #fde68a;
+  margin-top: 2rem; direction: rtl;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="font-size:2rem;margin-bottom:.5rem">🚀</div>
+  <h1>קורס אנגלית – רעות זהבי</h1>
+  <p>לוח בקרה פנימי | פיתוח: שירת גולדשטיין + ענבר</p>
+  <div class="badge">⚠️ שימוש פנימי בלבד – לא לשיתוף עם הלקוחה</div>
+</div>
+
+<div class="container">
+
+  <div class="section-title">📋 מסמכים פנימיים</div>
+  <div class="card-grid">
+    <a class="card" href="spec.html">
+      <span class="icon">📄</span>
+      <h3>מסמך איפיון</h3>
+      <p>ארכיטקטורה, wireframes, תקציב, לוח זמנים, שאלות פתוחות</p>
+      <span class="tag" style="background:rgba(99,102,241,.25);color:#a5b4fc">לשיתוף עם הלקוחה ✓</span>
+    </a>
+    <a class="card" href="demo.html">
+      <span class="icon">🎮</span>
+      <h3>דמו מלא (כל 5 משחקים)</h3>
+      <p>פרוטוטייפ אינטראקטיבי עם זיהוי קול אמיתי</p>
+      <span class="tag" style="background:rgba(16,185,129,.25);color:#6ee7b7">לשיתוף עם הלקוחה ✓</span>
+    </a>
+  </div>
+
+  <div class="section-title">🎮 משחקים (Production)</div>
+  <div class="games-grid">
+    <a class="game-card" href="game1.html" style="background:linear-gradient(135deg,#1e3a8a,#3b82f6)">
+      <div class="num">משחק 1</div>
+      <h3>🚀 פתיחה + ABC</h3>
+      <p>שם + שיר ABC + ולידציה</p>
+    </a>
+    <a class="game-card" href="game2.html" style="background:linear-gradient(135deg,#4c1d95,#8b5cf6)">
+      <div class="num">משחק 2</div>
+      <h3>🔵 כפתורי AEIOU</h3>
+      <p>5 רובוטים, צלילי תנועות</p>
+    </a>
+    <a class="game-card" href="game3.html" style="background:linear-gradient(135deg,#78350f,#f59e0b)">
+      <div class="num">משחק 3</div>
+      <h3>👑 כוכב המלך</h3>
+      <p>שיחה + הקלטת משפטים</p>
+    </a>
+    <a class="game-card" href="game4.html" style="background:linear-gradient(135deg,#831843,#ec4899)">
+      <div class="num">משחק 4</div>
+      <h3>👸 עולם המלכה</h3>
+      <p>שיחה + שחרור מהקורים</p>
+    </a>
+    <a class="game-card" href="game5.html" style="background:linear-gradient(135deg,#064e3b,#10b981)">
+      <div class="num">משחק 5</div>
+      <h3>🌟 YES World</h3>
+      <p>פיוס עם Silence, YES/NO</p>
+    </a>
+  </div>
+  <p style="font-size:.75rem;color:rgba(255,255,255,.3);margin-top:.6rem">* קבצי game1–5.html יבנו בשלב הפיתוח. כרגע מוביל ל-demo.html</p>
+
+  <div class="internal-note">
+    ⚠️ <strong>לרעות משתפים:</strong> כל אחד מהקישורים game1–game5 ישירות. לא את ה-index הזה ולא את spec.html.
+  </div>
+
+</div>
+</body>
+</html>

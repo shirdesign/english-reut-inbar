@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>English Course – Interactive Demo</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #080820;
+  color: #fff;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Stars background */
+.stars-bg {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background: radial-gradient(ellipse at 20% 50%, #1a1060 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 20%, #0d2060 0%, transparent 50%),
+              #080820;
+}
+.star {
+  position: absolute; background: white; border-radius: 50%;
+  animation: twinkle 2s infinite alternate;
+}
+@keyframes twinkle { from { opacity: .3; } to { opacity: 1; } }
+
+/* Game selector nav */
+.game-nav {
+  position: relative; z-index: 10;
+  display: flex; overflow-x: auto; gap: .5rem;
+  padding: .8rem 1rem; background: rgba(0,0,0,.5);
+  border-bottom: 1px solid rgba(255,255,255,.1);
+}
+.game-nav::-webkit-scrollbar { display: none; }
+.nav-btn {
+  flex-shrink: 0; padding: .5rem 1rem; border-radius: 20px;
+  border: 2px solid rgba(255,255,255,.3); background: transparent;
+  color: rgba(255,255,255,.7); cursor: pointer; font-size: .8rem;
+  transition: all .2s; white-space: nowrap;
+}
+.nav-btn.active { color: white; border-color: currentColor; font-weight: 700; }
+.nav-btn[data-g="1"].active { border-color: #60a5fa; color: #60a5fa; background: rgba(96,165,250,.15); }
+.nav-btn[data-g="2"].active { border-color: #a78bfa; color: #a78bfa; background: rgba(167,139,250,.15); }
+.nav-btn[data-g="3"].active { border-color: #fbbf24; color: #fbbf24; background: rgba(251,191,36,.15); }
+.nav-btn[data-g="4"].active { border-color: #f472b6; color: #f472b6; background: rgba(244,114,182,.15); }
+.nav-btn[data-g="5"].active { border-color: #34d399; color: #34d399; background: rgba(52,211,153,.15); }
+
+/* Game container */
+.game-area {
+  position: relative; z-index: 5;
+  display: flex; align-items: center; justify-content: center;
+  min-height: calc(100vh - 60px); padding: 1rem;
+}
+
+/* Phone frame */
+.phone-frame {
+  width: 100%; max-width: 380px;
+  background: #0f172a;
+  border: 2px solid rgba(255,255,255,.15);
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.05);
+  min-height: 620px;
+  display: flex; flex-direction: column;
+}
+
+/* Screen */
+.screen {
+  flex: 1; padding: 1.5rem 1.2rem;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 1rem;
+  animation: fadeIn .35s ease;
+  position: relative;
+}
+@keyframes fadeIn { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform: none; } }
+
+.screen-title {
+  font-size: .75rem; text-transform: uppercase; letter-spacing: 2px;
+  color: rgba(255,255,255,.4); margin-bottom: -.5rem;
+}
+
+.char-area {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 20px; padding: 1rem 1.5rem;
+  text-align: center; width: 100%;
+}
+.char-emoji { font-size: 3.5rem; display: block; margin-bottom: .5rem; }
+.char-name { font-size: .75rem; color: rgba(255,255,255,.5); margin-bottom: .3rem; }
+.speech-bubble {
+  background: rgba(255,255,255,.9); color: #1e293b;
+  border-radius: 16px 16px 16px 4px;
+  padding: .7rem 1rem; font-size: .9rem; line-height: 1.5;
+  width: 100%; text-align: right;
+}
+.speech-bubble.rtl { direction: rtl; text-align: right; border-radius: 16px 16px 4px 16px; }
+
+/* Sentence card */
+.sentence-card {
+  background: linear-gradient(135deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 16px; padding: 1.2rem; width: 100%; text-align: center;
+}
+.sentence-text { font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: .3rem; }
+.sentence-counter { font-size: .75rem; color: rgba(255,255,255,.5); }
+.sentence-translation { font-size: .8rem; color: rgba(255,255,255,.6); margin-top: .3rem; direction: rtl; }
+
+/* Buttons */
+.btn {
+  padding: .85rem 1.8rem; border-radius: 28px; border: none;
+  font-size: 1rem; font-weight: 700; cursor: pointer;
+  transition: all .15s; width: 100%;
+  display: flex; align-items: center; justify-content: center; gap: .5rem;
+}
+.btn:active { transform: scale(.96); }
+.btn-mic { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
+.btn-mic.recording {
+  background: linear-gradient(135deg, #fca5a5, #ef4444);
+  animation: pulse-red 1s infinite;
+}
+.btn-mic.success { background: linear-gradient(135deg, #10b981, #059669); }
+@keyframes pulse-red {
+  0%,100% { box-shadow: 0 0 0 0 rgba(239,68,68,.4); }
+  50% { box-shadow: 0 0 0 12px rgba(239,68,68,0); }
+}
+.btn-next { background: linear-gradient(135deg, #6366f1, #4f46e5); color: white; }
+.btn-play { background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; }
+.btn-yes { background: linear-gradient(135deg, #10b981, #059669); color: white; flex: 1; }
+.btn-no { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; flex: 1; }
+.btn-row { display: flex; gap: .6rem; width: 100%; }
+.btn-choice {
+  flex: 1; background: rgba(255,255,255,.1); border: 1.5px solid rgba(255,255,255,.25);
+  color: white; padding: .7rem .5rem; border-radius: 16px;
+  font-size: .85rem; font-weight: 600; cursor: pointer; transition: all .15s;
+}
+.btn-choice:active { transform: scale(.95); }
+.btn-choice.selected { border-color: #6366f1; background: rgba(99,102,241,.3); }
+.btn-small {
+  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+  color: rgba(255,255,255,.8); padding: .5rem 1rem; border-radius: 20px;
+  font-size: .8rem; cursor: pointer;
+}
+
+/* Status / feedback */
+.status-box {
+  border-radius: 12px; padding: .8rem 1rem; width: 100%;
+  text-align: center; font-size: .9rem; font-weight: 600;
+}
+.status-listening { background: rgba(239,68,68,.2); border: 1px solid rgba(239,68,68,.4); color: #fca5a5; }
+.status-success { background: rgba(16,185,129,.2); border: 1px solid rgba(16,185,129,.4); color: #6ee7b7; }
+.status-error { background: rgba(245,158,11,.2); border: 1px solid rgba(245,158,11,.4); color: #fde68a; }
+.status-info { background: rgba(99,102,241,.2); border: 1px solid rgba(99,102,241,.4); color: #c4b5fd; }
+
+/* Code display */
+.code-box {
+  background: rgba(0,0,0,.5); border: 2px solid rgba(99,102,241,.5);
+  border-radius: 16px; padding: 1rem; text-align: center; width: 100%;
+}
+.code-label { font-size: .75rem; color: rgba(255,255,255,.5); margin-bottom: .3rem; direction: rtl; }
+.code-value { font-size: 1.6rem; font-weight: 900; color: #a5b4fc; letter-spacing: 3px; font-family: monospace; }
+.code-hint { font-size: .75rem; color: rgba(255,255,255,.4); margin-top: .3rem; direction: rtl; }
+
+/* Progress dots */
+.progress-dots { display: flex; gap: .4rem; justify-content: center; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.2); transition: all .3s; }
+.dot.active { background: white; transform: scale(1.3); }
+.dot.done { background: rgba(99,102,241,.8); }
+
+/* AEIOU buttons */
+.aeiou-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: .5rem; width: 100%;
+}
+.aeiou-btn {
+  aspect-ratio: 1; border-radius: 50%; border: 3px solid rgba(255,255,255,.3);
+  background: rgba(255,255,255,.08); color: white;
+  font-size: 1.4rem; font-weight: 900; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  transition: all .2s; position: relative;
+}
+.aeiou-btn span { font-size: .5rem; color: rgba(255,255,255,.5); margin-top: .1rem; }
+.aeiou-btn.clicked {
+  background: rgba(99,102,241,.5); border-color: #a78bfa;
+  animation: pop .3s ease;
+}
+.aeiou-btn.clicked::after { content: '✓'; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); font-size: .6rem; color: #a78bfa; }
+@keyframes pop { 0%{transform:scale(1)} 50%{transform:scale(1.3)} 100%{transform:scale(1)} }
+
+/* Celebration */
+.celebration { text-align: center; width: 100%; }
+.celebration .big-emoji { font-size: 4rem; animation: bounce 1s infinite alternate; }
+@keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-10px); } }
+.confetti-row { font-size: 1.5rem; letter-spacing: 4px; margin: .5rem 0; }
+
+/* Progress bar */
+.progress-bar-wrap { width: 100%; background: rgba(255,255,255,.1); border-radius: 8px; height: 6px; }
+.progress-bar-fill { height: 6px; border-radius: 8px; background: linear-gradient(90deg, #6366f1, #a78bfa); transition: width .5s ease; }
+
+/* Video placeholder */
+.video-placeholder {
+  width: 100%; aspect-ratio: 16/9; background: #000;
+  border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  border: 1px solid rgba(255,255,255,.15); cursor: pointer; position: relative;
+  overflow: hidden;
+}
+.video-placeholder::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, #1e3a8a, #312e81);
+}
+.video-inner { position: relative; z-index: 1; text-align: center; }
+.play-icon { font-size: 3rem; display: block; }
+.video-inner p { font-size: .75rem; color: rgba(255,255,255,.6); margin-top: .3rem; }
+
+/* Input name display */
+.name-display {
+  font-size: 1.4rem; font-weight: 700; color: #fbbf24;
+  text-align: center; min-height: 2rem;
+}
+
+/* Waveform animation */
+.waveform { display: flex; align-items: center; gap: 3px; height: 30px; justify-content: center; }
+.wave-bar {
+  width: 4px; background: #ef4444; border-radius: 4px;
+  animation: wave 0.8s infinite ease-in-out;
+}
+.wave-bar:nth-child(2) { animation-delay: .1s; }
+.wave-bar:nth-child(3) { animation-delay: .2s; }
+.wave-bar:nth-child(4) { animation-delay: .3s; }
+.wave-bar:nth-child(5) { animation-delay: .2s; }
+.wave-bar:nth-child(6) { animation-delay: .1s; }
+@keyframes wave {
+  0%,100% { height: 6px; } 50% { height: 24px; }
+}
+
+/* Demo label */
+.demo-badge {
+  position: fixed; top: .5rem; left: .5rem; z-index: 100;
+  background: rgba(251,191,36,.2); border: 1px solid rgba(251,191,36,.5);
+  color: #fbbf24; font-size: .7rem; padding: .2rem .6rem; border-radius: 10px;
+  font-weight: 700;
+}
+
+/* No speech support */
+.no-speech { color: #fca5a5; font-size: .8rem; text-align: center; direction: rtl; }
+</style>
+</head>
+<body>
+
+<div class="stars-bg" id="starsContainer"></div>
+<div class="demo-badge">DEMO</div>
+
+<!-- Game Navigation -->
+<div class="game-nav">
+  <button class="nav-btn active" data-g="1" onclick="selectGame(1)">🚀 משחק 1: פתיחה + ABC</button>
+  <button class="nav-btn" data-g="2" onclick="selectGame(2)">🔵 משחק 2: AEIOU</button>
+  <button class="nav-btn" data-g="3" onclick="selectGame(3)">👑 משחק 3: המלך</button>
+  <button class="nav-btn" data-g="4" onclick="selectGame(4)">👸 משחק 4: המלכה</button>
+  <button class="nav-btn" data-g="5" onclick="selectGame(5)">🌟 משחק 5: YES World</button>
+</div>
+
+<div class="game-area">
+  <div class="phone-frame" id="phoneFrame">
+    <div class="screen" id="mainScreen"></div>
+  </div>
+</div>
+
+<script>
+// =================== STARS ===================
+(function() {
+  const c = document.getElementById('starsContainer');
+  for (let i = 0; i < 80; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const sz = Math.random() * 2.5 + 0.5;
+    s.style.cssText = `width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;animation-duration:${Math.random()*3+1.5}s;animation-delay:${Math.random()*2}s;`;
+    c.appendChild(s);
+  }
+})();
+
+// =================== SPEECH ===================
+const hasSpeech = !!(window.SpeechRecognition || window.webkitSpeechRecognition);
+let recognition = null;
+
+function speak(text, lang = 'en-US', onDone) {
+  if (!window.speechSynthesis) { if (onDone) onDone(); return; }
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = lang; u.rate = 0.9; u.pitch = 1.1;
+  u.onend = onDone;
+  speechSynthesis.speak(u);
+}
+
+function startListening(lang, onResult, onError) {
+  if (!hasSpeech) { if (onError) onError('no-support'); return; }
+  if (recognition) { try { recognition.stop(); } catch(e){} }
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  recognition = new SR();
+  recognition.lang = lang;
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 3;
+  recognition.onresult = e => {
+    const t = Array.from(e.results[0]).map(r=>r.transcript).join(' ');
+    onResult(t.trim());
+  };
+  recognition.onerror = e => { if (onError) onError(e.error); };
+  recognition.onend = () => { recognition = null; };
+  recognition.start();
+}
+
+function stopListening() {
+  if (recognition) { try { recognition.stop(); } catch(e){} recognition = null; }
+}
+
+// =================== STATE ===================
+let currentGame = 1;
+let state = {};
+
+const GAMES_COLOR = {
+  1: '#3b82f6', 2: '#8b5cf6', 3: '#f59e0b', 4: '#ec4899', 5: '#10b981'
+};
+
+// =================== RENDER ===================
+function render(html) {
+  const s = document.getElementById('mainScreen');
+  s.innerHTML = html;
+  document.getElementById('phoneFrame').style.borderColor =
+    `${GAMES_COLOR[currentGame]}55`;
+}
+
+function selectGame(g) {
+  stopListening();
+  currentGame = g;
+  state = {};
+  document.querySelectorAll('.nav-btn').forEach(b => {
+    b.classList.toggle('active', parseInt(b.dataset.g) === g);
+  });
+  RENDERERS[g]();
+}
+
+// =================== HELPERS ===================
+function dots(total, current) {
+  return `<div class="progress-dots">${Array.from({length:total},(_,i)=>`<div class="dot ${i<current?'done':''} ${i===current?'active':''}"></div>`).join('')}</div>`;
+}
+
+function progressBar(val, max) {
+  const pct = Math.round((val/max)*100);
+  return `<div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${pct}%"></div></div>`;
+}
+
+// =================== GAME 1: OPENING ===================
+function game1_screen1() {
+  state.g1 = { step: 1, name: '' };
+  render(`
+    <div class="screen-title">Mission 1 – Who Are You?</div>
+    <div class="char-area">
+      <span class="char-emoji">🤖</span>
+      <div class="char-name">A.B</div>
+    </div>
+    <div class="speech-bubble rtl">
+      רגע, רגע! לא אמרתם לנו איך קוראים לכם!
+    </div>
+    <div class="speech-bubble" style="border-radius:16px 16px 4px 16px; text-align:left">
+      When you want to answer me — press the microphone button! 🎤
+    </div>
+    ${!hasSpeech ? `<p class="no-speech">⚠️ דפדפן זה אינו תומך בזיהוי קול. השתמש ב-Chrome / Edge.</p>` : ''}
+    <button class="btn btn-mic" id="micBtn" onclick="game1_listenName()">
+      🎤 Say Your Name!
+    </button>
+    <div id="statusBox"></div>
+    <div class="name-display" id="nameDisplay"></div>
+    ${dots(5, 0)}
+  `);
+}
+
+function game1_listenName() {
+  const btn = document.getElementById('micBtn');
+  const status = document.getElementById('statusBox');
+  btn.className = 'btn btn-mic recording';
+  btn.innerHTML = `<div class="waveform">${'<div class="wave-bar"></div>'.repeat(6)}</div> Listening...`;
+  status.innerHTML = `<div class="status-box status-listening">🎤 מקשיב... אמור את שמך!</div>`;
+
+  startListening('he-IL,en-US',
+    (text) => {
+      const name = text.split(' ')[0];
+      state.g1.name = name;
+      btn.className = 'btn btn-mic success';
+      btn.innerHTML = `✅ Got it!`;
+      document.getElementById('nameDisplay').textContent = name;
+      status.innerHTML = `<div class="status-box status-success">✅ שמענו: "${name}"!</div>`;
+      setTimeout(() => game1_screen2(name), 1200);
+    },
+    (err) => {
+      btn.className = 'btn btn-mic';
+      btn.innerHTML = '🎤 Say Your Name!';
+      if (err === 'no-support') {
+        status.innerHTML = `<div class="status-box status-error">⚠️ Speech not supported. Using demo name.</div>`;
+        setTimeout(() => game1_screen2('Alex'), 1200);
+      } else {
+        status.innerHTML = `<div class="status-box status-error">לא שמענו 😕 נסה שוב!</div>`;
+      }
+    }
+  );
+}
+
+function game1_screen2(name) {
+  render(`
+    <div class="char-area">
+      <span class="char-emoji">🤖</span>
+    </div>
+    <div class="speech-bubble" style="text-align:left; border-radius:16px 16px 4px 16px; font-size:1.2rem">
+      Hello <strong style="color:#6366f1">${name}</strong>! 👋
+    </div>
+    <div class="speech-bubble rtl">
+      ברוכים הבאים למשימה! מוכנים להרפתקה?
+    </div>
+    <div class="speech-bubble" style="text-align:left; border-radius:16px 16px 4px 16px">
+      Ready for the adventure? 🚀
+    </div>
+    <button class="btn btn-next" onclick="game1_screen3()">LET'S GO! 🚀</button>
+    ${dots(5, 1)}
+  `);
+  speak(`Hello ${name}! Welcome to the mission!`);
+}
+
+function game1_screen3() {
+  render(`
+    <div class="screen-title">Listen to the ABC Song</div>
+    <div class="speech-bubble rtl">
+      והנה כבר מגיע אלינו מסר ראשון מהחלל... הקשיבו לשיר!
+    </div>
+    <div class="video-placeholder" onclick="game1_playVideo()">
+      <div class="video-inner">
+        <span class="play-icon">▶️</span>
+        <p>ABC Song (Vimeo)<br>לחץ להפעלה</p>
+      </div>
+    </div>
+    <div class="speech-bubble rtl" style="font-size:.85rem">
+      בחר גרסה:
+    </div>
+    <div class="btn-row">
+      <button class="btn-choice" onclick="this.closest('.btn-row').querySelectorAll('.btn-choice').forEach(b=>b.classList.remove('selected'));this.classList.add('selected')">A–Z מלא</button>
+      <button class="btn-choice" onclick="this.closest('.btn-row').querySelectorAll('.btn-choice').forEach(b=>b.classList.remove('selected'));this.classList.add('selected')">A–M</button>
+      <button class="btn-choice" onclick="this.closest('.btn-row').querySelectorAll('.btn-choice').forEach(b=>b.classList.remove('selected'));this.classList.add('selected')">N–Z</button>
+    </div>
+    <button class="btn btn-next" onclick="game1_screen4()">Ready! Let's go ➡️</button>
+    ${dots(5, 2)}
+  `);
+}
+
+function game1_playVideo() {
+  const vp = document.querySelector('.video-placeholder');
+  vp.innerHTML = `<div style="position:relative;z-index:1;text-align:center;padding:1rem"><span style="font-size:2rem">🎵</span><p style="font-size:.8rem;color:#a5b4fc;margin-top:.5rem">Here the Vimeo video plays.<br>A B C D E F G...<br><em style="font-size:.7rem;opacity:.7">(Vimeo embed in production)</em></p></div>`;
+  speak('A B C D E F G, H I J K L M N O P, Q R S, T U V, W X Y and Z! Now I know my ABCs!');
+}
+
+function game1_screen4() {
+  render(`
+    <div class="char-area">
+      <span class="char-emoji">🚀</span>
+    </div>
+    <div class="speech-bubble rtl">
+      לא חשבתם שתוכלו להיכנס לחללית בלי מבחן כניסה? אמרו את ה-ABC!
+    </div>
+    <div class="speech-bubble" style="text-align:left;border-radius:16px 16px 4px 16px;font-size:.85rem; color:#374151">
+      ⚠️ <em>Silence</em> hates noise – press the button and say the alphabet!
+    </div>
+    ${!hasSpeech ? `<p class="no-speech">⚠️ Speech not supported. Click the button anyway!</p>` : ''}
+    <button class="btn btn-mic" id="abcBtn" onclick="game1_listenABC()">
+      🎤 Say the ABC!
+    </button>
+    <div id="abcStatus"></div>
+    ${dots(5, 3)}
+  `);
+}
+
+// Maps what the speech API might say for each letter
+const LETTER_PATTERNS = {
+  A: /\bA\b|AY\b/i,
+  B: /\bB\b|BE\b|BEE\b/i,
+  C: /\bC\b|SEE\b|CEE\b/i,
+  D: /\bD\b|DEE\b/i,
+  E: /\bE\b|EE\b/i,
+  F: /\bF\b|EF\b|EFF\b/i,
+  G: /\bG\b|GEE\b|JEE\b/i,
+  H: /\bH\b|AITCH\b|EITCH\b/i,
+  I: /\bI\b|EYE\b/i,
+  J: /\bJ\b|JAY\b/i,
+  K: /\bK\b|KAY\b/i,
+  L: /\bL\b|EL\b|ELLE\b/i,
+  M: /\bM\b|EM\b/i,
+  N: /\bN\b|EN\b/i,
+  O: /\bO\b|OH\b/i,
+  P: /\bP\b|PEE\b/i,
+  Q: /\bQ\b|CUE\b|QUE\b/i,
+  R: /\bR\b|AR\b/i,
+  S: /\bS\b|ES\b|ESS\b/i,
+  T: /\bT\b|TEE\b/i,
+  U: /\bU\b|YOU\b|YEW\b/i,
+  V: /\bV\b|VEE\b/i,
+  W: /\bW\b|DOUBLE.?U\b|DOUBLE.?YOU\b/i,
+  X: /\bX\b|EX\b/i,
+  Y: /\bY\b|WHY\b|WYE\b/i,
+  Z: /\bZ\b|ZEE\b|ZED\b/i,
+};
+const PASS_THRESHOLD = 20; // out of 26 (allows for speech recognition errors)
+
+function checkABC(text) {
+  const t = text.toUpperCase();
+  const found = [];
+  const missing = [];
+  for (const [letter, pattern] of Object.entries(LETTER_PATTERNS)) {
+    (pattern.test(t) ? found : missing).push(letter);
+  }
+  return { found, missing, score: found.length, pass: found.length >= PASS_THRESHOLD };
+}
+
+function game1_listenABC() {
+  const btn = document.getElementById('abcBtn');
+  const status = document.getElementById('abcStatus');
+  btn.className = 'btn btn-mic recording';
+  btn.innerHTML = `<div class="waveform">${'<div class="wave-bar"></div>'.repeat(6)}</div> Listening...`;
+  status.innerHTML = `<div class="status-box status-listening">🎤 Say A B C D... all the way to Z!</div>`;
+
+  startListening('en-US',
+    (text) => {
+      const result = checkABC(text);
+      const foundStr = result.found.map(l=>`<span style="color:#6ee7b7;font-weight:700">${l}</span>`).join(' ');
+      const missingStr = result.missing.length
+        ? `<br><span style="font-size:.75rem;opacity:.7">לא זוהו: ${result.missing.join(' ')}</span>` : '';
+
+      if (result.pass) {
+        btn.className = 'btn btn-mic success';
+        btn.innerHTML = '🎉 Amazing!';
+        status.innerHTML = `<div class="status-box status-success">
+          🎉 כל הכבוד! זוהו ${result.score}/26 אותיות:<br>${foundStr}
+        </div>`;
+        setTimeout(() => game1_screen5(), 1800);
+      } else {
+        btn.className = 'btn btn-mic';
+        btn.innerHTML = '🎤 Try Again!';
+        status.innerHTML = `<div class="status-box status-error">
+          זוהו רק ${result.score}/26 אותיות (צריך לפחות ${PASS_THRESHOLD}):<br>
+          ${foundStr}${missingStr}<br>
+          <span style="font-size:.8rem">נסה שוב לאט ובבירור! 😊</span>
+        </div>`;
+      }
+    },
+    (err) => {
+      btn.className = 'btn btn-mic';
+      btn.innerHTML = '🎤 Say the ABC!';
+      if (err === 'no-support') {
+        status.innerHTML = `<div class="status-box status-info">Demo mode – no mic detected, skipping to success 🎉</div>`;
+        setTimeout(() => game1_screen5(), 1800);
+      } else {
+        status.innerHTML = `<div class="status-box status-error">לא שמענו. בדוק מיקרופון ונסה שוב!</div>`;
+      }
+    }
+  );
+}
+
+function game1_screen5() {
+  render(`
+    <div class="celebration">
+      <div class="big-emoji">🚀</div>
+      <div class="confetti-row">🎉 ✨ 🌟 ✨ 🎉</div>
+    </div>
+    <div class="speech-bubble rtl" style="font-size:1.1rem; text-align:center">
+      🎊 כל הכבוד! החללית נפתחה! המסע מתחיל!
+    </div>
+    <div class="speech-bubble" style="text-align:center;border-radius:16px;font-size:.9rem">
+      🚀 The mission has begun! You did it!
+    </div>
+    <div class="code-box">
+      <div class="code-label">קוד כניסה לשיעור הבא – כתבו אותו! ✍️</div>
+      <div class="code-value">AEIOU-01</div>
+      <div class="code-hint">הכניסו את הקוד הזה בבוחן שבסקולר</div>
+    </div>
+    ${dots(5, 4)}
+  `);
+  speak('Amazing! You opened the spaceship! The adventure begins!');
+}
+
+// =================== GAME 2: AEIOU ===================
+function game2() {
+  state.g2 = { clicked: new Set() };
+  // 🔴 PLACEHOLDER CONTENT – waiting for Reut's full script per button
+  const sounds = {
+    A: { phonetic: '/æ/', example: 'apple, ant', color: '#f87171',
+         story: "æ æ æ! I am robot A! Silence took my letter! All I have left is my sound — æ like in APPLE! æ æ æ!" },
+    E: { phonetic: '/ɛ/', example: 'egg, elephant', color: '#fb923c',
+         story: "ɛ ɛ ɛ! I am robot E! He stole my letter E! Only my sound remains — ɛ like in EGG! ɛ ɛ ɛ!" },
+    I: { phonetic: '/ɪ/', example: 'igloo, ink', color: '#a3e635',
+         story: "ɪ ɪ ɪ! Robot I here! Silence broke everything! ɪ like in IGLOO — that's all I can say! ɪ ɪ ɪ!" },
+    O: { phonetic: '/ɒ/', example: 'orange, octopus', color: '#34d399',
+         story: "ɒ ɒ ɒ! I am robot O! The spaceship crashed because of Silence! ɒ like in ORANGE! ɒ ɒ ɒ!" },
+    U: { phonetic: '/ʌ/', example: 'umbrella, up', color: '#60a5fa',
+         story: "ʌ ʌ ʌ! Robot U speaking! He took all our letters! ʌ like in UMBRELLA — help us! ʌ ʌ ʌ!" },
+  };
+  state.g2.sounds = sounds;
+
+  const btns = Object.entries(sounds).map(([letter, d]) =>
+    `<div class="aeiou-btn" id="aeiou-${letter}" onclick="game2_click('${letter}')" style="border-color:${d.color}40">
+      ${letter}
+      <span>${d.phonetic}</span>
+    </div>`
+  ).join('');
+
+  render(`
+    <div class="char-area">
+      <span class="char-emoji">🤖</span>
+      <div class="char-name">A.B</div>
+    </div>
+    <div class="speech-bubble rtl">
+      מה קורה פה? לחץ על כל רובוט-כפתור כדי לשמוע מה יש לו לומר!
+    </div>
+    <div class="aeiou-grid">${btns}</div>
+    <div id="aeiouFeedback"></div>
+    <div id="aeiouProgress" class="status-box status-info">לחץ על 0 / 5 כפתורים</div>
+    <button class="btn btn-next" id="aeiouNext" style="opacity:.4;pointer-events:none" onclick="game2_continue()">
+      המשך (לחץ על כל 5 כפתורים) ➡️
+    </button>
+  `);
+}
+
+function game2_click(letter) {
+  const sounds = state.g2.sounds;
+  const d = sounds[letter];
+  state.g2.clicked.add(letter);
+
+  const btn = document.getElementById(`aeiou-${letter}`);
+  btn.classList.add('clicked');
+  btn.style.background = `${d.color}33`;
+
+  const fb = document.getElementById('aeiouFeedback');
+  fb.innerHTML = `<div class="status-box status-success" style="text-align:left;direction:ltr">
+    <strong style="font-size:1.1rem">${letter}</strong> = ${d.phonetic} | <em>${d.example}</em><br>
+    <span style="font-size:.78rem;display:block;margin-top:.3rem;opacity:.9;font-style:italic">"${d.story}"</span>
+    <small style="opacity:.5;font-size:.65rem">📝 placeholder – תוכן סופי מרעות</small>
+  </div>`;
+
+  speak(d.story, 'en-US');
+
+  const count = state.g2.clicked.size;
+  document.getElementById('aeiouProgress').textContent = `✅ לחצת על ${count} / 5 כפתורים`;
+
+  if (count === 5) {
+    const nextBtn = document.getElementById('aeiouNext');
+    nextBtn.style.opacity = '1';
+    nextBtn.style.pointerEvents = 'auto';
+    nextBtn.textContent = '🎉 כל הכפתורים! המשך ➡️';
+    nextBtn.className = 'btn btn-next';
+  }
+}
+
+function game2_continue() {
+  render(`
+    <div class="char-area">
+      <span class="char-emoji">🤖</span>
+      <div class="char-name">A.B</div>
+    </div>
+    <div class="speech-bubble" style="text-align:left;border-radius:16px 16px 4px 16px">
+      A E I O U — these are the VOWELS! Without them, there are no words!
+    </div>
+    <div class="speech-bubble rtl">
+      בלעדיהם אין מילים ואין שפה. Silence גנב אותם – אבל עכשיו אנחנו יודעים מה הצלילים!
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:.4rem;width:100%">
+      ${['A','E','I','O','U'].map((l,i)=>`<div style="text-align:center;padding:.5rem;border-radius:8px;background:rgba(255,255,255,.08);font-size:1.1rem;font-weight:700">${l}</div>`).join('')}
+    </div>
+    <button class="btn btn-next" onclick="game2_end()">סיימנו! ➡️</button>
+  `);
+}
+
+function game2_end() {
+  render(`
+    <div class="celebration">
+      <div class="big-emoji">🔵✨</div>
+    </div>
+    <div class="speech-bubble rtl" style="text-align:center">
+      🎊 שיבוש מרחוק! Silence מנסה לעצור אותנו – אבל אנחנו יודעים את הצלילים!
+    </div>
+    <div class="code-box">
+      <div class="code-label">קוד לשיעור הבא ✍️</div>
+      <div class="code-value">KING-02</div>
+      <div class="code-hint">הכניסו בבוחן בסקולר</div>
+    </div>
+  `);
+}
+
+// =================== GAME 3: KING ===================
+const KING_SENTENCES = [
+  { en: 'Hello.', he: 'שלום.' },
+  { en: 'How are you?', he: 'מה שלומך?' },
+  { en: 'My name is ______.', he: 'שמי ______.' },
+  { en: 'What is your name?', he: 'מה שמך?' },
+  { en: 'Nice to meet you.', he: 'נעים להכיר.' },
+  { en: 'Please help us.', he: 'בבקשה עזרו לנו.' },
+  { en: 'Thank you.', he: 'תודה לך.' },
+  { en: 'Goodbye.', he: 'להתראות.' },
+];
+
+function game3() {
+  state.g3 = { step: 0, recorded: new Set() };
+  render(`
+    <div class="char-area">
+      <span class="char-emoji">🚀</span>
+    </div>
+    <div class="speech-bubble rtl" style="text-align:center">
+      החללית נוחתת בכוכב המלך...
+    </div>
+    <div class="speech-bubble" style="text-align:left;border-radius:16px 16px 4px 16px">
+      <strong>A.B:</strong> This must be the King's Planet! 👑<br>
+      <em style="font-size:.85rem">I am so excited... I've never been in a real palace!</em>
+    </div>
+    <button class="btn btn-next" onclick="game3_meetKing()" style="background:linear-gradient(135deg,#78350f,#f59e0b)">
+      Enter the Palace 👑
+    </button>
+  `);
+}
+
+function game3_meetKing() {
+  render(`
+    <div class="char-area">
+      <span class="char-emoji">👑</span>
+      <div class="char-name">The King</div>
+    </div>
+    <div class="speech-bubble" style="text-align:left;border-radius:16px 16px 4px 16px">
+      Hello! Who are you?
+    </div>
+    <div class="char-area" style="background:rgba(255,255,255,.04)">
+      <span class="char-emoji" style="font-size:2rem">🤖</span>
+      <div class="char-name">A.B</div>
+    </div>
+    <div class="speech-bubble rtl">We need help. We are stuck in a web.</div>
+    <div class="speech-bubble" style="text-align:left;border-radius:16px 16px 4px 16px; font-size:.85rem">
+      <strong>King:</strong> I can help you, but first — you must speak politely! In my kingdom, we speak politely. 🤵
+    </div>
+    <div class="speech-bubble rtl" style="font-size:.85rem">
+      <strong>A.B:</strong> וכאן אתם נכנסים! נלמד להיות מנומסים בארמון המלך!
+    </div>
+    <button class="btn btn-next" onclick="game3_sentences()" style="background:linear-gradient(135deg,#78350f,#f59e0b)">
+      Let's learn! ➡️
+    </button>
+  `);
+  speak("Hello! Who are you?");
+}
+
+function game3_sentences() {
+  const i = state.g3.step;
+  if (i >= KING_SENTENCES.length) { game3_end(); return; }
+  const s = KING_SENTENCES[i];
+  const total = KING_SENTENCES.length;
+
+  render(`
+    <div class="screen-title">Polite Phrases – King's Palace</div>
+    ${progressBar(i, total)}
+    <div class="sentence-card">
+      <div class="sentence-counter">Phrase ${i+1} of ${total}</div>
+      <div class="sentence-text">${s.en}</div>
+      <div class="sentence-translation">${s.he}</div>
+    </div>
+    <div class="speech-bubble rtl" style="font-size:.85rem">
+      קרא את המשפט, ואז לחץ על הכפתור והקלט!
+    </div>
+    <button class="btn btn-mic" id="recBtn" onclick="game3_record(${i})">
+      🎤 Record This Phrase
+    </button>
+    <div id="recStatus"></div>
+    <div class="btn-row" style="margin-top:.3rem">
+      <button class="btn-small" onclick="speak('${s.en.replace(/'/g,"\\'")}')">🔊 Hear it</button>
+      ${state.g3.recorded.has(i) ? `<button class="btn-small" style="background:rgba(16,185,129,.2);border-color:#34d399;color:#6ee7b7" onclick="game3_next(${i})">Next ➡️</button>` : ''}
+    </div>
+    ${dots(total, i)}
+  `);
+}
+
+function game3_record(idx) {
+  const btn = document.getElementById('recBtn');
+  const status = document.getElementById('recStatus');
+  btn.className = 'btn btn-mic recording';
+  btn.innerHTML = `<div class="waveform">${'<div class="wave-bar"></div>'.repeat(6)}</div> Recording...`;
+  status.innerHTML = `<div class="status-box status-listening">🎤 Say: "${KING_SENTENCES[idx].en}"</div>`;
+
+  startListening('en-US',
+    (text) => {
+      btn.className = 'btn btn-mic success';
+      btn.innerHTML = '✅ Recorded!';
+      status.innerHTML = `<div class="status-box status-success">✅ We heard: "${text}" 👍</div>`;
+      state.g3.recorded.add(idx);
+      setTimeout(() => game3_next(idx), 1200);
+    },
+    (err) => {
+      btn.className = 'btn btn-mic';
+      btn.innerHTML = '🎤 Try Again';
+      if (err === 'no-support') {
+        state.g3.recorded.add(idx);
+        status.innerHTML = `<div class="status-box status-info">✅ Demo mode – recorded! 🎙️</div>`;
+        setTimeout(() => game3_next(idx), 1200);
+      } else {
+        status.innerHTML = `<div class="status-box status-error">לא שמענו. נסה שוב! 🎤</div>`;
+      }
+    }
+  );
+}
+
+function game3_next(idx) {
+  state.g3.step = idx + 1;
+  game3_sentences();
+}
+
+function game3_end() {
+  render(`
+    <div class="char-area">
+      <span class="char-emoji">👑</span>
+    </div>
+    <div class="speech-bubble" style="text-align:left;border-radius:16px 16px 4px 16px">
+      Very good! You speak very politely! 🤵
+    </div>
+    <div class="speech-bubble" style="text-align:left;border-radius:16px 16px 4px 16px; font-size:.85rem">
+      Now — The Queen decides everything. Go find her a <strong>special gift</strong>. 🎁
+    </div>
+    <div class="speech-bubble rtl" style="font-size:.85rem">
+      <strong>A.B:</strong> תודה, מלך! נמצא מתנה למלכה!
+    </div>
+    <div class="code-box">
+      <div class="code-label">קוד לשיעור הבא ✍️</div>
+      <div class="code-value">QUEEN-03</div>
+      <div class="code-hint">הכניסו בבוחן בסקולר</div>
+    </div>
+  `);
+  speak("Very good! You speak very politely! Go find the Queen a special gift!");
+}
+
+// =================== GAME 4: QUEEN ===================
+const QUEEN_SENTENCES = [
+  { en: 'Hello Queen.', he: 'שלום מלכה.' },
+  { en: 'How are you?', he: 'מה שלומך?' },
+  { en: 'My name is ______.', he: 'שמי ______.' },
+  { en: 'Nice to meet you.', he: 'נעים להכיר.' },
+  { en: 'We have a gift for you.', he: 'יש לנו מתנה בשבילך.' },
+  { en: 'We came from many planets.', he: 'באנו מכוכבי לכת רבים.' },
+  { en: 'The witch made a web.', he: 'המכשפה יצרה קורי עכביש.' },
+  { en: 'We were stuck on the web.', he: 'היינו תקועים בקורים.' },
+  { en: 'Please help us.', he: 'בבקשה עזרי לנו.' },
+  { en: 'Thank you.', he: 'תודה לך.' },
+];
+
+function game4() {
+  state.g4 = { step: 0, recorded: new Set() };
+  render(`
+    <div class="char-area">
+      <span class="char-emoji">👸</span>
+      <div class="char-name">The Queen</div>
+    </div>
+    <div class="speech-bubble" style="text-align:left;border-radius:16px 16px 4px 16px">
+      Hello. What do you want?
+    </div>
+    <div class="char-area" style="background:rgba(255,255,255,.04)">
+      <span class="char-emoji" style="font-size:2rem">🤖</span>
+    </div>
+    <div class="speech-bubble rtl">
+      גם המלכה רוצה לשמוע אותנו מדברים בנימוס!
+      יופיע על המסך משפט – קראו אותו ואז הקליטו!
+    </div>
+    <button class="btn btn-next" onclick="game4_sentences()" style="background:linear-gradient(135deg,#831843,#ec4899)">
+      Let's begin! 👸
+    </button>
+  `);
+  speak("Hello. What do you want?");
+}
+
+function game4_sentences() {
+  const i = state.g4.step;
+  if (i >= QUEEN_SENTENCES.length) { game4_end(); return; }
+  const s = QUEEN_SENTENCES[i];
+  const total = QUEEN_SENTENCES.length;
+
+  render(`
+    <div class="screen-title">Polite Phrases – Queen's Palace</div>
+    ${progressBar(i, total)}
+    <div class="sentence-card" style="border-color:rgba(244,114,182,.4)">
+      <div class="sentence-counter">Phrase ${i+1} of ${total}</div>
+      <div class="sentence-text">${s.en}</div>
+      <div class="sentence-translation">${s.he}</div>
+    </div>
+    <button class="btn btn-mic" id="recBtn4" onclick="game4_record(${i})" style="background:linear-gradient(135deg,#9d174d,#ec4899)">
+      🎤 Record
+    </button>
+    <div id="recStatus4"></div>
+    <div class="btn-row">
+      <button class="btn-small" onclick="speak('${s.en.replace(/'/g,"\\'")}')">🔊 Hear it</button>
+    </div>
+    ${dots(total, i)}
+  `);
+}
+
+function game4_record(idx) {
+  const btn = document.getElementById('recBtn4');
+  const status = document.getElementById('recStatus4');
+  btn.className = 'btn btn-mic recording';
+  btn.innerHTML = `<div class="waveform">${'<div class="wave-bar"></div>'.repeat(6)}</div>`;
+  status.innerHTML = `<div class="status-box status-listening">🎤 Say: "${QUEEN_SENTENCES[idx].en}"</div>`;
+
+  startListening('en-US',
+    (text) => {
+      btn.className = 'btn btn-mic success';
+      btn.innerHTML = '✅ Recorded!';
+      status.innerHTML = `<div class="status-box status-success">✅ "${text}" 👍</div>`;
+      setTimeout(() => { state.g4.step = idx + 1; game4_sentences(); }, 1200);
+    },
+    (err) => {
+      btn.className = 'btn btn-mic';
+      btn.innerHTML = '🎤 Record';
+      btn.style.background = 'linear-gradient(135deg,#9d174d,#ec4899)';
+      if (err === 'no-support') {
+        status.innerHTML = `<div class="status-box status-info">Demo mode – recorded! 🎙️</div>`;
+        setTimeout(() => { state.g4.step = idx + 1; game4_sentences(); }, 1200);
+      } else {
+        status.innerHTML = `<div class="status-box status-error">Try again! 🎤</div>`;
+      }
+    }
+  );
+}
+
+function game4_end() {
+  render(`
+    <div class="char-area">
+      <span class="char-emoji">👸</span>
+    </div>
+    <div class="speech-bubble" style="text-align:left;border-radius:16px 16px 4px 16px">
+      You speak very nicely! 🌸<br>
+      I will help you.
+    </div>
+    <div class="celebration" style="font-size:2rem">✨🪄✨</div>
+    <div class="speech-bubble" style="text-align:left;border-radius:16px 16px 4px 16px">
+      <em>"Kind words open doors."</em> 🚪
+    </div>
+    <div class="speech-bubble rtl" style="font-size:.85rem">
+      🎊 A.B: look! We are free! קורי העכביש נעלמו!
+    </div>
+    <div class="code-box">
+      <div class="code-label">קוד לשיעור הבא ✍️</div>
+      <div class="code-value">YES-04</div>
+      <div class="code-hint">הכניסו בבוחן בסקולר</div>
+    </div>
+  `);
+  speak("You speak very nicely! Kind words open doors!");
+}
+
+// =================== GAME 5: YES WORLD ===================
+const SILENCE_PHRASES = [
+  { en: "Don't be sad.", he: "אל תהיה עצוב." },
+  { en: "Don't be angry.", he: "אל תהיה כועס." },
+  { en: "Don't be afraid.", he: "אל תפחד." },
+  { en: "We are your friends.", he: "אנחנו החברים שלך." },
+  { en: "You are not alone.", he: "אתה לא לבד." },
+];
+
+const YES_NO_QUESTIONS = [
+  { q: "Friends? You want to be my friend?", answer: "YES" },
+  { q: "Do you like me?", answer: "YES" },
+  { q: "Do you want me to go away?", answer: "NO" },
+];
+
+function game5() {
+  state.g5 = { phase: 'intro' };
+  render(`
+    <div class="char-area">
+      <span class="char-emoji">🌟</span>
+      <div class="char-name">Yes Planet!</div>
+    </div>
+    <div class="speech-bubble" style="text-align:left;border-radius:16px 16px 4px 16px">
+      <strong>A.B:</strong> This is Yes Planet. Silence <em>hates</em> this planet! 😄
+    </div>
+    <div class="speech-bubble" style="text-align:left;border-radius:16px 16px 4px 16px; font-size:.85rem">
+      <strong>Queen:</strong> On this planet, people help each other. People say YES. ✨
+    </div>
+    <div class="speech-bubble rtl" style="font-size:.85rem">
+      רואים שם פינה? זה Silence – הוא יושב לבד ונראה עצוב...
+    </div>
+    <button class="btn btn-next" onclick="game5_silence()" style="background:linear-gradient(135deg,#064e3b,#10b981)">
+      Let's talk to Silence 🌑
+    </button>
+  `);
+}
+
+function game5_silence() {
+  state.g5.phraseIdx = 0;
+  render(`
+    <div class="char-area">
+      <span class="char-emoji">🌑</span>
+      <div class="char-name">Silence</div>
+    </div>
+    <div class="speech-bubble" style="text-align:left;border-radius:16px 16px 4px 16px">
+      Go away. I don't like this planet.
+    </div>
+    <div class="speech-bubble" style="text-align:left;border-radius:16px 16px 4px 16px; font-size:.85rem">
+      <em>Everyone is happy here and I am not happy. Because I lost. You found all the buttons. You don't need me.</em>
+    </div>
+    <div class="speech-bubble rtl">
+      <strong>A.B:</strong> That is not true! Let's talk to Silence. Let's show him we care!
+    </div>
+    <button class="btn btn-next" onclick="game5_phrases()" style="background:linear-gradient(135deg,#064e3b,#10b981)">
+      Talk to Silence ➡️
+    </button>
+  `);
+  speak("Go away. I don't like this planet. Everyone is happy here and I am not.");
+}
+
+function game5_phrases() {
+  const i = state.g5.phraseIdx || 0;
+  if (i >= SILENCE_PHRASES.length) { game5_yesno(0); return; }
+  const s = SILENCE_PHRASES[i];
+
+  render(`
+    <div class="screen-title">Say it to Silence 🌑</div>
+    ${progressBar(i, SILENCE_PHRASES.length + YES_NO_QUESTIONS.length)}
+    <div class="char-area">
+      <span class="char-emoji">🌑</span>
+    </div>
+    <div class="sentence-card" style="border-color:rgba(52,211,153,.3)">
+      <div class="sentence-counter">Phrase ${i+1} of ${SILENCE_PHRASES.length}</div>
+      <div class="sentence-text">${s.en}</div>
+      <div class="sentence-translation">${s.he}</div>
+    </div>
+    <button class="btn btn-mic" id="recBtn5" onclick="game5_recordPhrase(${i})" style="background:linear-gradient(135deg,#064e3b,#10b981)">
+      🎤 Say it!
+    </button>
+    <div id="recStatus5"></div>
+    <div class="btn-row">
+      <button class="btn-small" onclick="speak('${s.en.replace(/'/g,"\\'")}')">🔊 Hear it</button>
+    </div>
+    ${dots(SILENCE_PHRASES.length + YES_NO_QUESTIONS.length, i)}
+  `);
+}
+
+function game5_recordPhrase(idx) {
+  const btn = document.getElementById('recBtn5');
+  const status = document.getElementById('recStatus5');
+  btn.className = 'btn btn-mic recording';
+  btn.innerHTML = `<div class="waveform">${'<div class="wave-bar"></div>'.repeat(6)}</div>`;
+
+  startListening('en-US',
+    (text) => {
+      btn.className = 'btn btn-mic success';
+      btn.innerHTML = '✅';
+      status.innerHTML = `<div class="status-box status-success">✅ Silence heard you!</div>`;
+      setTimeout(() => { state.g5.phraseIdx = idx + 1; game5_phrases(); }, 1000);
+    },
+    (err) => {
+      btn.className = 'btn btn-mic';
+      btn.innerHTML = '🎤 Say it!';
+      btn.style.background = 'linear-gradient(135deg,#064e3b,#10b981)';
+      status.innerHTML = `<div class="status-box ${err==='no-support'?'status-info':'status-error'}">${err==='no-support'?'Demo – recorded!':'Try again!'}</div>`;
+      if (err === 'no-support') setTimeout(() => { state.g5.phraseIdx = idx + 1; game5_phrases(); }, 1200);
+    }
+  );
+}
+
+function game5_yesno(qIdx) {
+  if (qIdx >= YES_NO_QUESTIONS.length) { game5_reconciliation(); return; }
+  const q = YES_NO_QUESTIONS[qIdx];
+
+  render(`
+    <div class="char-area">
+      <span class="char-emoji">🌑</span>
+    </div>
+    <div class="speech-bubble" style="text-align:left;border-radius:16px 16px 4px 16px;font-size:.95rem">
+      ${q.q}
+    </div>
+    <div class="speech-bubble rtl" style="font-size:.85rem">
+      ענה <strong>${q.answer}</strong> בקול, או לחץ על הכפתור:
+    </div>
+    <button class="btn btn-mic" id="yesnoBtn" onclick="game5_listenYesNo(${qIdx})" style="background:linear-gradient(135deg,#064e3b,#10b981)">
+      🎤 Answer YES or NO
+    </button>
+    <div id="yesnoStatus"></div>
+    <div class="btn-row">
+      <button class="btn-yes" onclick="game5_answerYesNo(${qIdx},'YES')">YES ✓</button>
+      <button class="btn-no" onclick="game5_answerYesNo(${qIdx},'NO')">NO ✗</button>
+    </div>
+    ${dots(SILENCE_PHRASES.length + YES_NO_QUESTIONS.length, SILENCE_PHRASES.length + qIdx)}
+  `);
+  speak(q.q);
+}
+
+function game5_listenYesNo(qIdx) {
+  const btn = document.getElementById('yesnoBtn');
+  const status = document.getElementById('yesnoStatus');
+  btn.className = 'btn btn-mic recording';
+  btn.innerHTML = `<div class="waveform">${'<div class="wave-bar"></div>'.repeat(6)}</div>`;
+
+  startListening('en-US',
+    (text) => {
+      const t = text.toUpperCase();
+      if (t.includes('YES') || t.includes('YEA') || t.includes('YEAH')) {
+        game5_answerYesNo(qIdx, 'YES');
+      } else if (t.includes('NO')) {
+        game5_answerYesNo(qIdx, 'NO');
+      } else {
+        btn.className = 'btn btn-mic';
+        btn.innerHTML = '🎤 Try Again';
+        btn.style.background = 'linear-gradient(135deg,#064e3b,#10b981)';
+        status.innerHTML = `<div class="status-box status-error">Say YES or NO clearly! 🗣️</div>`;
+      }
+    },
+    (err) => {
+      btn.className = 'btn btn-mic';
+      btn.innerHTML = '🎤 Answer';
+      btn.style.background = 'linear-gradient(135deg,#064e3b,#10b981)';
+      if (err === 'no-support') game5_answerYesNo(qIdx, YES_NO_QUESTIONS[qIdx].answer);
+      else status.innerHTML = `<div class="status-box status-error">Try again!</div>`;
+    }
+  );
+}
+
+function game5_answerYesNo(qIdx, answer) {
+  const q = YES_NO_QUESTIONS[qIdx];
+  const correct = answer === q.answer;
+  const status = document.getElementById('yesnoStatus');
+  if (status) {
+    status.innerHTML = `<div class="status-box ${correct?'status-success':'status-error'}">
+      ${correct ? `✅ ${answer}! That's right!` : `❌ Try saying "${q.answer}"!`}
+    </div>`;
+  }
+  if (correct) {
+    setTimeout(() => game5_yesno(qIdx + 1), 1200);
+  }
+}
+
+function game5_reconciliation() {
+  render(`
+    <div class="char-area">
+      <span class="char-emoji">🌑</span>
+    </div>
+    <div class="speech-bubble" style="text-align:left;border-radius:16px 16px 4px 16px;font-size:.9rem">
+      <em>I am sorry. I took the buttons. I made problems. I am sorry!</em>
+    </div>
+    <div class="celebration" style="font-size:2rem">⌨️✨</div>
+    <div class="speech-bubble" style="text-align:left;border-radius:16px 16px 4px 16px;font-size:.9rem">
+      <strong>A.B:</strong> We have all the letters! We fixed the keyboard! 🎉
+    </div>
+    <div class="speech-bubble rtl" style="font-size:.85rem">
+      <strong>המלכה:</strong> You worked together! You did a great job! 🌟
+    </div>
+    <button class="btn btn-next" onclick="game5_end()" style="background:linear-gradient(135deg,#064e3b,#10b981)">
+      Let's go together! 🚀
+    </button>
+  `);
+  speak("I am sorry. I took the buttons. I am sorry!");
+}
+
+function game5_end() {
+  render(`
+    <div class="celebration">
+      <div class="big-emoji">🚀🌟🎉</div>
+      <div class="confetti-row">✨ 🎊 ⭐ 🎊 ✨</div>
+    </div>
+    <div class="speech-bubble" style="text-align:left;border-radius:16px 16px 4px 16px;font-size:1rem">
+      <strong>A.B:</strong> You did it! You helped everyone! Ready for new worlds?! 🌌
+    </div>
+    <div class="speech-bubble rtl" style="text-align:center">
+      🎊 סיימתם את הקורס! כל הכבוד!<br>
+      <strong style="font-size:1.1rem">THE END ✨</strong>
+    </div>
+    <div class="code-box">
+      <div class="code-label">🏆 הצלחת במשימה!</div>
+      <div class="code-value" style="font-size:1.1rem">MISSION-COMPLETE</div>
+      <div class="code-hint">הכניסו בבוחן הסיום בסקולר</div>
+    </div>
+  `);
+  speak("You did it! You helped everyone! The adventure continues in new worlds!");
+}
+
+// =================== RENDERERS MAP ===================
+const RENDERERS = {
+  1: game1_screen1,
+  2: game2,
+  3: game3,
+  4: game4,
+  5: game5,
+};
+
+// =================== INIT ===================
+selectGame(1);
+</script>
+</body>
+</html>
