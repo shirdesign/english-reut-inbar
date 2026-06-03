@@ -113,6 +113,37 @@ body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color:
 .wf-video { background: #000; border-radius: 6px; width: 100%; height: 55px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; }
 .wf-row { display: flex; gap: .25rem; justify-content: center; width: 100%; }
 
+/* Desktop wireframe */
+.desktops-row { display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 1rem; margin: 1rem 0; }
+.desktop-wrap { flex-shrink: 0; text-align: center; }
+.desktop-label { font-size: .75rem; color: var(--muted); margin-bottom: .4rem; font-weight: 600; }
+.desktop {
+  width: 460px; border: 2px solid #334155; border-radius: 10px;
+  background: #080820; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,.12);
+}
+.desktop-bar { height: 22px; background: #1e2436; display: flex; align-items: center; gap: .3rem; padding: 0 .5rem; }
+.desktop-bar::before, .desktop-bar::after, .desktop-bar div { content: ''; width: 9px; height: 9px; border-radius: 50%; background: #475569; display: inline-block; }
+.desktop-body { padding: 1rem; min-height: 280px; background: #080820; display: flex; gap: 1rem; }
+.desktop-side { width: 100px; flex-shrink: 0; }
+.desktop-side .side-title { color: rgba(255,255,255,.4); font-size: .55rem; margin-bottom: .4rem; text-transform: uppercase; letter-spacing: 1px; }
+.desktop-side .side-item { color: rgba(255,255,255,.45); font-size: .65rem; padding: .3rem .4rem; border-radius: 6px; margin-bottom: .2rem; }
+.desktop-side .side-item.active { background: rgba(99,102,241,.25); color: #c4b5fd; font-weight: 700; }
+.desktop-main { flex: 1; display: flex; flex-direction: column; gap: .5rem; }
+.dw-row { display: flex; gap: .5rem; }
+.dw-card { background: rgba(255,255,255,.06); border-radius: 10px; padding: .6rem; flex: 1; }
+.dw-card .lbl { color: rgba(255,255,255,.4); font-size: .55rem; margin-bottom: .2rem; }
+.dw-card .body { color: white; font-size: .7rem; }
+.dw-bubble { background: rgba(255,255,255,.85); color: #1e293b; border-radius: 8px; padding: .4rem; font-size: .65rem; margin-top: .3rem; }
+.dw-input { background: rgba(255,255,255,.12); border-radius: 8px; padding: .6rem; text-align: center; color: white; font-size: .85rem; font-weight: 700; }
+.dw-btn { color: white; border-radius: 8px; padding: .35rem .6rem; font-size: .65rem; font-weight: 700; text-align: center; }
+.dw-btn-mic { background: #ef4444; }
+.dw-btn-next { background: #6366f1; }
+.dw-btn-play { background: #3b82f6; }
+.dw-progress { background: rgba(255,255,255,.08); border-radius: 4px; height: 3px; }
+.dw-progress > div { height: 3px; border-radius: 4px; }
+.dw-char-row { display: flex; align-items: center; gap: .5rem; background: rgba(255,255,255,.06); border-radius: 10px; padding: .5rem .7rem; }
+.dw-char-emoji { font-size: 1.4rem; }
+
 /* Game header */
 .game-header {
   border-radius: 12px; padding: 1.2rem 1.5rem; color: #fff;
@@ -509,6 +540,51 @@ tr:hover td { background: #f8fafc; }
     </div>
   </div>
 
+  <!-- Desktop wireframe G1 -->
+  <div class="card" style="margin-top:1rem">
+    <h3>🖥️ Wireframe דסקטופ – משחק 1 (1280px)</h3>
+    <div class="desktops-row">
+      <div class="desktop-wrap">
+        <div class="desktop-label">מסך הקלטת ABC</div>
+        <div class="desktop">
+          <div class="desktop-bar"><div></div><div></div><div></div></div>
+          <div class="desktop-body">
+            <div class="desktop-side">
+              <div class="side-title">משחקים</div>
+              <div class="side-item active">🚀 פתיחה</div>
+              <div class="side-item">🔵 AEIOU</div>
+              <div class="side-item">👑 המלך</div>
+              <div class="side-item">👸 המלכה</div>
+              <div class="side-item">🌟 YES</div>
+            </div>
+            <div class="desktop-main">
+              <div class="dw-char-row">
+                <span class="dw-char-emoji">🚀</span>
+                <div class="dw-bubble" style="margin:0;flex:1">לחצו על הכפתור ואמרו את ה-ABC! ⚠️ Silence שומע!</div>
+              </div>
+              <div class="dw-row">
+                <div class="dw-card" style="flex:2">
+                  <div class="lbl">בחירת גרסה:</div>
+                  <div style="display:flex;gap:.3rem;margin-top:.3rem">
+                    <div class="dw-btn dw-btn-play" style="flex:1">A–Z מלא</div>
+                    <div class="dw-btn" style="background:rgba(255,255,255,.1);flex:1">A–M</div>
+                    <div class="dw-btn" style="background:rgba(255,255,255,.1);flex:1">N–Z</div>
+                  </div>
+                </div>
+                <div class="dw-card" style="flex:1;background:#000;display:flex;align-items:center;justify-content:center">
+                  <span style="color:white;font-size:1.2rem">▶ Vimeo</span>
+                </div>
+              </div>
+              <div class="dw-input">🎤 A B C D E F G... אמור עד Z</div>
+              <div class="dw-btn dw-btn-mic" style="padding:.5rem">🎤 הקלט ABC</div>
+              <div class="dw-progress"><div style="background:#6366f1;width:60%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="note note-yellow">
     <strong>⚠️ ולידציה ABC:</strong> כשהילד אומר ABC, המשחק בודק שהמילים A, B, C ו-Z נאמרו (לא חייב מושלם). אם רוב האותיות נשמעות – עובר. אם לא – הודעת עידוד ונסיון נוסף.
   </div>
@@ -585,6 +661,48 @@ tr:hover td { background: #f8fafc; }
         </div></div>
       </div>
 
+    </div>
+  </div>
+
+  <!-- Desktop wireframe G2 -->
+  <div class="card" style="margin-top:1rem">
+    <h3>🖥️ Wireframe דסקטופ – משחק 2 (1280px)</h3>
+    <div class="desktops-row">
+      <div class="desktop-wrap">
+        <div class="desktop-label">מסך 5 כפתורים AEIOU</div>
+        <div class="desktop">
+          <div class="desktop-bar"><div></div><div></div><div></div></div>
+          <div class="desktop-body">
+            <div class="desktop-side">
+              <div class="side-title">משחקים</div>
+              <div class="side-item">🚀 פתיחה</div>
+              <div class="side-item active">🔵 AEIOU</div>
+              <div class="side-item">👑 המלך</div>
+              <div class="side-item">👸 המלכה</div>
+              <div class="side-item">🌟 YES</div>
+            </div>
+            <div class="desktop-main">
+              <div class="dw-char-row">
+                <span class="dw-char-emoji">🤖</span>
+                <div class="dw-bubble" style="margin:0;flex:1">מה קורה פה? לחץ על כל רובוט-כפתור כדי לשמוע!</div>
+              </div>
+              <div style="display:flex;gap:.6rem;justify-content:center;padding:.8rem 0">
+                <div style="width:48px;height:48px;border-radius:50%;border:2px solid #f87171;background:rgba(248,113,113,.2);display:flex;align-items:center;justify-content:center;color:white;font-weight:900">A</div>
+                <div style="width:48px;height:48px;border-radius:50%;border:2px solid #fb923c;background:rgba(251,146,60,.2);display:flex;align-items:center;justify-content:center;color:white;font-weight:900">E</div>
+                <div style="width:48px;height:48px;border-radius:50%;border:2px solid #a3e635;background:rgba(163,230,53,.2);display:flex;align-items:center;justify-content:center;color:white;font-weight:900">I</div>
+                <div style="width:48px;height:48px;border-radius:50%;border:2px solid #34d399;background:rgba(52,211,153,.2);display:flex;align-items:center;justify-content:center;color:white;font-weight:900">O</div>
+                <div style="width:48px;height:48px;border-radius:50%;border:2px solid #60a5fa;background:rgba(96,165,250,.2);display:flex;align-items:center;justify-content:center;color:white;font-weight:900">U</div>
+              </div>
+              <div class="dw-card">
+                <div class="lbl">A = /æ/ | apple, ant</div>
+                <div class="dw-bubble">"æ æ æ! I am robot A! Silence took my letter!"</div>
+              </div>
+              <div class="dw-input" style="background:rgba(99,102,241,.15);font-size:.7rem">לחצת על 1 / 5 כפתורים</div>
+              <div class="dw-btn dw-btn-next" style="opacity:.4">המשך (לאחר 5 לחיצות)</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -697,6 +815,52 @@ tr:hover td { background: #f8fafc; }
 
     </div>
   </div>
+
+  <!-- Desktop wireframe G3 -->
+  <div class="card" style="margin-top:1rem">
+    <h3>🖥️ Wireframe דסקטופ – משחק 3 (1280px)</h3>
+    <div class="desktops-row">
+      <div class="desktop-wrap">
+        <div class="desktop-label">מסך הקלטת משפט מול המלך</div>
+        <div class="desktop">
+          <div class="desktop-bar"><div></div><div></div><div></div></div>
+          <div class="desktop-body">
+            <div class="desktop-side">
+              <div class="side-title">משחקים</div>
+              <div class="side-item">🚀 פתיחה</div>
+              <div class="side-item">🔵 AEIOU</div>
+              <div class="side-item active">👑 המלך</div>
+              <div class="side-item">👸 המלכה</div>
+              <div class="side-item">🌟 YES</div>
+            </div>
+            <div class="desktop-main">
+              <div class="dw-row">
+                <div class="dw-card">
+                  <div class="lbl">👑 המלך:</div>
+                  <div class="dw-bubble" style="margin-top:.2rem">In my kingdom, we speak politely!</div>
+                </div>
+                <div class="dw-card">
+                  <div class="lbl">🤖 A.B:</div>
+                  <div class="dw-bubble" style="margin-top:.2rem">Yes, your majesty! Let's learn!</div>
+                </div>
+              </div>
+              <div class="dw-card" style="background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3)">
+                <div class="lbl" style="color:#fbbf24">משפט 3 מתוך 8:</div>
+                <div class="dw-input" style="background:rgba(255,255,255,.15);font-size:1rem;margin-top:.3rem">My name is ______.</div>
+                <div class="lbl" style="text-align:center;margin-top:.3rem">שמי ______</div>
+              </div>
+              <div style="display:flex;gap:.5rem">
+                <div class="dw-btn dw-btn-mic" style="flex:2;padding:.5rem">🎤 הקלט</div>
+                <div class="dw-btn" style="background:rgba(255,255,255,.12);flex:1">🔊 שמע</div>
+                <div class="dw-btn dw-btn-next" style="flex:1">הבא ▶</div>
+              </div>
+              <div class="dw-progress"><div style="background:#f59e0b;width:37%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- ===== GAME 4 ===== -->
@@ -734,6 +898,47 @@ tr:hover td { background: #f8fafc; }
       <tr><td>9</td><td>Please help us.</td><td>15 שנ׳</td></tr>
       <tr><td>10</td><td>Thank you.</td><td>15 שנ׳</td></tr>
     </table>
+  </div>
+
+  <!-- Desktop wireframe G4 -->
+  <div class="card" style="margin-top:1rem">
+    <h3>🖥️ Wireframe דסקטופ – משחק 4 (1280px)</h3>
+    <div class="desktops-row">
+      <div class="desktop-wrap">
+        <div class="desktop-label">מסך הקלטת משפט מול המלכה + שחרור הקורים</div>
+        <div class="desktop">
+          <div class="desktop-bar"><div></div><div></div><div></div></div>
+          <div class="desktop-body">
+            <div class="desktop-side">
+              <div class="side-title">משחקים</div>
+              <div class="side-item">🚀 פתיחה</div>
+              <div class="side-item">🔵 AEIOU</div>
+              <div class="side-item">👑 המלך</div>
+              <div class="side-item active">👸 המלכה</div>
+              <div class="side-item">🌟 YES</div>
+            </div>
+            <div class="desktop-main">
+              <div class="dw-char-row" style="background:rgba(236,72,153,.12)">
+                <span class="dw-char-emoji">👸</span>
+                <div class="dw-bubble" style="margin:0;flex:1">Hello! What do you want?</div>
+              </div>
+              <div class="dw-card" style="background:rgba(236,72,153,.1);border:1px solid rgba(236,72,153,.3)">
+                <div class="lbl" style="color:#f9a8d4">משפט 5 מתוך 10:</div>
+                <div class="dw-input" style="background:rgba(255,255,255,.15);font-size:.95rem;margin-top:.3rem">We have a gift for you.</div>
+                <div class="lbl" style="text-align:center;margin-top:.3rem">יש לנו מתנה בשבילך</div>
+              </div>
+              <div style="display:flex;gap:.5rem">
+                <div class="dw-btn" style="background:linear-gradient(135deg,#9d174d,#ec4899);flex:2;padding:.5rem">🎤 הקלט</div>
+                <div class="dw-btn" style="background:rgba(255,255,255,.12);flex:1">🔊 שמע</div>
+                <div class="dw-btn dw-btn-next" style="flex:1">הבא ▶</div>
+              </div>
+              <div class="dw-progress"><div style="background:#ec4899;width:50%"></div></div>
+              <div style="text-align:center;font-size:.65rem;color:rgba(255,255,255,.4)">🪄 בסיום: אנימציית שחרור קורי העכביש</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="note note-green">
@@ -816,6 +1021,45 @@ tr:hover td { background: #f8fafc; }
             <div class="wf-btn wf-next">THE END 🌟</div>
           </div>
         </div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Desktop wireframe G5 -->
+  <div class="card" style="margin-top:1rem">
+    <h3>🖥️ Wireframe דסקטופ – משחק 5 (1280px)</h3>
+    <div class="desktops-row">
+      <div class="desktop-wrap">
+        <div class="desktop-label">מסך שאלת YES/NO עם Silence</div>
+        <div class="desktop">
+          <div class="desktop-bar"><div></div><div></div><div></div></div>
+          <div class="desktop-body">
+            <div class="desktop-side">
+              <div class="side-title">משחקים</div>
+              <div class="side-item">🚀 פתיחה</div>
+              <div class="side-item">🔵 AEIOU</div>
+              <div class="side-item">👑 המלך</div>
+              <div class="side-item">👸 המלכה</div>
+              <div class="side-item active">🌟 YES</div>
+            </div>
+            <div class="desktop-main">
+              <div class="dw-char-row" style="background:rgba(16,185,129,.1)">
+                <span class="dw-char-emoji">🌑</span>
+                <div class="dw-bubble" style="margin:0;flex:1">Friends? You want to be my friend?</div>
+              </div>
+              <div class="dw-card">
+                <div class="lbl">ענה בקול:</div>
+                <div class="dw-btn" style="background:linear-gradient(135deg,#064e3b,#10b981);padding:.5rem;margin-top:.3rem">🎤 אמור YES או NO</div>
+              </div>
+              <div style="display:flex;gap:.5rem">
+                <div class="dw-btn" style="background:#10b981;flex:1;padding:.5rem;font-size:.9rem">YES ✓</div>
+                <div class="dw-btn" style="background:#ef4444;flex:1;padding:.5rem;font-size:.9rem">NO ✗</div>
+              </div>
+              <div class="dw-progress"><div style="background:#10b981;width:75%"></div></div>
+              <div style="text-align:center;font-size:.65rem;color:rgba(255,255,255,.4)">🎉 בסיום: פיוס + לוגו הקורס</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
