@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>גרסה 1 — לפני האפיון החדש (שימור מדויק)</title>
+<style>
+:root {
+  --primary: #1e1b4b; --accent: #6366f1;
+  --g1: #3b82f6; --g3: #f59e0b; --g4: #ec4899; --g5: #10b981;
+  --bg: #f8fafc; --card: #fff; --border: #e2e8f0; --text: #1e293b; --muted: #64748b;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 1rem; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin: 1rem 0; }
+.card h3 { margin-bottom: .8rem; color: var(--primary); }
+.panel { display: none; }
+.panel.active { display: block; }
+.source-note { background:#f1f5f9; border:1px solid #cbd5e1; border-radius:8px; padding:.6rem .9rem; font-size:.78rem; color:#475569; margin-bottom:1rem; }
+.game-header { border-radius: 12px; padding: 1rem 1.3rem; color: #fff; display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+.game-icon { font-size: 2.2rem; }
+.game-meta h3 { font-size: 1.15rem; margin-bottom: .2rem; color:#fff; }
+.game-meta p { font-size: .85rem; opacity: .85; }
+.tag { display: inline-block; padding: .2rem .7rem; border-radius: 12px; font-size: .78rem; font-weight: 600; margin: .15rem; }
+.tag-blue { background: #dbeafe; color: #1e40af; }
+.tag-yellow { background: #fef3c7; color: #92400e; }
+.tag-pink { background: #fce7f3; color: #9d174d; }
+.tag-green { background: #d1fae5; color: #065f46; }
+
+/* ===== exact copy of phone wireframe system from spec.html ===== */
+.screens-row { display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 1rem; margin: 1rem 0; }
+.phone-wrap { flex-shrink: 0; text-align: center; }
+.phone-label { font-size: .75rem; color: var(--muted); margin-bottom: .4rem; font-weight: 600; }
+.phone { width: 200px; border: 2px solid #334155; border-radius: 24px; background: #f1f5f9; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,.12); }
+.phone-bar { height: 20px; background: #334155; border-radius: 22px 22px 0 0; }
+.phone-body { padding: .6rem; display: flex; flex-direction: column; gap: .4rem; min-height: 340px; }
+.wf-bg { background: #0a0a2e; border-radius: 8px; flex: 1; padding: .5rem; display: flex; flex-direction: column; gap: .3rem; align-items: center; justify-content: center; }
+.wf-char { background: rgba(255,255,255,.15); border: 1px dashed rgba(255,255,255,.4); border-radius: 8px; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; }
+.wf-bubble { background: rgba(255,255,255,.9); color: #1e293b; border-radius: 8px; padding: .3rem .5rem; font-size: .7rem; text-align: center; max-width: 100%; }
+.wf-btn { border-radius: 20px; padding: .25rem .6rem; font-size: .7rem; font-weight: 700; color: #fff; text-align: center; border: none; }
+.wf-mic { background: #ef4444; } .wf-play { background: #3b82f6; } .wf-next { background: #10b981; } .wf-choice { background: #6366f1; }
+.wf-divider { height: 1px; background: rgba(255,255,255,.2); width: 90%; }
+.wf-input { background: rgba(255,255,255,.85); border-radius: 6px; padding: .25rem .5rem; font-size: .7rem; color: #374151; text-align: center; width: 90%; }
+.wf-title { color: rgba(255,255,255,.9); font-size: .75rem; font-weight: 700; text-align: center; }
+.wf-sub { color: rgba(255,255,255,.65); font-size: .65rem; text-align: center; }
+.wf-video { background: #000; border-radius: 6px; width: 100%; height: 55px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; }
+.wf-row { display: flex; gap: .25rem; justify-content: center; width: 100%; }
+
+.desktops-row { display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 1rem; margin: 1rem 0; }
+.desktop-wrap { flex-shrink: 0; text-align: center; }
+.desktop-label { font-size: .75rem; color: var(--muted); margin-bottom: .4rem; font-weight: 600; }
+.desktop { width: 460px; border: 2px solid #334155; border-radius: 10px; background: #080820; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,.12); }
+.desktop-bar { height: 22px; background: #1e2436; display: flex; align-items: center; gap: .3rem; padding: 0 .5rem; }
+.desktop-bar div { width: 9px; height: 9px; border-radius: 50%; background: #475569; display: inline-block; }
+.desktop-body { padding: 1.5rem 2rem; min-height: 200px; background: #080820; display: flex; gap: 1rem; justify-content: center; }
+.desktop-main { flex: 1; display: flex; flex-direction: column; gap: .5rem; }
+.dw-row { display: flex; gap: .5rem; }
+.dw-card { background: rgba(255,255,255,.06); border-radius: 10px; padding: .6rem; flex: 1; }
+.dw-card .lbl { color: rgba(255,255,255,.4); font-size: .55rem; margin-bottom: .2rem; }
+.dw-bubble { background: rgba(255,255,255,.85); color: #1e293b; border-radius: 8px; padding: .4rem; font-size: .65rem; margin-top: .3rem; }
+.dw-input { background: rgba(255,255,255,.12); border-radius: 8px; padding: .6rem; text-align: center; color: white; font-size: .85rem; font-weight: 700; }
+.dw-btn { color: white; border-radius: 8px; padding: .35rem .6rem; font-size: .65rem; font-weight: 700; text-align: center; }
+.dw-btn-mic { background: #ef4444; } .dw-btn-next { background: #6366f1; } .dw-btn-play{background:#3b82f6;}
+.dw-progress { background: rgba(255,255,255,.08); border-radius: 4px; height: 3px; }
+.dw-progress > div { height: 3px; border-radius: 4px; }
+.dw-char-row { display: flex; align-items: center; gap: .5rem; background: rgba(255,255,255,.06); border-radius: 10px; padding: .5rem .7rem; }
+.dw-char-emoji { font-size: 1.4rem; }
+</style>
+</head>
+<body>
+
+<div class="source-note">📌 גרסה זו היא שימור מדויק של ה-wireframes הקיימים ב-<code>spec.html</code> (קטעים g1, g3, g4, g5) — ללא כל תיקון או עדכון. המקור המוגן: <code>/Users/shiratgoldstein/english_reut_inbar/spec.html</code> (לא נערך).</div>
+
+<!-- ================= OPENING (orig g1) ================= -->
+<div class="panel" id="panel-opening">
+  <div class="game-header" style="background:linear-gradient(135deg,#1e3a8a,#3b82f6)">
+    <div class="game-icon">🚀</div>
+    <div class="game-meta"><h3>כניסה לחללית – מי אתה? (כפי שהיה בספק המקורי — משחק 1)</h3><p>משך: ~3 דק׳ | נושא: היכרות + שיר ABC</p></div>
+    <div><span class="tag tag-blue">הקלטה: שם</span><span class="tag tag-blue">הקלטה: ABC</span><span class="tag tag-blue">וידאו Vimeo</span></div>
+  </div>
+  <div class="card">
+    <h3>📱 Wireframes (spec.html §5, ללא שינוי)</h3>
+    <div class="screens-row">
+      <div class="phone-wrap"><div class="phone-label">מסך 1: מה שמך?</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
+          <div class="wf-title">🚀 משימה סודית</div><div class="wf-char">🤖</div>
+          <div class="wf-bubble">רגע! לא אמרתם לי מה השם שלכם!</div><div class="wf-divider"></div>
+          <div class="wf-sub">לחצו ואמרו את שמכם:</div><div class="wf-btn wf-mic">🎤 אמור שם</div>
+        </div></div></div></div>
+      <div class="phone-wrap"><div class="phone-label">מסך 2: ברכה + LET'S GO</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
+          <div class="wf-char">🤖</div><div class="wf-bubble">שלום [שם]! ברוכים הבאים למשימה!</div>
+          <div class="wf-divider"></div><div class="wf-bubble">מוכנים להרפתקה?</div><div class="wf-btn wf-next">LET'S GO! 🚀</div>
+        </div></div></div></div>
+      <div class="phone-wrap"><div class="phone-label">מסך 3: שמע ABC</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
+          <div class="wf-title">📻 מסר נכנס מהחלל!</div><div class="wf-video">▶</div><div class="wf-sub">סרטון ABC (Vimeo)</div>
+          <div class="wf-divider"></div><div class="wf-sub">בחר גרסה:</div>
+          <div class="wf-row"><div class="wf-btn wf-play" style="font-size:.55rem">A–Z מלא</div><div class="wf-btn wf-choice" style="font-size:.55rem">A–M</div><div class="wf-btn wf-choice" style="font-size:.55rem">N–Z</div></div>
+          <div class="wf-btn wf-next" style="margin-top:.3rem">קדימה ←</div>
+        </div></div></div></div>
+      <div class="phone-wrap"><div class="phone-label">מסך 4: אמור ABC</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
+          <div class="wf-char">🚀</div><div class="wf-bubble">לחצו על הכפתור ואמרו את ה-ABC!</div>
+          <div class="wf-sub" style="color:#fbbf24">⚠️ Silence שומע – אל תשתקו!</div><div class="wf-divider"></div>
+          <div class="wf-btn wf-mic">🎤 אמור ABC</div><div class="wf-sub">א"ב ג"ד... (A B C D...)</div>
+        </div></div></div></div>
+      <div class="phone-wrap"><div class="phone-label">מסך 5: הצלחה + קוד</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
+          <div class="wf-title" style="color:#4ade80;font-size:1rem">🎉 כל הכבוד!</div><div class="wf-char" style="font-size:2.5rem">🚀</div>
+          <div class="wf-bubble">החללית נפתחה! המסע מתחיל!</div><div class="wf-divider"></div>
+          <div class="wf-input">קוד כניסה לשיעור הבא:<br><strong>AEIOU-01</strong></div><div class="wf-sub">כתבו את הקוד ✍️</div>
+        </div></div></div></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>🖥️ Wireframe דסקטופ (spec.html §5)</h3>
+    <div class="desktops-row"><div class="desktop-wrap"><div class="desktop-label">מסך הקלטת ABC</div>
+      <div class="desktop"><div class="desktop-bar"><div></div><div></div><div></div></div><div class="desktop-body"><div class="desktop-main">
+        <div class="dw-char-row"><span class="dw-char-emoji">🚀</span><div class="dw-bubble" style="margin:0;flex:1">לחצו על הכפתור ואמרו את ה-ABC! ⚠️ Silence שומע!</div></div>
+        <div class="dw-row"><div class="dw-card" style="flex:2"><div class="lbl">בחירת גרסה:</div>
+          <div style="display:flex;gap:.3rem;margin-top:.3rem"><div class="dw-btn dw-btn-play" style="flex:1">A–Z מלא</div><div class="dw-btn" style="background:rgba(255,255,255,.1);flex:1">A–M</div><div class="dw-btn" style="background:rgba(255,255,255,.1);flex:1">N–Z</div></div></div>
+          <div class="dw-card" style="flex:1;background:#000;display:flex;align-items:center;justify-content:center"><span style="color:white;font-size:1.2rem">▶ Vimeo</span></div></div>
+        <div class="dw-input">🎤 A B C D E F G... אמור עד Z</div>
+        <div class="dw-btn dw-btn-mic" style="padding:.5rem">🎤 הקלט ABC</div>
+        <div class="dw-progress"><div style="background:#6366f1;width:60%"></div></div>
+      </div></div></div>
+    </div></div>
+  </div>
+  <div class="source-note">⚠️ בגרסה הישנה היה גם "משחק 2 – כפתורי AEIOU" כמשחק נפרד (5 רובוטים, ללא הקלטה). הוא לא נכלל כאן כבחירה כי אינו אחד מארבעת המשחקים המאושרים — ראי גרסה 2 לטיפול בשאלת השתייכותו.</div>
+</div>
+
+<!-- ================= KING (orig g3) ================= -->
+<div class="panel" id="panel-king">
+  <div class="game-header" style="background:linear-gradient(135deg,#78350f,#f59e0b)">
+    <div class="game-icon">👑</div>
+    <div class="game-meta"><h3>שיחה עם המלך – מילות נימוסים (כפי שהיה בספק המקורי — משחק 3)</h3><p>משך: ~10 דק׳ | שיעור 018</p></div>
+    <div><span class="tag tag-yellow">8 משפטים</span><span class="tag tag-yellow">הקלטה</span><span class="tag tag-yellow">דיאלוג</span></div>
+  </div>
+  <div class="card">
+    <h3>📱 Wireframes (spec.html §7, ללא שינוי)</h3>
+    <div class="screens-row">
+      <div class="phone-wrap"><div class="phone-label">מסך: פגישה עם המלך</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
+          <div class="wf-char">👑</div><div class="wf-bubble">Hello! Who are you?</div><div class="wf-divider"></div>
+          <div class="wf-char" style="width:40px;height:40px;font-size:1.2rem">🤖</div><div class="wf-bubble">We need help. We are stuck in a web.</div>
+          <div class="wf-btn wf-next">המשך →</div>
+        </div></div></div></div>
+      <div class="phone-wrap"><div class="phone-label">מסך: הקלטת משפט</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
+          <div class="wf-sub">משפט 3 מתוך 8</div><div class="wf-input" style="font-size:.9rem;font-weight:700;padding:.5rem">My name is ______.</div>
+          <div class="wf-sub">קרא את המשפט, ואז הקלט:</div><div class="wf-btn wf-mic">🎤 הקלט</div>
+          <div class="wf-row"><div class="wf-btn" style="background:#374151;font-size:.65rem">◀ קודם</div><div class="wf-btn wf-next" style="font-size:.65rem">הבא ▶</div></div>
+        </div></div></div></div>
+      <div class="phone-wrap"><div class="phone-label">מסך: המשחק הסתיים</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
+          <div class="wf-title" style="color:#fbbf24">👑 Very good!</div><div class="wf-bubble">You speak very politely!</div>
+          <div class="wf-bubble">Go find a gift for the Queen!</div><div class="wf-divider"></div>
+          <div class="wf-input">קוד לשיעור הבא:<br><strong>QUEEN-02</strong></div>
+        </div></div></div></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>🖥️ Wireframe דסקטופ (spec.html §7)</h3>
+    <div class="desktops-row"><div class="desktop-wrap"><div class="desktop-label">מסך הקלטת משפט מול המלך</div>
+      <div class="desktop"><div class="desktop-bar"><div></div><div></div><div></div></div><div class="desktop-body"><div class="desktop-main">
+        <div class="dw-row"><div class="dw-card"><div class="lbl">👑 המלך:</div><div class="dw-bubble" style="margin-top:.2rem">In my kingdom, we speak politely!</div></div>
+          <div class="dw-card"><div class="lbl">🤖 A.B:</div><div class="dw-bubble" style="margin-top:.2rem">Yes, your majesty! Let's learn!</div></div></div>
+        <div class="dw-card" style="background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3)"><div class="lbl" style="color:#fbbf24">משפט 3 מתוך 8:</div>
+          <div class="dw-input" style="background:rgba(255,255,255,.15);font-size:1rem;margin-top:.3rem">My name is ______.</div><div class="lbl" style="text-align:center;margin-top:.3rem">שמי ______</div></div>
+        <div style="display:flex;gap:.5rem"><div class="dw-btn dw-btn-mic" style="flex:2;padding:.5rem">🎤 הקלט</div><div class="dw-btn" style="background:rgba(255,255,255,.12);flex:1">🔊 שמע</div><div class="dw-btn dw-btn-next" style="flex:1">הבא ▶</div></div>
+        <div class="dw-progress"><div style="background:#f59e0b;width:37%"></div></div>
+      </div></div></div>
+    </div></div>
+  </div>
+</div>
+
+<!-- ================= QUEEN (orig g4) ================= -->
+<div class="panel" id="panel-queen">
+  <div class="game-header" style="background:linear-gradient(135deg,#831843,#ec4899)">
+    <div class="game-icon">👸</div>
+    <div class="game-meta"><h3>שיחה עם המלכה – חיזוק ניקוד (כפי שהיה בספק המקורי — משחק 4)</h3><p>משך: ~10 דק׳ | שיעור 020</p></div>
+    <div><span class="tag tag-pink">10 משפטים</span><span class="tag tag-pink">הקלטה</span><span class="tag tag-pink">שחרור מקורי עכביש</span></div>
+  </div>
+  <div class="source-note">📌 במקור לא היה wireframe נייד למשחק זה — רק דסקטופ. מוצג כאן בדיוק כפי שהיה, בלי להמציא מסך נייד שלא קיים.</div>
+  <div class="card">
+    <h3>🖥️ Wireframe דסקטופ (spec.html §8, ללא שינוי)</h3>
+    <div class="desktops-row"><div class="desktop-wrap"><div class="desktop-label">מסך הקלטת משפט מול המלכה + שחרור הקורים</div>
+      <div class="desktop"><div class="desktop-bar"><div></div><div></div><div></div></div><div class="desktop-body"><div class="desktop-main">
+        <div class="dw-char-row" style="background:rgba(236,72,153,.12)"><span class="dw-char-emoji">👸</span><div class="dw-bubble" style="margin:0;flex:1">Hello! What do you want?</div></div>
+        <div class="dw-card" style="background:rgba(236,72,153,.1);border:1px solid rgba(236,72,153,.3)"><div class="lbl" style="color:#f9a8d4">משפט 5 מתוך 10:</div>
+          <div class="dw-input" style="background:rgba(255,255,255,.15);font-size:.95rem;margin-top:.3rem">We have a gift for you.</div><div class="lbl" style="text-align:center;margin-top:.3rem">יש לנו מתנה בשבילך</div></div>
+        <div style="display:flex;gap:.5rem"><div class="dw-btn" style="background:linear-gradient(135deg,#9d174d,#ec4899);flex:2;padding:.5rem">🎤 הקלט</div><div class="dw-btn" style="background:rgba(255,255,255,.12);flex:1">🔊 שמע</div><div class="dw-btn dw-btn-next" style="flex:1">הבא ▶</div></div>
+        <div class="dw-progress"><div style="background:#ec4899;width:50%"></div></div>
+        <div style="text-align:center;font-size:.65rem;color:rgba(255,255,255,.4)">🪄 בסיום: אנימציית שחרור קורי העכביש</div>
+      </div></div></div>
+    </div></div>
+  </div>
+</div>
+
+<!-- ================= SILENCE (orig g5) ================= -->
+<div class="panel" id="panel-silence">
+  <div class="game-header" style="background:linear-gradient(135deg,#064e3b,#10b981)">
+    <div class="game-icon">🌟</div>
+    <div class="game-meta"><h3>פיוס עם Silence – YES/NO (כפי שהיה בספק המקורי — משחק 5)</h3><p>משך: ~4 דק׳ | שיעור 023</p></div>
+    <div><span class="tag tag-green">הקלטה × 8</span><span class="tag tag-green">שאלות YES/NO</span><span class="tag tag-green">סיום הקורס</span></div>
+  </div>
+  <div class="card">
+    <h3>📱 Wireframes (spec.html §9, ללא שינוי)</h3>
+    <div class="screens-row">
+      <div class="phone-wrap"><div class="phone-label">מסך: שאלה של Silence</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
+          <div class="wf-char">🌑</div><div class="wf-bubble">Friends? You want to be my friend?</div><div class="wf-divider"></div>
+          <div class="wf-sub">ענה בקול:</div><div class="wf-btn wf-mic">🎤 אמור YES או NO</div>
+          <div class="wf-row"><div class="wf-btn" style="background:#10b981;font-size:.8rem">YES ✓</div><div class="wf-btn" style="background:#ef4444;font-size:.8rem">NO ✗</div></div>
+        </div></div></div></div>
+      <div class="phone-wrap"><div class="phone-label">מסך: סיום הקורס</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
+          <div class="wf-title" style="color:#4ade80;font-size:.9rem">🎉 כל הכבוד!</div><div class="wf-char" style="font-size:2rem">🚀✨</div>
+          <div class="wf-bubble">You did it! You helped everyone!</div><div class="wf-bubble">לוגו קורס</div><div class="wf-btn wf-next">THE END 🌟</div>
+        </div></div></div></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>🖥️ Wireframe דסקטופ (spec.html §9)</h3>
+    <div class="desktops-row"><div class="desktop-wrap"><div class="desktop-label">מסך שאלת YES/NO עם Silence</div>
+      <div class="desktop"><div class="desktop-bar"><div></div><div></div><div></div></div><div class="desktop-body"><div class="desktop-main">
+        <div class="dw-char-row" style="background:rgba(16,185,129,.1)"><span class="dw-char-emoji">🌑</span><div class="dw-bubble" style="margin:0;flex:1">Friends? You want to be my friend?</div></div>
+        <div class="dw-card"><div class="lbl">ענה בקול:</div><div class="dw-btn" style="background:linear-gradient(135deg,#064e3b,#10b981);padding:.5rem;margin-top:.3rem">🎤 אמור YES או NO</div></div>
+        <div style="display:flex;gap:.5rem"><div class="dw-btn" style="background:#10b981;flex:1;padding:.5rem;font-size:.9rem">YES ✓</div><div class="dw-btn" style="background:#ef4444;flex:1;padding:.5rem;font-size:.9rem">NO ✗</div></div>
+        <div class="dw-progress"><div style="background:#10b981;width:75%"></div></div>
+        <div style="text-align:center;font-size:.65rem;color:rgba(255,255,255,.4)">🎉 בסיום: פיוס + לוגו הקורס</div>
+      </div></div></div>
+    </div></div>
+  </div>
+</div>
+
+<script>
+function selectGame(id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  var el = document.getElementById('panel-'+id);
+  if(el) el.classList.add('active');
+}
+window.selectGame = selectGame;
+selectGame('opening');
+</script>
+</body>
+</html>

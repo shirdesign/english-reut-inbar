@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>גרסה 2 — שרטוטים מעודכנים לפי האפיון החדש</title>
+<style>
+:root {
+  --primary: #1e1b4b; --accent: #6366f1;
+  --g1: #3b82f6; --g3: #f59e0b; --g4: #ec4899; --g5: #10b981;
+  --bg: #f8fafc; --card: #fff; --border: #e2e8f0; --text: #1e293b; --muted: #64748b;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 1rem; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin: 1rem 0; }
+.card h3 { margin-bottom: .8rem; color: var(--primary); }
+.panel { display: none; }
+.panel.active { display: block; }
+.game-header { border-radius: 12px; padding: 1rem 1.3rem; color: #fff; display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+.game-icon { font-size: 2.2rem; }
+.game-meta h3 { font-size: 1.15rem; margin-bottom: .2rem; color:#fff; }
+.game-meta p { font-size: .85rem; opacity: .85; }
+.tag { display: inline-block; padding: .2rem .7rem; border-radius: 12px; font-size: .78rem; font-weight: 600; margin: .15rem; }
+.tag-blue{background:#dbeafe;color:#1e40af;} .tag-yellow{background:#fef3c7;color:#92400e;}
+.tag-pink{background:#fce7f3;color:#9d174d;} .tag-green{background:#d1fae5;color:#065f46;}
+
+/* phone wireframe system — same visual language as spec.html / version1 */
+.screens-row { display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 1rem; margin: 1rem 0; flex-wrap:wrap; }
+.phone-wrap { flex-shrink: 0; text-align: center; }
+.phone-label { font-size: .75rem; color: var(--muted); margin-bottom: .4rem; font-weight: 600; }
+.phone { width: 200px; border: 2px solid #334155; border-radius: 24px; background: #f1f5f9; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,.12); }
+.phone-bar { height: 20px; background: #334155; border-radius: 22px 22px 0 0; }
+.phone-body { padding: .6rem; display: flex; flex-direction: column; gap: .4rem; min-height: 340px; }
+.wf-bg { background: #0a0a2e; border-radius: 8px; flex: 1; padding: .5rem; display: flex; flex-direction: column; gap: .3rem; align-items: center; justify-content: center; }
+.wf-char { background: rgba(255,255,255,.15); border: 1px dashed rgba(255,255,255,.4); border-radius: 8px; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; }
+.wf-bubble { background: rgba(255,255,255,.9); color: #1e293b; border-radius: 8px; padding: .3rem .5rem; font-size: .7rem; text-align: center; max-width: 100%; }
+.wf-btn { border-radius: 20px; padding: .25rem .6rem; font-size: .7rem; font-weight: 700; color: #fff; text-align: center; border: none; cursor:pointer; }
+.wf-mic { background: #ef4444; } .wf-play { background: #3b82f6; } .wf-next { background: #10b981; } .wf-choice { background: #6366f1; } .wf-gray{background:#475569;}
+.wf-divider { height: 1px; background: rgba(255,255,255,.2); width: 90%; }
+.wf-input { background: rgba(255,255,255,.85); border-radius: 6px; padding: .25rem .5rem; font-size: .7rem; color: #374151; text-align: center; width: 90%; }
+.wf-title { color: rgba(255,255,255,.9); font-size: .75rem; font-weight: 700; text-align: center; }
+.wf-sub { color: rgba(255,255,255,.65); font-size: .65rem; text-align: center; }
+.wf-video { background: #000; border-radius: 6px; width: 100%; height: 55px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; }
+.wf-row { display: flex; gap: .25rem; justify-content: center; width: 100%; flex-wrap:wrap; }
+.wf-counter{color:rgba(255,255,255,.55);font-size:.6rem;}
+.wf-rec-dot{width:8px;height:8px;border-radius:50%;background:#ef4444;display:inline-block;animation:pulse 1s infinite;margin-left:.3rem;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.wf-mic-icon{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.12);border:1px dashed rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-size:1rem;}
+
+/* new components for version 2 */
+.callout { background:#eef2ff; border:1px solid #c7d2fe; border-radius:10px; padding:.8rem 1rem; font-size:.84rem; margin-bottom:1rem; }
+.callout b { color:#4338ca; }
+.callout-warn{background:#fffbeb;border:1px solid #fde68a;}
+.callout-warn b{color:#92400e;}
+.badge-approve{display:inline-block;background:#fef3c7;color:#92400e;border-radius:10px;padding:.15rem .55rem;font-size:.68rem;font-weight:700;margin:.1rem;}
+.badge-missing{display:inline-block;background:#fee2e2;color:#991b1b;border-radius:10px;padding:.15rem .55rem;font-size:.68rem;font-weight:700;margin:.1rem;}
+.badge-assume{display:inline-block;background:#e0f2fe;color:#075985;border-radius:10px;padding:.15rem .55rem;font-size:.68rem;font-weight:700;margin:.1rem;}
+.video-placeholder{background:repeating-linear-gradient(135deg,#000 0 10px,#111 10px 20px);color:#fff;border-radius:8px;padding:1.2rem .6rem;text-align:center;font-size:.68rem;border:2px dashed #475569;}
+.demo-panel{border:2px dashed #94a3b8;background:#f1f5f9;border-radius:10px;padding:.7rem;margin-top:.6rem;}
+.demo-panel .demo-label{font-size:.68rem;color:#475569;font-weight:700;margin-bottom:.4rem;text-align:center;}
+.demo-panel .demo-btns{display:flex;gap:.3rem;flex-wrap:wrap;justify-content:center;}
+.demo-btn{background:#334155;color:#fff;border:none;border-radius:16px;padding:.3rem .6rem;font-size:.65rem;cursor:pointer;}
+.demo-btn:hover{background:#1e293b;}
+.wf-highlight{background:#fde68a;color:#78350f;padding:0 .15rem;border-radius:3px;}
+.branch-table{width:100%;border-collapse:collapse;font-size:.8rem;}
+.branch-table th{background:#f1f5f9;padding:.45rem .6rem;text-align:right;}
+.branch-table td{padding:.45rem .6rem;border-bottom:1px solid #e2e8f0;vertical-align:top;}
+.branch-table tr:hover td{background:#f8fafc;}
+table.content-table{width:100%;border-collapse:collapse;font-size:.85rem;margin-top:.6rem;}
+table.content-table th{background:#f1f5f9;padding:.5rem .7rem;text-align:right;}
+table.content-table td{padding:.5rem .7rem;border-bottom:1px solid #e2e8f0;}
+</style>
+</head>
+<body>
+
+<div class="callout">📌 גרסה זו: שרטוטי התנהגות לאישור, מבוססים על "אפיון אינטראקטיבי לאפליקציות שמע רעות זהבי" (המסמך שהתקבל ב-1.11.2026), תסריט 001-פתיחה, ותסריטים 018/020/023. לא עיצוב סופי, לא משחק עובד. דרישות ישנות מ-demo.html/tasks.html שסותרות את המסמך החדש <u>לא נשמרו</u>.</div>
+
+<!-- ================= OPENING ================= -->
+<div class="panel" id="panel-opening">
+  <div class="game-header" style="background:linear-gradient(135deg,#1e3a8a,#3b82f6)">
+    <div class="game-icon">🚀</div>
+    <div class="game-meta"><h3>פתיחה — שם + ABC (פתיחת דלת החללית)</h3><p>מקור: 001-פתיחה.docx</p></div>
+    <div><span class="tag tag-blue">הקלטה: שם</span><span class="tag tag-blue">הקלטה: ABC</span><span class="tag tag-blue">וידאו נרטיב</span></div>
+  </div>
+
+  <div class="callout"><b>מה השתנה מגרסה 1:</b> אין דמות AB בפתיחה — המספר הוא קפטן IL. אין בחירת קטע A–Z/A–M/N–Z (לא מופיע במקור 001; הוסר). המשימה מוצגת כ"פתיחת דלת החללית", לא כ"כפתור LET'S GO" סתמי. פעולת הילד היחידה היא קול — אין כפתורי בחירה.
+  <br><span class="badge-missing">AEIOU לא נכלל</span> כמשחק נפרד בגרסה זו — לא הוכרע אם שייך לפתיחה בכלל (אין אזכור ב-001).
+  <span class="badge-approve">לאישור</span> סבילות לזיהוי טעות בשם/ABC, TTS "שלום [שם]" (דרישה או רעיון?), פורמט שיר ה-ABC.</div>
+
+  <div class="card">
+    <h3>📱 Wireframes</h3>
+    <div class="screens-row">
+      <div class="phone-wrap"><div class="phone-label">פ0: תוכן סרטון — לא חלק מהאינטראקציה</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body">
+          <div class="video-placeholder">🎬 וידאו: קפטן IL מציג את סוכנות השפות,<br>Silence פורץ ומפזר את אותיות המקלדת<br><br><em>תוכן נרטיבי — אינו מסך אינטראקטיבי שלנו</em></div>
+        </div></div></div></div>
+      <div class="phone-wrap"><div class="phone-label">פ1: אישור מיקרופון</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
+          <div class="wf-mic-icon">🎤</div><div class="wf-bubble">כדי להמשיך צריך לאשר גישה למיקרופון</div>
+          <div class="wf-btn wf-mic">אישור מיקרופון</div>
+        </div></div></div></div>
+      <div class="phone-wrap"><div class="phone-label">פ2: מה השם שלך?</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
+          <div class="wf-title">🚀 סוכנות השפות</div><div class="wf-bubble">אמרו לי מה השם שלכם, סוכנים!</div>
+          <div class="wf-divider"></div><div class="wf-btn wf-mic">🎤 אמרו את השם</div>
+          <div class="wf-sub">הילד יכול לומר שם חופשי — אין בדיקה מול שם קבוע</div>
+        </div></div></div></div>
+      <div class="phone-wrap"><div class="phone-label">פ3: שירו את ה-ABC</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
+          <div class="wf-bubble">Silence שומע הכל... צריך קול חזק כדי לפתוח את דלת החללית!</div>
+          <div class="wf-divider"></div><div class="wf-btn wf-mic">🎤 שירו את ה-ABC</div>
+          <div class="wf-sub">שיר ABC: <span class="badge-missing">חסר — פורמט יגיע מרעות</span></div>
+        </div></div></div></div>
+      <div class="phone-wrap"><div class="phone-label">פ3-ב: לא נשמע קול (לנסות שוב)</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
+          <div class="wf-bubble">לא שמעתי אתכם... אפשר לנסות שוב?</div><div class="wf-btn wf-mic">🎤 לנסות שוב</div>
+          <div class="wf-sub"><span class="badge-approve">לאישור</span> כמה ניסיונות לפני מעבר אוטומטי</div>
+        </div></div></div></div>
+      <div class="phone-wrap"><div class="phone-label">פ4: הדלת נפתחת</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
+          <div class="wf-title" style="color:#4ade80;font-size:1rem">🎉 הדלת נפתחת!</div><div class="wf-char" style="font-size:2.5rem">🚀</div>
+          <div class="wf-bubble">המסע בחלל מתחיל!</div><div class="wf-btn wf-next">המשך לסרטון →</div>
+        </div></div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= KING ================= -->
+<div class="panel" id="panel-king">
+  <div class="game-header" style="background:linear-gradient(135deg,#78350f,#f59e0b)">
+    <div class="game-icon">👑</div>
+    <div class="game-meta"><h3>המלך — חזרה על תשובות מוכנות</h3><p>מקור: 018 + אפיון המלך (01/02), 5 חילופי שיחה</p></div>
+    <div><span class="tag tag-yellow">5 חילופים</span><span class="tag tag-yellow">חזרה בקול</span><span class="tag tag-yellow">ללא פסילה</span></div>
+  </div>
+
+  <div class="callout"><b>מה השתנה מגרסה 1:</b> 5 חילופים (לא 8 כמו ב-tasks.html הישן — תוקן לפי התסריט/האפיון). נוסח המשפטים עודכן לפי 018/02 בדיוק. נוספה הדגשת מילים בזמן השמעת הדוגמה. מצוין במפורש: <b>אין בדיקת הגייה ואין פסילה</b> על נוסח ההקלטה.
+  <span class="badge-approve">לאישור</span> תרגול בלי מיקרופון, אופן משוב הקלטת המלך.</div>
+
+  <div class="card">
+    <h3>📱 Wireframes</h3>
+    <div class="screens-row">
+      <div class="phone-wrap"><div class="phone-label">מ1: פתיחה</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
+          <div class="wf-char">👑</div><div class="wf-title">המלך</div>
+          <div class="wf-bubble">הקשיבו לתשובה המוכנה וחזרו עליה בקול</div><div class="wf-btn wf-next">מתחילים</div>
+        </div></div></div></div>
+      <div class="phone-wrap"><div class="phone-label">מ2: אישור מיקרופון</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
+          <div class="wf-mic-icon">🎤</div><div class="wf-bubble">כדי להקליט צריך לאשר גישה למיקרופון</div>
+          <div class="wf-btn wf-mic">אישור מיקרופון</div><div class="wf-sub"><span class="badge-approve">לאישור</span> תרגול בלי מיקרופון</div>
+        </div></div></div></div>
+      <div class="phone-wrap"><div class="phone-label">מ3: שאלה+תשובה — לפני הקלטה</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
+          <div class="wf-counter">3 / 5</div><div class="wf-char">👑</div><div class="wf-bubble">What is your name?</div>
+          <div class="wf-input" style="font-weight:700">My name is <span class="wf-highlight">____</span>.</div>
+          <div class="wf-row"><div class="wf-btn wf-play" style="font-size:.6rem">🔊 לשמוע שוב</div><div class="wf-btn wf-mic" style="font-size:.6rem">🎤 להקליט</div></div>
+        </div></div></div></div>
+      <div class="phone-wrap"><div class="phone-label">מ3: בזמן הקלטה</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
+          <div class="wf-counter">3 / 5</div><div class="wf-bubble">🔴 מקליטים כעת<span class="wf-rec-dot"></span></div>
+          <div class="wf-input">My name is ____.</div><div class="wf-btn wf-mic">⏹ סיום הקלטה</div>
+        </div></div></div></div>
+      <div class="phone-wrap"><div class="phone-label">מ3-ב: לא נקלט קול</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
+          <div class="wf-bubble">אפשר לנסות שוב</div><div class="wf-btn wf-mic">🎤 להקליט</div>
+        </div></div></div></div>
+      <div class="phone-wrap"><div class="phone-label">מ4: האזנה / ניסיון חוזר / המשך</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
+          <div class="wf-bubble">כל הכבוד על הניסיון</div>
+          <div class="wf-row"><div class="wf-btn wf-play" style="font-size:.6rem">🔊 לשמוע את עצמי</div><div class="wf-btn wf-mic" style="font-size:.6rem">🎤 להקליט שוב</div></div>
+          <div class="wf-btn wf-next">הבא</div><div class="wf-sub">אין X אדום / אין ניקוד</div>
+        </div></div></div></div>
+      <div class="phone-wrap"><div class="phone-label">מ5: סיום</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
+          <div class="wf-char">👑</div><div class="wf-bubble">Very nice. You speak nicely.</div><div class="wf-btn wf-next">המשך</div>
+        </div></div></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📝 תוכן השיחה (5 חילופים — מקור: 02 טקסט המלך)</h3>
+    <table class="content-table">
+      <tr><th>#</th><th>המלך</th><th>תשובה מוכנה</th></tr>
+      <tr><td>1</td><td>Hello, kid! How are you?</td><td>Hello! I'm fine, thank you.</td></tr>
+      <tr><td>2</td><td>What is your name?</td><td>My name is ____. <span class="badge-assume">הילד משלים שם חופשי</span></td></tr>
+      <tr><td>3</td><td>It is nice to meet you.</td><td>It is nice to meet you too.</td></tr>
+      <tr><td>4</td><td>Maybe I can help you.</td><td>Thank you.</td></tr>
+      <tr><td>5</td><td>Goodbye, kid.</td><td>Goodbye, King.</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ================= QUEEN ================= -->
+<div class="panel" id="panel-queen">
+  <div class="game-header" style="background:linear-gradient(135deg,#831843,#ec4899)">
+    <div class="game-icon">👸</div>
+    <div class="game-meta"><h3>המלכה — בחירת תשובה בשם AB</h3><p>מקור: 020 + אפיון המלכה (03/04), 4 שאלות</p></div>
+    <div><span class="tag tag-pink">4 שאלות</span><span class="tag tag-pink">בחירה — ללא הקלטה</span></div>
+  </div>
+
+  <div class="callout callout-warn"><b>השינוי המרכזי מגרסה 1:</b> <b>אין כפתור הקלטה בכלל</b> — בגרסה הישנה (tasks.html/demo.html) הייתה דרישת הקלטה; זו נופלת, לפי התסריט (020) והמסמך החדש במפורש. 4 שאלות (לא 10). תשובות בשם AB בלבד, לא בשם הילד.
+  <span class="badge-approve">לאישור</span> האם לחיצה על אפשרות תשובה גם משמיעה את הנוסח.</div>
+
+  <div class="card">
+    <h3>📱 Wireframes</h3>
+    <div class="screens-row">
+      <div class="phone-wrap"><div class="phone-label">ק1: פתיחה</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
+          <div class="wf-char">👸</div><div class="wf-bubble">המלכה שואלת. בחרו תשובה מתאימה בשם AB</div><div class="wf-btn wf-next">מתחילים</div>
+        </div></div></div></div>
+      <div class="phone-wrap"><div class="phone-label">ק2: שאלה + 3 תשובות</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
+          <div class="wf-counter">2 / 4</div><div class="wf-char">👸</div><div class="wf-bubble">What is your name?</div>
+          <div class="wf-btn wf-choice" style="width:90%">My name is AB.</div>
+          <div class="wf-btn wf-choice" style="width:90%;opacity:.85">I'm fine, thank you.</div>
+          <div class="wf-btn wf-choice" style="width:90%;opacity:.85">Thank you, Queen.</div>
+          <div class="wf-sub">🔊 לשמוע שוב את השאלה</div>
+        </div></div></div></div>
+      <div class="phone-wrap"><div class="phone-label">ק3: בחירה נכונה</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
+          <div class="wf-btn wf-choice" style="width:90%;outline:3px solid #10b981">My name is AB. ✓</div>
+          <div class="wf-bubble">Very nice!</div><div class="wf-btn wf-next">הבא</div>
+        </div></div></div></div>
+      <div class="phone-wrap"><div class="phone-label">ק4: בחירה לא נכונה</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
+          <div class="wf-bubble">Try again.</div><div class="wf-sub">נסו שוב — אין חשיפת התשובה הנכונה, אין פסילה</div>
+          <div class="wf-btn wf-choice" style="width:90%">נסו שוב</div>
+        </div></div></div></div>
+      <div class="phone-wrap"><div class="phone-label">ק5: סיום</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
+          <div class="wf-char">👸</div><div class="wf-bubble">You speak very nicely. You brought me a beautiful box. I will help you.</div>
+          <div class="wf-btn wf-next">המשך</div>
+        </div></div></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📝 תוכן השיחה (4 שאלות — מקור: 04 טקסט המלכה)</h3>
+    <table class="content-table">
+      <tr><th>#</th><th>המלכה</th><th>נכון</th><th>מסיחים</th></tr>
+      <tr><td>1</td><td>How are you?</td><td>I'm fine, thank you.</td><td>My name is AB. / We have a gift for you.</td></tr>
+      <tr><td>2</td><td>What is your name?</td><td>My name is AB.</td><td>I'm fine, thank you. / Thank you, Queen.</td></tr>
+      <tr><td>3</td><td>What do you have for me?</td><td>We have a gift for you.</td><td>We need your help. / We are stuck in the web.</td></tr>
+      <tr><td>4</td><td>Do you need help?</td><td>Yes. Please help us.</td><td>No, thank you. / Goodbye, Queen.</td></tr>
+    </table>
+    <p style="font-size:.78rem;color:var(--muted);margin-top:.5rem">מיקום התשובה הנכונה מתחלף בין השאלות; סדר 3 האפשרויות קבוע בניסיון חוזר על אותה שאלה.</p>
+  </div>
+</div>
+
+<!-- ================= SILENCE ================= -->
+<div class="panel" id="panel-silence">
+  <div class="game-header" style="background:linear-gradient(135deg,#064e3b,#10b981)">
+    <div class="game-icon">🌑</div>
+    <div class="game-meta"><h3>סיילנס — שיחה חופשית ב-6 שלבים</h3><p>מקור: אפיון סיילנס (05/06) + 023</p></div>
+    <div><span class="tag tag-green">הקלטה חופשית</span><span class="tag tag-green">זיהוי מתוך רשימה סגורה</span></div>
+  </div>
+
+  <div class="callout callout-warn"><b>השינוי המרכזי מגרסה 1:</b> אין יותר 8 משפטי-עידוד קבועים ואין שאלות YES/NO קבועות — יש שיחה חופשית ב-6 שלבים נושאיים, הילד מקליט תשובה במילים שלו בכל שלב. <b>אין להציג לילד תשובות מוכנות או כפתורי תשובה.</b></div>
+
+  <div class="callout"><b>⚠️ גבול מנגנון הזיהוי — לאישור:</b> זיהוי מילה/ביטוי מתוך קבוצת חלופות סגורה מוגדרת מראש לכל שאלה, ומיפוי למענה מוקלט קבוע. אין יצירת תגובה חדשה ואין הבנת שפה חופשית. תשובה שלא מזוהה מתוך הרשימה → הודעת "לא הובן" ובקשת ניסיון נוסף (ולא פענוח משמעות חופשי).
+  <br><span class="badge-approve">לאישור בנפרד</span> הקראת שם הילד (שלב 1) — טעונה בדיקה טכנולוגית, ללא הבטחת פתרון.</div>
+
+  <div class="card">
+    <h3>📱 Wireframes</h3>
+    <div class="screens-row">
+      <div class="phone-wrap"><div class="phone-label">ס1: פתיחה</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
+          <div class="wf-char" style="filter:grayscale(1)">🌑</div><div class="wf-bubble">Silence קצת עצוב וחושש. ענו במילים שלכם.</div>
+          <div class="wf-btn wf-next">מתחילים</div><div class="wf-sub">אין אפשרויות תשובה מוכנות על המסך</div>
+        </div></div></div></div>
+      <div class="phone-wrap"><div class="phone-label">ס2: אישור מיקרופון</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
+          <div class="wf-mic-icon">🎤</div><div class="wf-bubble">כדי להקליט צריך לאשר גישה למיקרופון</div><div class="wf-btn wf-mic">אישור מיקרופון</div>
+        </div></div></div></div>
+
+      <div class="phone-wrap"><div class="phone-label">ס3: שאלה + הקלטה (תבנית — שלב X מתוך 6)</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
+          <div class="wf-counter">שלב 2 / 6</div><div class="wf-char" style="filter:grayscale(.6)">🌑</div>
+          <div class="wf-bubble" id="s3-question">I am sad. How are you?</div>
+          <div class="wf-row"><div class="wf-btn wf-play" style="font-size:.6rem">🔊 לשמוע שוב</div><div class="wf-btn wf-mic" style="font-size:.6rem" id="s3-rec-btn" onclick="demoRecord()">🎤 להקליט תשובה</div></div>
+          <div class="wf-bubble" id="s3-response" style="display:none;background:#d1fae5"></div>
+        </div></div></div>
+        <div class="demo-panel"><div class="demo-label">🧪 פקדי הדגמה — לא חלק מממשק הילד</div>
+          <div class="demo-btns">
+            <button class="demo-btn" onclick="demoAnswer('happy')">תשובה: happy</button>
+            <button class="demo-btn" onclick="demoAnswer('sad')">תשובה: sad</button>
+            <button class="demo-btn" onclick="demoAnswer('silence')">שתיקה</button>
+            <button class="demo-btn" onclick="demoAnswer('unclear')">לא זוהה</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="phone-wrap"><div class="phone-label">ס5-א: שתיקה</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
+          <div class="wf-char">🌑</div><div class="wf-bubble">I can't hear you.</div>
+          <div class="wf-sub">אפשר להקליט שוב בקול קצת יותר ברור</div><div class="wf-btn wf-mic">🎤 ננסה שוב</div>
+        </div></div></div></div>
+
+      <div class="phone-wrap"><div class="phone-label">ס5-ב: נקלט אך לא זוהה</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
+          <div class="wf-char">🌑</div><div class="wf-bubble">Sorry? Again, please.</div>
+          <div class="wf-sub">רמז קצר בעברית, בלי לחשוף את התשובה</div>
+          <div class="wf-row"><div class="wf-btn wf-play" style="font-size:.6rem">🔊 לשמוע שוב</div><div class="wf-btn wf-mic" style="font-size:.6rem">🎤 ננסה שוב</div></div>
+          <div class="wf-sub"><span class="badge-approve">לאישור</span> מספר ניסיונות לפני עזרה</div>
+        </div></div></div></div>
+
+      <div class="phone-wrap"><div class="phone-label">ס6: סיום</div>
+        <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
+          <div class="wf-char">🙂</div><div class="wf-bubble">Silence רגוע יותר. סיום שקט, לא תרועת "נכון!"</div>
+          <div class="wf-btn wf-next">המשך לסיפור</div>
+        </div></div></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🌿 6 שלבי השיחה — מקור: 06 טקסט סיילנס (רשימה סגורה → תגובה קבועה)</h3>
+    <table class="branch-table">
+      <tr><th>שלב</th><th>Silence אומר</th><th>תשובות קבילות (רשימה סגורה)</th><th>תגובה קבועה</th></tr>
+      <tr><td>1 — שם</td><td>Hello… What is your name?</td><td>My name is… / I'm… / שם בלבד</td><td>Hello, [name]. <span class="badge-approve">הקראת שם דינמי — לאישור</span></td></tr>
+      <tr><td>2 — רגש</td><td>I am sad. How are you?</td><td>happy / sad / scared / angry / fine</td><td>תגובה לפי רגש (5 ענפים קבועים)</td></tr>
+      <tr><td>3 — עזרה (ענף No)</td><td>Can you help me?</td><td>Yes… / <b>No</b></td><td>Yes→Thank you. <b>No→"Oh… I am sad." ואז "Can we talk?"</b> (ל-No שם: "Okay.")</td></tr>
+      <tr><td>4 — הכפתור</td><td>Look! What is this? → What color is it?</td><td>button / Y → green</td><td>My button… → Green. Thank you.</td></tr>
+      <tr><td>5 — SAM</td><td>Who is SAM?</td><td>dog / A dog / SAM is a dog</td><td>A dog… He has a friend. <span class="badge-approve">הצגת SAM ויזואלית — לאישור</span></td></tr>
+      <tr><td>6 — חברות (ענף No)</td><td>Can we be friends?</td><td>Yes… / <b>No</b></td><td>Yes→Really? Thank you. <b>No→"Okay… I am sorry."</b> — ממשיכים בכבוד, לא מסומן כטעות</td></tr>
+    </table>
+  </div>
+</div>
+
+<script>
+function selectGame(id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  var el = document.getElementById('panel-'+id);
+  if(el) el.classList.add('active');
+}
+window.selectGame = selectGame;
+
+var demoResponses = {
+  happy: "You are happy. I am sad.",
+  sad: "You are sad too?",
+  silence: null,
+  unclear: null
+};
+function demoAnswer(kind){
+  var q = document.getElementById('s3-question');
+  var r = document.getElementById('s3-response');
+  if(kind==='silence'){ r.style.display='block'; r.style.background='#fee2e2'; r.textContent='→ עבר למסך ס5-א (שתיקה): "I can not hear you."'; return; }
+  if(kind==='unclear'){ r.style.display='block'; r.style.background='#fef3c7'; r.textContent='→ עבר למסך ס5-ב (לא זוהה): "Sorry? Again, please."'; return; }
+  r.style.display='block'; r.style.background='#d1fae5';
+  r.textContent = '✓ זוהתה תשובה "'+kind+'" מהרשימה הסגורה → תגובה קבועה: "'+(demoResponses[kind]||'...')+'"';
+}
+function demoRecord(){
+  var r = document.getElementById('s3-response');
+  r.style.display='block'; r.style.background='#e0f2fe'; r.textContent='🎙 מדמה הקלטה... לחצו על אחד מפקדי ההדגמה למטה כדי לראות תוצאה.';
+}
+
+selectGame('opening');
+</script>
+</body>
+</html>

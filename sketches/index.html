@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>שרטוטים — קורס אנגלית רעות זהבי | לפני / אחרי</title>
+<style>
+  :root { --primary:#1e1b4b; --accent:#6366f1; --bg:#f8fafc; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Segoe UI', Arial, sans-serif; background:var(--bg); color:#1e293b; }
+  .topbar { background:linear-gradient(135deg,#0a0a2e 0%,#1e1b4b 60%,#312e81 100%); color:#fff; padding:1rem 1.2rem; }
+  .topbar h1 { font-size:1.15rem; margin-bottom:.8rem; }
+  .row { display:flex; gap:.5rem; flex-wrap:wrap; align-items:center; }
+  .tabs { display:flex; gap:.4rem; }
+  .tab-btn { background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.25); color:#fff; padding:.5rem 1.1rem; border-radius:10px; cursor:pointer; font-size:.9rem; font-weight:600; }
+  .tab-btn.active { background:#6366f1; border-color:#6366f1; }
+  .sep { width:1px; height:28px; background:rgba(255,255,255,.2); margin:0 .3rem; }
+  .game-btn { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2); color:#cbd5e1; padding:.5rem 1rem; border-radius:10px; cursor:pointer; font-size:.85rem; }
+  .game-btn.active { background:#fff; color:#1e1b4b; font-weight:700; }
+  .frame-wrap { height:calc(100vh - 92px); }
+  iframe { width:100%; height:100%; border:none; display:none; background:#f8fafc; }
+  iframe.active { display:block; }
+  @media (max-width:680px){ .topbar h1{font-size:1rem;} .tab-btn,.game-btn{font-size:.78rem;padding:.4rem .7rem;} }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <h1>🖌️ שרטוטים לאישור — קורס אנגלית רעות זהבי</h1>
+  <div class="row">
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="v1" onclick="setTab('v1')">גרסה 1 — לפני האפיון החדש</button>
+      <button class="tab-btn" data-tab="v2" onclick="setTab('v2')">גרסה 2 — בעקבות האפיון החדש</button>
+    </div>
+    <div class="sep"></div>
+    <div class="tabs" id="gameTabs">
+      <button class="game-btn active" data-game="opening" onclick="setGame('opening')">🚀 פתיחה</button>
+      <button class="game-btn" data-game="king" onclick="setGame('king')">👑 מלך</button>
+      <button class="game-btn" data-game="queen" onclick="setGame('queen')">👸 מלכה</button>
+      <button class="game-btn" data-game="silence" onclick="setGame('silence')">🌑 סיילנס</button>
+    </div>
+  </div>
+</div>
+
+<div class="frame-wrap">
+  <iframe id="frame-v1" class="active" src="version1-before.html"></iframe>
+  <iframe id="frame-v2" src="version2-updated.html"></iframe>
+</div>
+
+<script>
+var currentTab = 'v1';
+var currentGame = 'opening';
+
+function setTab(tab){
+  currentTab = tab;
+  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.toggle('active', b.dataset.tab===tab); });
+  document.getElementById('frame-v1').classList.toggle('active', tab==='v1');
+  document.getElementById('frame-v2').classList.toggle('active', tab==='v2');
+  syncGame();
+}
+function setGame(game){
+  currentGame = game;
+  document.querySelectorAll('.game-btn').forEach(function(b){ b.classList.toggle('active', b.dataset.game===game); });
+  syncGame();
+}
+function syncGame(){
+  [document.getElementById('frame-v1'), document.getElementById('frame-v2')].forEach(function(f){
+    try { f.contentWindow.selectGame(currentGame); } catch(e) { /* iframe not ready yet */ }
+  });
+}
+document.getElementById('frame-v1').addEventListener('load', syncGame);
+document.getElementById('frame-v2').addEventListener('load', syncGame);
+</script>
+</body>
+</html>
