@@ -69,60 +69,94 @@ body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color:
 table.content-table{width:100%;border-collapse:collapse;font-size:.85rem;margin-top:.6rem;}
 table.content-table th{background:#f1f5f9;padding:.5rem .7rem;text-align:right;}
 table.content-table td{padding:.5rem .7rem;border-bottom:1px solid #e2e8f0;}
+
+/* desktop wireframe system — copied from version1-before.html, for panels kept identical to version 1 */
+.source-note { background:#f1f5f9; border:1px solid #cbd5e1; border-radius:8px; padding:.6rem .9rem; font-size:.78rem; color:#475569; margin-bottom:1rem; }
+.desktops-row { display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 1rem; margin: 1rem 0; }
+.desktop-wrap { flex-shrink: 0; text-align: center; }
+.desktop-label { font-size: .75rem; color: var(--muted); margin-bottom: .4rem; font-weight: 600; }
+.desktop { width: 460px; border: 2px solid #334155; border-radius: 10px; background: #080820; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,.12); }
+.desktop-bar { height: 22px; background: #1e2436; display: flex; align-items: center; gap: .3rem; padding: 0 .5rem; }
+.desktop-bar div { width: 9px; height: 9px; border-radius: 50%; background: #475569; display: inline-block; }
+.desktop-body { padding: 1.5rem 2rem; min-height: 200px; background: #080820; display: flex; gap: 1rem; justify-content: center; }
+.desktop-main { flex: 1; display: flex; flex-direction: column; gap: .5rem; }
+.dw-row { display: flex; gap: .5rem; }
+.dw-card { background: rgba(255,255,255,.06); border-radius: 10px; padding: .6rem; flex: 1; }
+.dw-card .lbl { color: rgba(255,255,255,.4); font-size: .55rem; margin-bottom: .2rem; }
+.dw-bubble { background: rgba(255,255,255,.85); color: #1e293b; border-radius: 8px; padding: .4rem; font-size: .65rem; margin-top: .3rem; }
+.dw-input { background: rgba(255,255,255,.12); border-radius: 8px; padding: .6rem; text-align: center; color: white; font-size: .85rem; font-weight: 700; }
+.dw-btn { color: white; border-radius: 8px; padding: .35rem .6rem; font-size: .65rem; font-weight: 700; text-align: center; }
+.dw-btn-mic { background: #ef4444; } .dw-btn-next { background: #6366f1; } .dw-btn-play{background:#3b82f6;}
+.dw-progress { background: rgba(255,255,255,.08); border-radius: 4px; height: 3px; }
+.dw-progress > div { height: 3px; border-radius: 4px; }
+.dw-char-row { display: flex; align-items: center; gap: .5rem; background: rgba(255,255,255,.06); border-radius: 10px; padding: .5rem .7rem; }
+.dw-char-emoji { font-size: 1.4rem; }
 </style>
 </head>
 <body>
 
-<div class="callout">📌 גרסה זו: שרטוטי התנהגות לאישור, מבוססים על "אפיון אינטראקטיבי לאפליקציות שמע רעות זהבי" (המסמך שהתקבל ב-1.11.2026), תסריט 001-פתיחה, ותסריטים 018/020/023. לא עיצוב סופי, לא משחק עובד. דרישות ישנות מ-demo.html/tasks.html שסותרות את המסמך החדש <u>לא נשמרו</u>.</div>
+<div class="callout">📌 גרסה זו: שרטוטי התנהגות לאישור, מבוססים על "אפיון אינטראקטיבי לאפליקציות שמע רעות זהבי" (המסמך שהתקבל ב-1.11.2026) ותסריטים 018/020/023 — למלך, מלכה וסיילנס בלבד. לא עיצוב סופי, לא משחק עובד. דרישות ישנות מ-demo.html/tasks.html שסותרות את המסמך החדש <u>לא נשמרו</u>. <b>פתיחה:</b> לא נכללה באפיון החדש — מוצגת כאן זהה לגרסה 1, בלי שינוי, עד לקבלת מקור מאושר.</div>
 
 <!-- ================= OPENING ================= -->
 <div class="panel" id="panel-opening">
   <div class="game-header" style="background:linear-gradient(135deg,#1e3a8a,#3b82f6)">
     <div class="game-icon">🚀</div>
-    <div class="game-meta"><h3>פתיחה — שם + ABC (פתיחת דלת החללית)</h3><p>מקור: 001-פתיחה.docx</p></div>
-    <div><span class="tag tag-blue">הקלטה: שם</span><span class="tag tag-blue">הקלטה: ABC</span><span class="tag tag-blue">וידאו נרטיב</span></div>
+    <div class="game-meta"><h3>כניסה לחללית – מי אתה? (כפי שהיה בספק המקורי — משחק 1)</h3><p>משך: ~3 דק׳ | נושא: היכרות + שיר ABC</p></div>
+    <div><span class="tag tag-blue">הקלטה: שם</span><span class="tag tag-blue">הקלטה: ABC</span><span class="tag tag-blue">וידאו Vimeo</span></div>
   </div>
 
-  <div class="callout"><b>מה השתנה מגרסה 1:</b> אין דמות AB בפתיחה — המספר הוא קפטן IL. אין בחירת קטע A–Z/A–M/N–Z (לא מופיע במקור 001; הוסר). המשימה מוצגת כ"פתיחת דלת החללית", לא כ"כפתור LET'S GO" סתמי. פעולת הילד היחידה היא קול — אין כפתורי בחירה.
-  <br><span class="badge-missing">AEIOU לא נכלל</span> כמשחק נפרד בגרסה זו — לא הוכרע אם שייך לפתיחה בכלל (אין אזכור ב-001).
-  <span class="badge-approve">לאישור</span> סבילות לזיהוי טעות בשם/ABC, TTS "שלום [שם]" (דרישה או רעיון?), פורמט שיר ה-ABC.</div>
+  <div class="callout"><b>סטטוס:</b> הוחזר להיות זהה לגרסה 1 (ה-wireframes המקוריים מ-spec.html, ללא שינוי). עדכון קודם כאן התבסס על מסמך "001-פתיחה.docx" שנמצא ב-Drive של הפרויקט אך <u>לא אושר על ידך</u> כמקור לשינוי המשחק — <span class="badge-approve">לאישור</span> אם וכיצד להתבסס עליו.</div>
 
   <div class="card">
-    <h3>📱 Wireframes</h3>
+    <h3>📱 Wireframes (spec.html §5, ללא שינוי)</h3>
     <div class="screens-row">
-      <div class="phone-wrap"><div class="phone-label">פ0: תוכן סרטון — לא חלק מהאינטראקציה</div>
-        <div class="phone"><div class="phone-bar"></div><div class="phone-body">
-          <div class="video-placeholder">🎬 וידאו: קפטן IL מציג את סוכנות השפות,<br>Silence פורץ ומפזר את אותיות המקלדת<br><br><em>תוכן נרטיבי — אינו מסך אינטראקטיבי שלנו</em></div>
-        </div></div></div></div>
-      <div class="phone-wrap"><div class="phone-label">פ1: אישור מיקרופון</div>
+      <div class="phone-wrap"><div class="phone-label">מסך 1: מה שמך?</div>
         <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
-          <div class="wf-mic-icon">🎤</div><div class="wf-bubble">כדי להמשיך צריך לאשר גישה למיקרופון</div>
-          <div class="wf-btn wf-mic">אישור מיקרופון</div>
+          <div class="wf-title">🚀 משימה סודית</div><div class="wf-char">🤖</div>
+          <div class="wf-bubble">רגע! לא אמרתם לי מה השם שלכם!</div><div class="wf-divider"></div>
+          <div class="wf-sub">לחצו ואמרו את שמכם:</div><div class="wf-btn wf-mic">🎤 אמור שם</div>
         </div></div></div></div>
-      <div class="phone-wrap"><div class="phone-label">פ2: מה השם שלך?</div>
+      <div class="phone-wrap"><div class="phone-label">מסך 2: ברכה + LET'S GO</div>
         <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
-          <div class="wf-title">🚀 סוכנות השפות</div><div class="wf-bubble">אמרו לי מה השם שלכם, סוכנים!</div>
-          <div class="wf-divider"></div><div class="wf-btn wf-mic">🎤 אמרו את השם</div>
-          <div class="wf-sub">הילד יכול לומר שם חופשי — אין בדיקה מול שם קבוע</div>
+          <div class="wf-char">🤖</div><div class="wf-bubble">שלום [שם]! ברוכים הבאים למשימה!</div>
+          <div class="wf-divider"></div><div class="wf-bubble">מוכנים להרפתקה?</div><div class="wf-btn wf-next">LET'S GO! 🚀</div>
         </div></div></div></div>
-      <div class="phone-wrap"><div class="phone-label">פ3: שירו את ה-ABC</div>
+      <div class="phone-wrap"><div class="phone-label">מסך 3: שמע ABC</div>
         <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
-          <div class="wf-bubble">Silence שומע הכל... צריך קול חזק כדי לפתוח את דלת החללית!</div>
-          <div class="wf-divider"></div><div class="wf-btn wf-mic">🎤 שירו את ה-ABC</div>
-          <div class="wf-sub">שיר ABC: <span class="badge-missing">חסר — פורמט יגיע מרעות</span></div>
+          <div class="wf-title">📻 מסר נכנס מהחלל!</div><div class="wf-video">▶</div><div class="wf-sub">סרטון ABC (Vimeo)</div>
+          <div class="wf-divider"></div><div class="wf-sub">בחר גרסה:</div>
+          <div class="wf-row"><div class="wf-btn wf-play" style="font-size:.55rem">A–Z מלא</div><div class="wf-btn wf-choice" style="font-size:.55rem">A–M</div><div class="wf-btn wf-choice" style="font-size:.55rem">N–Z</div></div>
+          <div class="wf-btn wf-next" style="margin-top:.3rem">קדימה ←</div>
         </div></div></div></div>
-      <div class="phone-wrap"><div class="phone-label">פ3-ב: לא נשמע קול (לנסות שוב)</div>
+      <div class="phone-wrap"><div class="phone-label">מסך 4: אמור ABC</div>
         <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
-          <div class="wf-bubble">לא שמעתי אתכם... אפשר לנסות שוב?</div><div class="wf-btn wf-mic">🎤 לנסות שוב</div>
-          <div class="wf-sub"><span class="badge-approve">לאישור</span> כמה ניסיונות לפני מעבר אוטומטי</div>
+          <div class="wf-char">🚀</div><div class="wf-bubble">לחצו על הכפתור ואמרו את ה-ABC!</div>
+          <div class="wf-sub" style="color:#fbbf24">⚠️ Silence שומע – אל תשתקו!</div><div class="wf-divider"></div>
+          <div class="wf-btn wf-mic">🎤 אמור ABC</div><div class="wf-sub">א"ב ג"ד... (A B C D...)</div>
         </div></div></div></div>
-      <div class="phone-wrap"><div class="phone-label">פ4: הדלת נפתחת</div>
+      <div class="phone-wrap"><div class="phone-label">מסך 5: הצלחה + קוד</div>
         <div class="phone"><div class="phone-bar"></div><div class="phone-body"><div class="wf-bg">
-          <div class="wf-title" style="color:#4ade80;font-size:1rem">🎉 הדלת נפתחת!</div><div class="wf-char" style="font-size:2.5rem">🚀</div>
-          <div class="wf-bubble">המסע בחלל מתחיל!</div><div class="wf-btn wf-next">המשך לסרטון →</div>
+          <div class="wf-title" style="color:#4ade80;font-size:1rem">🎉 כל הכבוד!</div><div class="wf-char" style="font-size:2.5rem">🚀</div>
+          <div class="wf-bubble">החללית נפתחה! המסע מתחיל!</div><div class="wf-divider"></div>
+          <div class="wf-input">קוד כניסה לשיעור הבא:<br><strong>AEIOU-01</strong></div><div class="wf-sub">כתבו את הקוד ✍️</div>
         </div></div></div></div>
     </div>
   </div>
+  <div class="card">
+    <h3>🖥️ Wireframe דסקטופ (spec.html §5)</h3>
+    <div class="desktops-row"><div class="desktop-wrap"><div class="desktop-label">מסך הקלטת ABC</div>
+      <div class="desktop"><div class="desktop-bar"><div></div><div></div><div></div></div><div class="desktop-body"><div class="desktop-main">
+        <div class="dw-char-row"><span class="dw-char-emoji">🚀</span><div class="dw-bubble" style="margin:0;flex:1">לחצו על הכפתור ואמרו את ה-ABC! ⚠️ Silence שומע!</div></div>
+        <div class="dw-row"><div class="dw-card" style="flex:2"><div class="lbl">בחירת גרסה:</div>
+          <div style="display:flex;gap:.3rem;margin-top:.3rem"><div class="dw-btn dw-btn-play" style="flex:1">A–Z מלא</div><div class="dw-btn" style="background:rgba(255,255,255,.1);flex:1">A–M</div><div class="dw-btn" style="background:rgba(255,255,255,.1);flex:1">N–Z</div></div></div>
+          <div class="dw-card" style="flex:1;background:#000;display:flex;align-items:center;justify-content:center"><span style="color:white;font-size:1.2rem">▶ Vimeo</span></div></div>
+        <div class="dw-input">🎤 A B C D E F G... אמור עד Z</div>
+        <div class="dw-btn dw-btn-mic" style="padding:.5rem">🎤 הקלט ABC</div>
+        <div class="dw-progress"><div style="background:#6366f1;width:60%"></div></div>
+      </div></div></div>
+    </div></div>
+  </div>
+  <div class="source-note">⚠️ בגרסה הישנה היה גם "משחק 2 – כפתורי AEIOU" כמשחק נפרד (5 רובוטים, ללא הקלטה). הוא לא נכלל כאן כבחירה כי אינו אחד מארבעת המשחקים המאושרים — ראי גרסה 2 לטיפול בשאלת השתייכותו.</div>
 </div>
 
 <!-- ================= KING ================= -->
